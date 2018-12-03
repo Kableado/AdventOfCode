@@ -95,9 +95,36 @@ namespace AdventOfCode2018
             return overlappedArea.ToString();
         }
 
+        public string ResolveDay03_Part2(string[] inputs)
+        {
+            List<Claim> claims = inputs.Select(i => Claim.FromString(i)).ToList();
+
+            Claim unoverlappingClaim = null;
+            for (int i = 0; i < claims.Count; i++)
+            {
+                bool overlaps = false;
+                for (int j = 0; j < claims.Count; j++)
+                {
+                    if (i == j) { continue; }
+                    if (Claim.Overlaps(claims[i], claims[j]))
+                    {
+                        overlaps = true;
+                        break;
+                    }
+                }
+                if (overlaps == false)
+                {
+                    unoverlappingClaim = claims[i];
+                    break;
+                }
+            }
+            return unoverlappingClaim.ID.ToString();
+
+        }
+
         public class Claim
         {
-            public string ID { get; set; }
+            public int ID { get; set; }
 
             public int Left { get; set; }
             public int Top { get; set; }
@@ -120,12 +147,32 @@ namespace AdventOfCode2018
             {
                 Claim claim = new Claim();
                 string[] parts = strClaim.Split(new string[] { " @ ", ",", ": ", "x", }, StringSplitOptions.None);
-                claim.ID = parts[0];
+                claim.ID = Convert.ToInt32(parts[0].Substring(1));
                 claim.Left = Convert.ToInt32(parts[1]);
                 claim.Top = Convert.ToInt32(parts[2]);
                 claim.Width = Convert.ToInt32(parts[3]);
                 claim.Height = Convert.ToInt32(parts[4]);
                 return claim;
+            }
+
+            public static bool Overlaps(Claim claim1, Claim claim2)
+            {
+                if (claim1.MinX <= claim2.MaxX &&
+                    claim2.MinX <= claim1.MaxX &&
+                    claim1.MinY <= claim2.MaxY &&
+                    claim2.MinY <= claim1.MaxY)
+                {
+                    int minX = Math.Max(claim1.MinX, claim2.MinX);
+                    int maxX = Math.Min(claim1.MaxX, claim2.MaxX);
+                    int minY = Math.Max(claim1.MinY, claim2.MinY);
+                    int maxY = Math.Min(claim1.MaxY, claim2.MaxY);
+                    int width = maxX - minX;
+                    int height = maxY - minY;
+                    if (width <= 0 || height <= 0) { return false; }
+                    return true;
+                }
+
+                return false;
             }
         }
     }
