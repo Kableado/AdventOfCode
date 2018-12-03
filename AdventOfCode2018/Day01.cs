@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventOfCode2018
+﻿namespace AdventOfCode2018
 {
     /*
      --- Day 1: Chronal Calibration ---
@@ -33,12 +31,28 @@ namespace AdventOfCode2018
     Starting with a frequency of zero, what is the resulting frequency after all of the changes in frequency have been applied?
     */
 
-
     public class Day01
     {
         public string ResolveDay01(string[] inputs)
         {
-            throw new NotImplementedException();
+            int accumulator = 0;
+            foreach (string input in inputs)
+            {
+                int intInput;
+                if (int.TryParse(input.Substring(1), out intInput))
+                {
+                    if (input[0] == '-')
+                    {
+                        accumulator -= intInput;
+                    }
+                    if (input[0] == '+')
+                    {
+                        accumulator += intInput;
+                    }
+                }
+            }
+
+            return accumulator.ToString();
         }
     }
 }
