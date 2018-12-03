@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace AdventOfCode2018
 {
@@ -85,7 +85,35 @@ namespace AdventOfCode2018
 
         public string ResolveDay01_Part2(string[] inputs)
         {
-            throw new NotImplementedException();
+            int accumulator = 0;
+            List<int> accumulatorHistory = new List<int>();
+            int? repeatedAccumulator = null;
+            while (repeatedAccumulator == null)
+            {
+                foreach (string input in inputs)
+                {
+                    accumulatorHistory.Add(accumulator);
+                    int intInput;
+                    if (int.TryParse(input.Substring(1), out intInput))
+                    {
+                        if (input[0] == '-')
+                        {
+                            accumulator -= intInput;
+                        }
+                        if (input[0] == '+')
+                        {
+                            accumulator += intInput;
+                        }
+
+                        if (accumulatorHistory.Contains(accumulator))
+                        {
+                            repeatedAccumulator = accumulator;
+                            break;
+                        }
+                    }
+                }
+            }
+            return repeatedAccumulator.ToString();
         }
     }
 }
