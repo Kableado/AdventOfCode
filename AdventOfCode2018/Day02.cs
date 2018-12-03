@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace AdventOfCode2018
 {
@@ -33,9 +34,39 @@ namespace AdventOfCode2018
 
     public class Day02
     {
+        private int CountOccurrencesOfLetter(string text, char letter)
+        {
+            return text.Count(c => (c == letter));
+        }
+
+        private Tuple<bool, bool> HasPairsAndTriplets(string text)
+        {
+            bool hasPair = false;
+            bool hasTriplet = false;
+            foreach (char c in text)
+            {
+                int count = CountOccurrencesOfLetter(text, c);
+                if (count == 2) { hasPair = true; }
+                if (count == 3) { hasTriplet = true; }
+                if (hasPair && hasTriplet) { break; }
+            }
+            return new Tuple<bool, bool>(hasPair, hasTriplet);
+        }
+
         public string ResolveDay02(string[] inputs)
         {
-            throw new NotImplementedException();
+            int pairsCount = 0;
+            int tripletsCount = 0;
+            foreach (string input in inputs)
+            {
+                var hasPairsAndTriplets = HasPairsAndTriplets(input);
+                if (hasPairsAndTriplets.Item1) { pairsCount++; }
+                if (hasPairsAndTriplets.Item2) { tripletsCount++; }
+            }
+
+            long result = pairsCount * tripletsCount;
+
+            return result.ToString();
         }
     }
 }
