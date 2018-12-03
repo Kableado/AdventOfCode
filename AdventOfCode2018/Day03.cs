@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode2018
 {
@@ -55,8 +57,78 @@ namespace AdventOfCode2018
     {
         public string ResolveDay03(string[] inputs)
         {
-            throw new NotImplementedException();
+            List<Claim> claims = inputs.Select(i => Claim.FromString(i)).ToList();
+
+            const int edgeSize = 1000;
+            int[,] cells = new int[edgeSize, edgeSize];
+
+            for (int j = 0; j < edgeSize; j++)
+            {
+                for (int i = 0; i < edgeSize; i++)
+                {
+                    cells[i, j] = 0;
+                }
+            }
+
+            foreach (Claim claim in claims)
+            {
+                for (int j = 0; j < claim.Height; j++)
+                {
+                    for (int i = 0; i < claim.Width; i++)
+                    {
+                        cells[claim.Left + i, claim.Top + j]++;
+                    }
+                }
+            }
+
+            int overlappedArea = 0;
+            for (int j = 0; j < edgeSize; j++)
+            {
+                for (int i = 0; i < edgeSize; i++)
+                {
+                    if (cells[i, j] > 1)
+                    {
+                        overlappedArea++;
+                    }
+                }
+            }
+            return overlappedArea.ToString();
         }
 
+        public class Claim
+        {
+            public string ID { get; set; }
+
+            public int Left { get; set; }
+            public int Top { get; set; }
+
+            public int Width { get; set; }
+            public int Height { get; set; }
+
+            public int MinX { get { return Left; } }
+            public int MaxX { get { return Left + Width; } }
+
+            public int MinY { get { return Top; } }
+            public int MaxY { get { return Top + Height; } }
+
+            public int GetArea()
+            {
+                return Width * Height;
+            }
+
+            public static Claim FromString(string strClaim)
+            {
+                Claim claim = new Claim();
+                string[] parts = strClaim.Split(new string[] { " @ ", ",", ": ", "x", }, StringSplitOptions.None);
+                claim.ID = parts[0];
+                claim.Left = Convert.ToInt32(parts[1]);
+                claim.Top = Convert.ToInt32(parts[2]);
+                claim.Width = Convert.ToInt32(parts[3]);
+                claim.Height = Convert.ToInt32(parts[4]);
+                return claim;
+            }
+        }
     }
+
+
 }
