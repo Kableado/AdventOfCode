@@ -13,6 +13,8 @@ namespace AdventOfCode2018
             string[] lines = File.ReadAllLines("inputs/Day01.txt");
             string result = day01.ResolveDay01(lines);
             Console.WriteLine("Day01 Result: {0}", result);
+            string resultPart2 = day01.ResolveDay01_Part2(lines);
+            Console.WriteLine("Day01_Part2 Result: {0}", resultPart2);
 
             Console.Read();
         }
