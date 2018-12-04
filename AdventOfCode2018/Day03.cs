@@ -55,7 +55,7 @@ namespace AdventOfCode2018
 
     public class Day03
     {
-        public string ResolveDay03(string[] inputs)
+        public string ResolvePart1(string[] inputs)
         {
             List<Claim> claims = inputs.Select(i => Claim.FromString(i)).ToList();
 
@@ -95,7 +95,7 @@ namespace AdventOfCode2018
             return overlappedArea.ToString();
         }
 
-        public string ResolveDay03_Part2(string[] inputs)
+        public string ResolvePart2(string[] inputs)
         {
             List<Claim> claims = inputs.Select(i => Claim.FromString(i)).ToList();
 

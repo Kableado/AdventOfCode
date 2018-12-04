@@ -6,11 +6,11 @@ namespace AdventOfCode2018.Tests
     public class Day03_Tests
     {
         [TestMethod()]
-        public void ResolveDay03__Test()
+        public void ResolvePart1__Test()
         {
             Day03 day03 = new Day03();
 
-            string result = day03.ResolveDay03(new string[] {
+            string result = day03.ResolvePart1(new string[] {
                 "#1 @ 1,3: 4x4",
                 "#2 @ 3,1: 4x4",
                 "#3 @ 5,5: 2x2",
@@ -20,11 +20,11 @@ namespace AdventOfCode2018.Tests
         }
 
         [TestMethod()]
-        public void ResolveDay03_Part2__Test()
+        public void ResolvePart2__Test()
         {
             Day03 day03 = new Day03();
 
-            string result = day03.ResolveDay03_Part2(new string[] {
+            string result = day03.ResolvePart2(new string[] {
                 "#1 @ 1,3: 4x4",
                 "#2 @ 3,1: 4x4",
                 "#3 @ 5,5: 2x2",

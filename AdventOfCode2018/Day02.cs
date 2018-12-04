@@ -72,7 +72,7 @@ namespace AdventOfCode2018
             return new Tuple<bool, bool>(hasPair, hasTriplet);
         }
 
-        public string ResolveDay02(string[] inputs)
+        public string ResolvePart1(string[] inputs)
         {
             int pairsCount = 0;
             int tripletsCount = 0;
@@ -101,7 +101,7 @@ namespace AdventOfCode2018
             return new Tuple<int, string>(diffCount, sb.ToString());
         }
 
-        public string ResolveDay02_Part2(string[] inputs)
+        public string ResolvePart2(string[] inputs)
         {
             for (int i = 0; i < (inputs.Length - 1); i++)
             {

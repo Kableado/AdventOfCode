@@ -61,7 +61,7 @@ namespace AdventOfCode2018
 
     public class Day01
     {
-        public string ResolveDay01(string[] inputs)
+        public string ResolvePart1(string[] inputs)
         {
             int accumulator = 0;
             foreach (string input in inputs)
@@ -83,7 +83,7 @@ namespace AdventOfCode2018
             return accumulator.ToString();
         }
 
-        public string ResolveDay01_Part2(string[] inputs)
+        public string ResolvePart2(string[] inputs)
         {
             int accumulator = 0;
             List<int> accumulatorHistory = new List<int>();
