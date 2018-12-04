@@ -61,6 +61,7 @@
     <Compile Include="Day02_Tests.cs" />
     <Compile Include="Day03_Tests.cs" />
     <Compile Include="Day04_Tests.cs" />
+    <Compile Include="GuardEvent_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
