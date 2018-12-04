@@ -7,7 +7,7 @@ namespace AdventOfCode2018
     {
         private static void Main(string[] args)
         {
-            int currentDay = 3;
+            int currentDay = 4;
 
             if (currentDay == 1)
             {
@@ -40,6 +40,17 @@ namespace AdventOfCode2018
                 Console.WriteLine("Day03 Result Part1: {0}", resultPart1);
                 string resultPart2 = day03.ResolvePart2(linesDay03);
                 Console.WriteLine("Day03 Result Part2: {0}", resultPart2);
+            }
+
+            if (currentDay == 4)
+            {
+                // Resolve Day04
+                Day04 day04 = new Day04();
+                string[] linesDay04 = File.ReadAllLines("inputs/Day04.txt");
+                string resultPart1 = day04.ResolvePart1(linesDay04);
+                Console.WriteLine("Day04 Result Part1: {0}", resultPart1);
+                string resultPart2 = day04.ResolvePart2(linesDay04);
+                Console.WriteLine("Day04 Result Part2: {0}", resultPart2);
             }
 
             Console.Read();
