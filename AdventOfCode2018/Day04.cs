@@ -58,6 +58,14 @@ namespace AdventOfCode2018
 
     What is the ID of the guard you chose multiplied by the minute you chose? (In the above example, the answer would be 10 * 24 = 240.)
 
+    --- Part Two ---
+
+    Strategy 2: Of all guards, which guard is most frequently asleep on the same minute?
+
+    In the example above, Guard #99 spent minute 45 asleep more than any other guard or minute - three times in total. (In all other cases, any guard spent any minute asleep at most twice.)
+
+    What is the ID of the guard you chose multiplied by the minute you chose? (In the above example, the answer would be 99 * 45 = 4455.)
+    
     */
     public class Day04
     {
@@ -98,7 +106,27 @@ namespace AdventOfCode2018
 
         public string ResolvePart2(string[] inputs)
         {
-            return null;
+            List<GuardEvent> guardEvents = GuardEvent.FromStringArray(inputs);
+            Dictionary<int, GuardSleepHistogram> dictFullHistogram = BuildFullHistorgram(guardEvents);
+
+            int selectedGuardID = int.MinValue;
+            int selectedMinute = int.MinValue;
+            int maxSleepMinuteValue = int.MinValue;
+            for (int i = 0; i < GuardSleepHistogram.MinutesOnHour; i++)
+            {
+                foreach (GuardSleepHistogram guardHistogram in dictFullHistogram.Values)
+                {
+                    if (guardHistogram.SleepOnMunute[i] > maxSleepMinuteValue)
+                    {
+                        maxSleepMinuteValue = guardHistogram.SleepOnMunute[i];
+                        selectedGuardID = guardHistogram.ID;
+                        selectedMinute = i;
+                    }
+                }
+            }
+
+            int result = selectedGuardID * selectedMinute;
+            return result.ToString();
         }
 
         private static Dictionary<int, GuardSleepHistogram> BuildFullHistorgram(List<GuardEvent> guardEvents)
