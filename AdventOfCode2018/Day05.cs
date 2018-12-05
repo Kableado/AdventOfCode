@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2018
+﻿using System.Text;
+
+namespace AdventOfCode2018
 {
     /*
     --- Day 5: Alchemical Reduction ---
@@ -31,9 +33,46 @@
 
     public class Day05
     {
+        public string ReducePolymer(string polymer)
+        {
+            if (polymer.Length <= 1) { return polymer; }
+            StringBuilder sb = new StringBuilder();
+
+            int i;
+            for (i = 1; i < polymer.Length; i++)
+            {
+                char previousCharacter = polymer[i - 1];
+                char character = polymer[i];
+                if (previousCharacter != character && char.ToLower(previousCharacter) == char.ToLower(character))
+                {
+                    i++;
+                }
+                else
+                {
+                    sb.Append(previousCharacter);
+                }
+            }
+            if (i == polymer.Length) { sb.Append(polymer[i - 1]); }
+
+            return sb.ToString();
+        }
+
+        public string FullyReducePolymer(string input)
+        {
+            string previousPolymer = null;
+            string polymer = input;
+            do
+            {
+                previousPolymer = polymer;
+                polymer = ReducePolymer(polymer);
+            } while (previousPolymer.Length > polymer.Length);
+            return polymer;
+        }
+
         public string ResolvePart1(string input)
         {
-            return null;
+            string reducedPolymer = FullyReducePolymer(input);
+            return reducedPolymer.Length.ToString();
         }
 
         public string ResolvePart2(string input)
