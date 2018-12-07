@@ -38,7 +38,7 @@ namespace AdventOfCode2018.Tests
             });
             int result = day06.AreaInThresold(points, 32);
 
-            Assert.AreEqual("16", result);
+            Assert.AreEqual(16, result);
         }
     }
 }

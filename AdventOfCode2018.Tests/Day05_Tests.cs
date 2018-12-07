@@ -10,7 +10,7 @@ namespace AdventOfCode2018.Tests
         {
             Day05 day05 = new Day05();
 
-            string result = day05.ResolvePart1("dabAcCaCBAcCcaDA");
+            string result = day05.ResolvePart1(new string[] { "dabAcCaCBAcCcaDA" });
 
             Assert.AreEqual("10", result);
         }
@@ -20,7 +20,7 @@ namespace AdventOfCode2018.Tests
         {
             Day05 day05 = new Day05();
 
-            string result = day05.ResolvePart2("dabAcCaCBAcCcaDA");
+            string result = day05.ResolvePart2(new string[] { "dabAcCaCBAcCcaDA" });
 
             Assert.AreEqual("4", result);
         }
