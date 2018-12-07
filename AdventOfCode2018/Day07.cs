@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2018
 {
@@ -50,14 +49,48 @@ namespace AdventOfCode2018
 
     In what order should the steps in your instructions be completed?
 
+    --- Part Two ---
+
+    As you're about to begin construction, four of the Elves offer to help. "The sun will set soon; it'll go faster if we work together." Now, you need to account for multiple people working on steps simultaneously. If multiple steps are available, workers should still begin them in alphabetical order.
+
+    Each step takes 60 seconds plus an amount corresponding to its letter: A=1, B=2, C=3, and so on. So, step A takes 60+1=61 seconds, while step Z takes 60+26=86 seconds. No time is required between steps.
+
+    To simplify things for the example, however, suppose you only have help from one Elf (a total of two workers) and that each step takes 60 fewer seconds (so that step A takes 1 second and step Z takes 26 seconds). Then, using the same instructions as above, this is how each second would be spent:
+
+    Second   Worker 1   Worker 2   Done
+       0        C          .        
+       1        C          .        
+       2        C          .        
+       3        A          F       C
+       4        B          F       CA
+       5        B          F       CA
+       6        D          F       CAB
+       7        D          F       CAB
+       8        D          F       CAB
+       9        D          .       CABF
+      10        E          .       CABFD
+      11        E          .       CABFD
+      12        E          .       CABFD
+      13        E          .       CABFD
+      14        E          .       CABFD
+      15        .          .       CABFDE
+
+    Each row represents one second of time. The Second column identifies how many seconds have passed as of the beginning of that second. Each worker column shows the step that worker is currently doing (or . if they are idle). The Done column shows completed steps.
+
+    Note that the order of the steps has changed; this is because steps now take time to finish and multiple workers can begin multiple steps simultaneously.
+
+    In this example, it would take 15 seconds for two workers to complete these steps.
+
+    With 5 workers and the 60+ second step durations described above, how long will it take to complete all of the steps?
+
     */
 
     public class Day07 : IDay
     {
-        public string ResolvePart1(string[] inputs)
+        private static Instructions BuildInstructions(string[] inputs, int baseCost)
         {
             Instructions instructions = new Instructions();
-            foreach(string input in inputs)
+            foreach (string input in inputs)
             {
                 if (string.IsNullOrEmpty(input)) { continue; }
                 string[] parts = input.Split(new string[] {
@@ -65,20 +98,38 @@ namespace AdventOfCode2018
                     " must be finished before step ",
                     " can begin.",
                 }, StringSplitOptions.RemoveEmptyEntries);
-                instructions.AddNodeRelation(parts[1], parts[0]);
+                instructions.AddNodeRelation(parts[1].ToUpper(), parts[0].ToUpper());
             }
+            foreach (InstructionNode node in instructions.Nodes.Values)
+            {
+                char nodeID = node.NodeID[0];
+                int nodeCost = baseCost + (nodeID - 'A') + 1;
+                node.Cost = nodeCost;
+            }
+
+            return instructions;
+        }
+
+        public string ResolvePart1(string[] inputs)
+        {
+            Instructions instructions = BuildInstructions(inputs, 0);
             List<InstructionNode> finalInstructions = instructions.SortInstructions();
             StringBuilder sbInstructions = new StringBuilder();
-            foreach(InstructionNode node in finalInstructions)
+            foreach (InstructionNode node in finalInstructions)
             {
                 sbInstructions.Append(node.NodeID);
             }
             return sbInstructions.ToString();
         }
 
+        public int BaseCost { get; set; } = 60;
+        public int NumberOfWorkers { get; set; } = 5;
+
         public string ResolvePart2(string[] inputs)
         {
-            return null;
+            Instructions instructions = BuildInstructions(inputs, BaseCost);
+            int totalElapsedTime = instructions.SimulateInstructionsUsage(NumberOfWorkers);
+            return totalElapsedTime.ToString();
         }
     }
 
@@ -87,6 +138,10 @@ namespace AdventOfCode2018
         public string NodeID { get; set; }
 
         public List<string> PreviousNodeIDs { get; } = new List<string>();
+
+        public int Cost { get; set; }
+
+        public bool Running { get; set; } = false;
 
         public bool Used { get; set; } = false;
 
@@ -128,7 +183,7 @@ namespace AdventOfCode2018
         {
             List<InstructionNode> finalNodes = new List<InstructionNode>();
 
-            foreach(InstructionNode node in Nodes.Values)
+            foreach (InstructionNode node in Nodes.Values)
             {
                 node.Used = false;
             }
@@ -137,7 +192,7 @@ namespace AdventOfCode2018
             do
             {
                 unusedNodes = Nodes.Values
-                    .Where(n => 
+                    .Where(n =>
                         n.Used == false &&
                         n.CanBeUsed(Nodes))
                     .OrderBy(n => n.NodeID)
@@ -150,6 +205,81 @@ namespace AdventOfCode2018
                 }
             } while (unusedNodes.Count > 0);
             return finalNodes;
+        }
+
+        private class SimulatedWorker
+        {
+            public InstructionNode CurrentInstruction { get; set; }
+            public int ElapsedTime { get; set; }
+
+            public void SetInstruction(InstructionNode instruction)
+            {
+                CurrentInstruction = instruction;
+                ElapsedTime = 0;
+                instruction.Running = true;
+            }
+
+            public bool Work()
+            {
+                if (CurrentInstruction == null) { return false; }
+                ElapsedTime++;
+                if (CurrentInstruction.Cost <= ElapsedTime)
+                {
+                    CurrentInstruction.Running = false;
+                    CurrentInstruction.Used = true;
+                    CurrentInstruction = null;
+                }
+                return true;
+            }
+        }
+
+        public int SimulateInstructionsUsage(int numberOfWorkers)
+        {
+            int totalElapsedTime = 0;
+            foreach (InstructionNode node in Nodes.Values)
+            {
+                node.Used = false;
+                node.Running = false;
+            }
+            List<SimulatedWorker> workers = new List<SimulatedWorker>(numberOfWorkers);
+            for (int i = 0; i < numberOfWorkers; i++)
+            {
+                workers.Add(new SimulatedWorker());
+            }
+
+            bool anyWorkerWitoutWork;
+            do
+            {
+                bool anyWorkDone = false;
+                foreach (SimulatedWorker worker in workers)
+                {
+                    if (worker.Work())
+                    {
+                        anyWorkDone = true;
+                    }
+                }
+                if (anyWorkDone) { totalElapsedTime++; }
+
+                anyWorkerWitoutWork = workers.Any(w => w.CurrentInstruction == null);
+                if (anyWorkerWitoutWork)
+                {
+                    List<InstructionNode> unusedNodes = Nodes.Values
+                        .Where(n =>
+                            n.Used == false && n.Running == false &&
+                            n.CanBeUsed(Nodes))
+                        .OrderBy(n => n.NodeID)
+                        .ToList();
+                    if (unusedNodes.Count > 0)
+                    {
+                        List<SimulatedWorker> workersWithoutWork = workers.Where(w => w.CurrentInstruction == null).ToList();
+                        for (int i = 0; i < workersWithoutWork.Count && i < unusedNodes.Count; i++)
+                        {
+                            workersWithoutWork[i].SetInstruction(unusedNodes[i]);
+                        }
+                    }
+                }
+            } while (workers.Any(w => w.CurrentInstruction != null));
+            return totalElapsedTime;
         }
     }
 }

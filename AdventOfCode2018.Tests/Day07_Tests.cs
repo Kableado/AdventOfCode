@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AdventOfCode2018;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2018.Tests
 {
@@ -27,6 +21,24 @@ namespace AdventOfCode2018.Tests
             });
 
             Assert.AreEqual("CABDFE", result);
+        }
+
+        [TestMethod()]
+        public void ResolvePart2__Test()
+        {
+            Day07 day07 = new Day07 { BaseCost = 0, NumberOfWorkers = 2 };
+
+            string result = day07.ResolvePart2(new string[] {
+                "Step C must be finished before step A can begin.",
+                "Step C must be finished before step F can begin.",
+                "Step A must be finished before step B can begin.",
+                "Step A must be finished before step D can begin.",
+                "Step B must be finished before step E can begin.",
+                "Step D must be finished before step E can begin.",
+                "Step F must be finished before step E can begin.",
+            });
+
+            Assert.AreEqual("15", result);
         }
     }
 }
