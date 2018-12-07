@@ -56,12 +56,100 @@ namespace AdventOfCode2018
     {
         public string ResolvePart1(string[] inputs)
         {
-            return null;
+            Instructions instructions = new Instructions();
+            foreach(string input in inputs)
+            {
+                if (string.IsNullOrEmpty(input)) { continue; }
+                string[] parts = input.Split(new string[] {
+                    "Step ",
+                    " must be finished before step ",
+                    " can begin.",
+                }, StringSplitOptions.RemoveEmptyEntries);
+                instructions.AddNodeRelation(parts[1], parts[0]);
+            }
+            List<InstructionNode> finalInstructions = instructions.SortInstructions();
+            StringBuilder sbInstructions = new StringBuilder();
+            foreach(InstructionNode node in finalInstructions)
+            {
+                sbInstructions.Append(node.NodeID);
+            }
+            return sbInstructions.ToString();
         }
 
         public string ResolvePart2(string[] inputs)
         {
             return null;
+        }
+    }
+
+    public class InstructionNode
+    {
+        public string NodeID { get; set; }
+
+        public List<string> PreviousNodeIDs { get; } = new List<string>();
+
+        public bool Used { get; set; } = false;
+
+        public bool CanBeUsed(Dictionary<string, InstructionNode> allNodes)
+        {
+            if (PreviousNodeIDs.Count == 0) { return true; }
+            bool allPreviousUsed = PreviousNodeIDs.All(nodeID => allNodes[nodeID].Used);
+            return allPreviousUsed;
+        }
+    }
+
+    public class Instructions
+    {
+        public Dictionary<string, InstructionNode> Nodes { get; } = new Dictionary<string, InstructionNode>();
+
+        public InstructionNode GetNode(string nodeID)
+        {
+            InstructionNode node = null;
+            if (Nodes.ContainsKey(nodeID))
+            {
+                node = Nodes[nodeID];
+            }
+            else
+            {
+                node = new InstructionNode { NodeID = nodeID, };
+                Nodes.Add(nodeID, node);
+            }
+            return node;
+        }
+
+        public void AddNodeRelation(string nodeID, string previousNodeID)
+        {
+            InstructionNode node = GetNode(nodeID);
+            InstructionNode previousNode = GetNode(previousNodeID);
+            node.PreviousNodeIDs.Add(previousNode.NodeID);
+        }
+
+        public List<InstructionNode> SortInstructions()
+        {
+            List<InstructionNode> finalNodes = new List<InstructionNode>();
+
+            foreach(InstructionNode node in Nodes.Values)
+            {
+                node.Used = false;
+            }
+
+            List<InstructionNode> unusedNodes = null;
+            do
+            {
+                unusedNodes = Nodes.Values
+                    .Where(n => 
+                        n.Used == false &&
+                        n.CanBeUsed(Nodes))
+                    .OrderBy(n => n.NodeID)
+                    .ToList();
+                if (unusedNodes.Count > 0)
+                {
+                    InstructionNode node = unusedNodes.FirstOrDefault();
+                    finalNodes.Add(node);
+                    node.Used = true;
+                }
+            } while (unusedNodes.Count > 0);
+            return finalNodes;
         }
     }
 }
