@@ -26,9 +26,9 @@ namespace AdventOfCode2018.Tests
         [TestMethod()]
         public void ResolvePart2__Test()
         {
-            Day06 day06 = new Day06();
+            Day06 day06 = new Day06 { DistanceThresold = 32, };
 
-            List<ChronoPoint> points = day06.InputsToPoints(new string[] {
+            string result = day06.ResolvePart2(new string[] {
                 "1, 1",
                 "1, 6",
                 "8, 3",
@@ -36,9 +36,8 @@ namespace AdventOfCode2018.Tests
                 "5, 5",
                 "8, 9",
             });
-            int result = day06.AreaInThresold(points, 32);
 
-            Assert.AreEqual(16, result);
+            Assert.AreEqual("16", result);
         }
     }
 }

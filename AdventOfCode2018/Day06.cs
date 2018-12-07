@@ -97,7 +97,7 @@ namespace AdventOfCode2018
 
     public class Day06 : IDay
     {
-        public List<ChronoPoint> InputsToPoints(string[] inputs)
+        private List<ChronoPoint> InputsToPoints(string[] inputs)
         {
             return inputs
                 .Where(input => string.IsNullOrEmpty(input) == false)
@@ -164,7 +164,7 @@ namespace AdventOfCode2018
             return maxArea.ToString();
         }
 
-        public int AreaInThresold(List<ChronoPoint> points, int distanceThresold)
+        private int AreaInThresold(List<ChronoPoint> points, int distanceThresold)
         {
             int minX = points.Min(p => p.X) - 1;
             int maxX = points.Max(p => p.X) + 1;
@@ -188,10 +188,12 @@ namespace AdventOfCode2018
             return areaInRange;
         }
 
+        public int DistanceThresold { get; set; } = 10000;
+
         public string ResolvePart2(string[] inputs)
         {
             List<ChronoPoint> points = InputsToPoints(inputs);
-            int areaInRange = AreaInThresold(points, 10000);
+            int areaInRange = AreaInThresold(points, DistanceThresold);
             return areaInRange.ToString();
         }
     }
