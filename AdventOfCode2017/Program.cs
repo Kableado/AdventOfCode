@@ -7,12 +7,13 @@ namespace AdventOfCode2017
     {
         private static void Main(string[] args)
         {
-            int currentDayNumber = 1;
+            int currentDayNumber = 2;
             IDay currentDay = null;
 
             switch (currentDayNumber)
             {
                 case 1: currentDay = new Day01(); break;
+                case 2: currentDay = new Day02(); break;
             }
 
             string[] linesDay = File.ReadAllLines(string.Format("inputs/Day{0:00}.txt", currentDayNumber));
