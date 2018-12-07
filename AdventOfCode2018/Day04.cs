@@ -67,7 +67,7 @@ namespace AdventOfCode2018
     What is the ID of the guard you chose multiplied by the minute you chose? (In the above example, the answer would be 99 * 45 = 4455.)
     
     */
-    public class Day04
+    public class Day04 : IDay
     {
         public string ResolvePart1(string[] inputs)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2018.Tests
 {
@@ -27,14 +28,15 @@ namespace AdventOfCode2018.Tests
         {
             Day06 day06 = new Day06();
 
-            string result = day06.ResolvePart2(new string[] {
+            List<ChronoPoint> points = day06.InputsToPoints(new string[] {
                 "1, 1",
                 "1, 6",
                 "8, 3",
                 "3, 4",
                 "5, 5",
                 "8, 9",
-            }, 32);
+            });
+            int result = day06.AreaInThresold(points, 32);
 
             Assert.AreEqual("16", result);
         }

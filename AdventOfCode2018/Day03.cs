@@ -61,7 +61,7 @@ namespace AdventOfCode2018
 
     */
 
-    public class Day03
+    public class Day03 : IDay
     {
         public string ResolvePart1(string[] inputs)
         {

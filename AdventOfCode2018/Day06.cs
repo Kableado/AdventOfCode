@@ -95,14 +95,19 @@ namespace AdventOfCode2018
 
     */
 
-    public class Day06
+    public class Day06 : IDay
     {
-        public string ResolvePart1(string[] inputs)
+        public List<ChronoPoint> InputsToPoints(string[] inputs)
         {
-            List<ChronoPoint> points = inputs
+            return inputs
                 .Where(input => string.IsNullOrEmpty(input) == false)
                 .Select(input => ChronoPoint.FromString(input))
                 .ToList();
+        }
+
+        public string ResolvePart1(string[] inputs)
+        {
+            List<ChronoPoint> points = InputsToPoints(inputs);
             Dictionary<int, int> pointsAreas = new Dictionary<int, int>();
             for (int i = 0; i < points.Count; i++)
             {
@@ -159,13 +164,8 @@ namespace AdventOfCode2018
             return maxArea.ToString();
         }
 
-        public string ResolvePart2(string[] inputs, int distanceThresold)
+        public int AreaInThresold(List<ChronoPoint> points, int distanceThresold)
         {
-            List<ChronoPoint> points = inputs
-                .Where(input => string.IsNullOrEmpty(input) == false)
-                .Select(input => ChronoPoint.FromString(input))
-                .ToList();
-
             int minX = points.Min(p => p.X) - 1;
             int maxX = points.Max(p => p.X) + 1;
             int minY = points.Min(p => p.Y) - 1;
@@ -184,7 +184,14 @@ namespace AdventOfCode2018
                     if (distanceSum < distanceThresold) { areaInRange++; }
                 }
             }
-            
+
+            return areaInRange;
+        }
+
+        public string ResolvePart2(string[] inputs)
+        {
+            List<ChronoPoint> points = InputsToPoints(inputs);
+            int areaInRange = AreaInThresold(points, 10000);
             return areaInRange.ToString();
         }
     }

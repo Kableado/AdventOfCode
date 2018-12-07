@@ -50,7 +50,7 @@ namespace AdventOfCode2018
 
     */
 
-    public class Day05
+    public class Day05 : IDay
     {
         public string ReducePolymer(string polymer)
         {
@@ -88,9 +88,9 @@ namespace AdventOfCode2018
             return polymer;
         }
 
-        public string ResolvePart1(string input)
+        public string ResolvePart1(string[] inputs)
         {
-            string reducedPolymer = FullyReducePolymer(input);
+            string reducedPolymer = FullyReducePolymer(inputs[0]);
             return reducedPolymer.Length.ToString();
         }
 
@@ -108,8 +108,9 @@ namespace AdventOfCode2018
             return sb.ToString();
         }
 
-        public string ResolvePart2(string input)
+        public string ResolvePart2(string[] inputs)
         {
+            string input = inputs[0];
             List<char> allUnitTypes = input.Select(c => char.ToLower(c)).Distinct().ToList();
 
             int minPolymerLenght = int.MaxValue;

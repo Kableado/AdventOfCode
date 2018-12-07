@@ -51,7 +51,7 @@ namespace AdventOfCode2018
 
     */
 
-    public class Day02
+    public class Day02 : IDay
     {
         private int CountOccurrencesOfLetter(string text, char letter)
         {
