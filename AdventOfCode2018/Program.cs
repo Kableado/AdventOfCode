@@ -71,7 +71,7 @@ namespace AdventOfCode2018
                 string[] linesDay06 = File.ReadAllLines("inputs/Day06.txt");
                 string resultPart1 = day06.ResolvePart1(linesDay06);
                 Console.WriteLine("Day06 Result Part1: {0}", resultPart1);
-                string resultPart2 = day06.ResolvePart2(linesDay06);
+                string resultPart2 = day06.ResolvePart2(linesDay06, 10000);
                 Console.WriteLine("Day06 Result Part2: {0}", resultPart2);
             }
 
