@@ -1,16 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AdventOfCode2017;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2017.Tests
 {
     [TestClass()]
     public class Day01_Tests
     {
+        #region ResolvePart1
+
         [TestMethod()]
         public void ResolvePart1__Test1()
         {
@@ -50,5 +46,61 @@ namespace AdventOfCode2017.Tests
 
             Assert.AreEqual("9", result);
         }
+
+        #endregion ResolvePart1
+
+        #region ResolvePart2
+        
+        [TestMethod()]
+        public void ResolvePart2__Test1()
+        {
+            Day01 day01 = new Day01();
+
+            string result = day01.ResolvePart2(new string[] { "1212", });
+
+            Assert.AreEqual("6", result);
+        }
+
+        [TestMethod()]
+        public void ResolvePart2__Test2()
+        {
+            Day01 day01 = new Day01();
+
+            string result = day01.ResolvePart2(new string[] { "1221", });
+
+            Assert.AreEqual("0", result);
+        }
+
+        [TestMethod()]
+        public void ResolvePart2__Test3()
+        {
+            Day01 day01 = new Day01();
+
+            string result = day01.ResolvePart2(new string[] { "123425", });
+
+            Assert.AreEqual("4", result);
+        }
+
+        [TestMethod()]
+        public void ResolvePart2__Test4()
+        {
+            Day01 day01 = new Day01();
+
+            string result = day01.ResolvePart2(new string[] { "123123", });
+
+            Assert.AreEqual("12", result);
+        }
+
+        [TestMethod()]
+        public void ResolvePart2__Test5()
+        {
+            Day01 day01 = new Day01();
+
+            string result = day01.ResolvePart2(new string[] { "12131415", });
+
+            Assert.AreEqual("4", result);
+        }
+
+        #endregion ResolvePart2
     }
 }
