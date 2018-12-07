@@ -37,7 +37,17 @@ namespace AdventOfCode2017
     {
         public string ResolvePart1(string[] inputs)
         {
-            return null;
+            string input = inputs[0];
+            int value = 0;
+            for(int i = 0; i < input.Length; i++)
+            {
+                int nextI = (i + 1) % input.Length;
+                if(input[i] == input[nextI])
+                {
+                    value += (input[i] - '0');
+                }
+            }
+            return value.ToString();
         }
 
         public string ResolvePart2(string[] inputs)
