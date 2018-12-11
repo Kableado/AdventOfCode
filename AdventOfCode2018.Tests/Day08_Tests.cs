@@ -14,5 +14,15 @@ namespace AdventOfCode2018.Tests
 
             Assert.AreEqual("138", result);
         }
+
+        [TestMethod()]
+        public void ResolvePart2__Test()
+        {
+            Day08 day = new Day08();
+
+            string result = day.ResolvePart2(new string[] { "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2", });
+
+            Assert.AreEqual("66", result);
+        }
     }
 }
