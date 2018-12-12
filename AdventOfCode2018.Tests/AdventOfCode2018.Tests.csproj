@@ -68,6 +68,7 @@
     <Compile Include="Day07_Tests.cs" />
     <Compile Include="Day08_Tests.cs" />
     <Compile Include="Day09_Tests.cs" />
+    <Compile Include="Day10_Tests.cs" />
     <Compile Include="GuardEvent_Tests.cs" />
     <Compile Include="MarbleGame_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
