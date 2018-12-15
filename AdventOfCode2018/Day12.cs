@@ -73,44 +73,29 @@ namespace AdventOfCode2018
 
     After 20 generations, what is the sum of the numbers of all pots which contain a plant?
 
-    */
+    --- Part Two ---
 
+    You realize that 20 generations aren't enough. After all, these plants will need to last another 1500 years to even reach your timeline, not to mention your future.
+
+    After fifty billion (50000000000) generations, what is the sum of the numbers of all pots which contain a plant?
+
+    */
 
     public class Day12 : IDay
     {
         public string ResolvePart1(string[] inputs)
         {
             Initialize(inputs);
-            int maxGenerations = 20;
-            bool[] field = GenerateInitialField(maxGenerations, _initialState, true);
-            bool[] nextField = GenerateInitialField(maxGenerations, _initialState, false);
-            for (int i = 0; i < maxGenerations; i++)
-            {
-                Console.Write("{0:000}: ", i);
-                ShowField(field);
-                SimulateGeneration(_rules, field, nextField);
-                bool[] aux = field;
-                field = nextField;
-                nextField = aux;
-            }
-            Console.Write("{0:000}: ", maxGenerations);
-            ShowField(field);
-
-            int sum = 0;
-            int offset = 2 + maxGenerations;
-            for (int i = 0; i < field.Length; i++)
-            {
-                if (field[i])
-                {
-                    sum += (i - offset);
-                }
-            }
-            return sum.ToString();
+            Simulate(20, true);
+            return CalculateChecksum().ToString();
         }
 
         public string ResolvePart2(string[] inputs)
         {
-            return null;
+            Initialize(inputs);
+            Simulate(500, false);
+            _offsetField -= (50000000000L - 500);
+            return CalculateChecksum().ToString();
         }
 
         private class PlantRule
@@ -124,8 +109,14 @@ namespace AdventOfCode2018
             public bool Result { get; set; }
         }
 
+        private const int SideMargin = 5;
+        private const int SideProcessMargin = 2;
+
         private List<bool> _initialState = new List<bool>();
         private List<PlantRule> _rules = new List<PlantRule>();
+        private long _offsetField = 0;
+        private bool[] _field;
+        private bool[] _workField;
 
         private void Initialize(string[] inputs)
         {
@@ -151,26 +142,89 @@ namespace AdventOfCode2018
                     Result = (parts[1][0] == '#'),
                 });
             }
+
+            int maxSize = (SideMargin * 2) + _initialState.Count;
+            _offsetField = SideMargin;
+            _field = new bool[maxSize];
+            _workField = new bool[maxSize];
+            for (int i = 0; i < _initialState.Count; i++)
+            {
+                _field[i + _offsetField] = _initialState[i];
+            }
         }
 
-        private static bool[] GenerateInitialField(int maxGenerations, List<bool> initialState, bool initialize)
+        private void SwapFields()
         {
-            int maxSize = (2 + maxGenerations) * 2 + initialState.Count;
-            bool[] field = new bool[maxSize];
-            if (initialize)
+            bool[] aux = _field;
+            _field = _workField;
+            _workField = aux;
+        }
+
+        private void RecenterField()
+        {
+            long leftSpace = 0;
+            long rightSpace = 0;
+            for (long i = 0; i < _field.Length; i++)
             {
-                int offset = 2 + maxGenerations;
-                for (int i = 0; i < initialState.Count; i++)
-                {
-                    field[i + offset] = initialState[i];
-                }
+                if (_field[i]) { break; }
+                leftSpace++;
             }
-            return field;
+            for (long i = _field.Length - 1; i >= 0; i--)
+            {
+                if (_field[i]) { break; }
+                rightSpace++;
+            }
+            if (leftSpace == SideMargin && rightSpace == SideMargin) { return; }
+
+            long oldSize = _field.Length;
+            long newSize = oldSize + (SideMargin - leftSpace) + (SideMargin - rightSpace);
+            long diffOffset = SideMargin - leftSpace;
+            if (oldSize == newSize && diffOffset != 0)
+            {
+                if (diffOffset > 0)
+                {
+                    for (long i = 0; i < diffOffset; i++) { _workField[i] = false; }
+                }
+                else
+                {
+                    for (long i = 0; i < Math.Abs(diffOffset); i++) { _workField[(_workField.Length - 1) - i] = false; }
+                }
+                for (long i = 0; i < newSize; i++)
+                {
+                    long i2 = i - diffOffset;
+                    if (i2 < 0 || i2 >= oldSize) { continue; }
+                    _workField[i] = _field[i2];
+                }
+                SwapFields();
+            }
+            else
+            {
+                bool[] tempField = new bool[newSize];
+                for (long i = 0; i < newSize; i++)
+                {
+                    long i2 = i - diffOffset;
+                    if (i2 < 0 || i2 >= oldSize) { continue; }
+                    tempField[i] = _field[i2];
+                }
+                _field = tempField;
+                _workField = new bool[newSize];
+            }
+            _offsetField += diffOffset;
+        }
+
+        private void ShowField(long nGeneration)
+        {
+            Console.Write("({0:000}) [{1}]: ", nGeneration, _offsetField);
+            foreach (bool plant in _field)
+            {
+                Console.Write(plant ? "#" : ".");
+            }
+            Console.WriteLine();
         }
 
         private static void SimulateGeneration(List<PlantRule> rules, bool[] field, bool[] finalField)
         {
-            for (int i = 2; i < (field.Length - 2); i++)
+            for (long i = SideProcessMargin; i < (field.Length - SideProcessMargin); i++)
             {
                 bool minus2 = field[i - 2];
                 bool minus1 = field[i - 1];
@@ -198,13 +252,32 @@ namespace AdventOfCode2018
             }
         }
 
-        private static void ShowField(bool[] field)
+        private void Simulate(long nGenerations, bool showEvolution = false)
         {
-            foreach (bool plant in field)
+            for (int i = 0; i < nGenerations; i++)
             {
-                Console.Write(plant ? "#" : ".");
+                RecenterField();
+                if (showEvolution)
+                {
+                    ShowField(i);
+                }
+                SimulateGeneration(_rules, _field, _workField);
+                SwapFields();
             }
-            Console.WriteLine();
+            ShowField(nGenerations);
+        }
+
+        private long CalculateChecksum()
+        {
+            long sum = 0;
+            for (long i = 0; i < _field.Length; i++)
+            {
+                if (_field[i])
+                {
+                    sum += (i - _offsetField);
+                }
+            }
+            return sum;
         }
     }
 }
