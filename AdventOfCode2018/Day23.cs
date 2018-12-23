@@ -49,16 +49,32 @@ namespace AdventOfCode2018
 
     Find the nanobot with the largest signal radius. How many nanobots are in range of its signals?
 
+    --- Part Two ---
+
+    Now, you just need to figure out where to position yourself so that you're actually teleported when the nanobots activate.
+
+    To increase the probability of success, you need to find the coordinate which puts you in range of the largest number of nanobots. If there are multiple, choose one closest to your position (0,0,0, measured by manhattan distance).
+
+    For example, given the following nanobot formation:
+
+    pos=<10,12,12>, r=2
+    pos=<12,14,12>, r=2
+    pos=<16,12,12>, r=4
+    pos=<14,14,14>, r=6
+    pos=<50,50,50>, r=200
+    pos=<10,10,10>, r=5
+
+    Many coordinates are in range of some of the nanobots in this formation. However, only the coordinate 12,12,12 is in range of the most nanobots: it is in range of the first five, but is not in range of the nanobot at 10,10,10. (All other coordinates are in range of fewer than five nanobots.) This coordinate's distance from 0,0,0 is 36.
+
+    Find the coordinates that are in range of the largest number of nanobots. What is the shortest manhattan distance between any of those points and 0,0,0?
+
     */
 
     public class Day23 : IDay
     {
         public string ResolvePart1(string[] inputs)
         {
-            List<NanoBot> nanoBots = inputs
-                .Select(strInput => NanoBot.FromString(strInput))
-                .Where(nanoBot => nanoBot != null)
-                .ToList();
+            List<NanoBot> nanoBots = NanoBot.ListFromStrings(inputs);
             NanoBot bestNanoBot = nanoBots.OrderBy(nanoBot => nanoBot.Range).LastOrDefault();
             int countInRange = nanoBots.Where(nanoBot => bestNanoBot.InRange(nanoBot)).Count();
             return countInRange.ToString();
@@ -66,7 +82,72 @@ namespace AdventOfCode2018
 
         public string ResolvePart2(string[] inputs)
         {
-            return null;
+            List<NanoBot> nanoBots = NanoBot.ListFromStrings(inputs);
+            long maxX = long.MinValue;
+            long maxY = long.MinValue;
+            long maxZ = long.MinValue;
+            long minX = long.MaxValue;
+            long minY = long.MaxValue;
+            long minZ = long.MaxValue;
+            foreach(NanoBot nanoBot in nanoBots)
+            {
+                if (nanoBot.X < minX) { minX = nanoBot.X; }
+                if (nanoBot.X > maxX) { maxX = nanoBot.X; }
+                if (nanoBot.Y < minY) { minY = nanoBot.Y; }
+                if (nanoBot.Y > maxY) { maxY = nanoBot.Y; }
+                if (nanoBot.Z < minZ) { minZ = nanoBot.Z; }
+                if (nanoBot.Z > maxZ) { maxZ = nanoBot.Z; }
+            }
+            long sizeX = maxX - minX;
+            long sizeY = maxY - minY;
+            long sizeZ = maxZ - minZ;
+            long scale = Math.Min(sizeX, Math.Min(sizeY, sizeZ));
+            
+            do
+            {
+                scale /= 2;
+                if (scale <= 0) { scale = 1; }
+
+                long bestX = 0;
+                long bestY = 0;
+                long bestZ = 0;
+                long bestCount = 0;
+                for (long k = minZ; k <= maxZ; k += scale)
+                {
+                    for (long j = minY; j <= maxY; j += scale)
+                    {
+                        for (long i = minX; i <= maxX; i += scale)
+                        {
+                            int count = 0;
+                            foreach(NanoBot nanoBot in nanoBots)
+                            {
+                                if (nanoBot.InRange(i, j, k, scale)) { count++; }
+                            }
+                            if(count> bestCount)
+                            {
+                                bestX = i;
+                                bestY = j;
+                                bestZ = k;
+                                bestCount = count;
+                            }
+                        }
+                    }
+                }
+
+                minX = bestX - scale;
+                maxX = bestX + scale;
+                minY = bestY - scale;
+                maxY = bestY + scale;
+                minZ = bestZ - scale;
+                maxZ = bestZ + scale;
+
+                if(scale == 1)
+                {
+                    long distance = bestX + bestY + bestZ;
+                    return distance.ToString();
+                }
+
+            } while (true);
         }
 
         public class NanoBot
@@ -90,9 +171,23 @@ namespace AdventOfCode2018
                 return nanoBot;
             }
 
+            public static List<NanoBot> ListFromStrings(string[] inputs)
+            {
+                List<NanoBot> nanoBots = inputs
+                    .Select(strInput => FromString(strInput))
+                    .Where(nanoBot => nanoBot != null)
+                    .ToList();
+                return nanoBots;
+            }
+
             public long ManhattanDistance(NanoBot other)
             {
-                long distance = Math.Abs(X - other.X) + Math.Abs(Y - other.Y) + Math.Abs(Z - other.Z);
+                return ManhattanDistance(other.X, other.Y, other.Z);
+            }
+
+            public long ManhattanDistance(long x, long y, long z)
+            {
+                long distance = Math.Abs(X - x) + Math.Abs(Y - y) + Math.Abs(Z - z);
                 return distance;
             }
 
@@ -100,6 +195,13 @@ namespace AdventOfCode2018
             {
                 long distance = ManhattanDistance(other);
                 return distance <= Range;
+            }
+
+            public bool InRange(long x, long y, long z, long scale)
+            {
+                long distance = (long)Math.Ceiling(ManhattanDistance(x, y, z) / (double)scale);
+                long range = (long)Math.Ceiling(Range / (double)scale);
+                return distance <= range;
             }
         }
     }
