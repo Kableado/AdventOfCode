@@ -7,7 +7,7 @@ namespace AdventOfCode2018
     {
         private static void Main(string[] args)
         {
-            int currentDayNumber = 13;
+            int currentDayNumber = 23;
             IDay currentDay = null;
 
             switch (currentDayNumber)
@@ -25,6 +25,7 @@ namespace AdventOfCode2018
                 case 11: currentDay = new Day11(); break;
                 case 12: currentDay = new Day12(); break;
                 case 13: currentDay = new Day13(); break;
+                case 23: currentDay = new Day23(); break;
             }
 
             string[] linesDay = File.ReadAllLines(string.Format("inputs/Day{0:00}.txt", currentDayNumber));
