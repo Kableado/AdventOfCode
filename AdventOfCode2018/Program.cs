@@ -7,7 +7,7 @@ namespace AdventOfCode2018
     {
         private static void Main(string[] args)
         {
-            int currentDayNumber = 14;
+            int currentDayNumber = 15;
             IDay currentDay = null;
 
             switch (currentDayNumber)
@@ -26,6 +26,7 @@ namespace AdventOfCode2018
                 case 12: currentDay = new Day12(); break;
                 case 13: currentDay = new Day13(); break;
                 case 14: currentDay = new Day14(); break;
+                case 15: currentDay = new Day15(); break;
                 case 23: currentDay = new Day23(); break;
             }
 

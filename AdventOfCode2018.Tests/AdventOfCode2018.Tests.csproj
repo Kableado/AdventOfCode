@@ -73,6 +73,7 @@
     <Compile Include="Day12_Tests.cs" />
     <Compile Include="Day13_Tests.cs" />
     <Compile Include="Day14_Tests.cs" />
+    <Compile Include="Day15_Tests.cs" />
     <Compile Include="Day23_Tests.cs" />
     <Compile Include="GuardEvent_Tests.cs" />
     <Compile Include="MarbleGame_Tests.cs" />
