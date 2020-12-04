@@ -10,9 +10,9 @@ namespace AdventOfCode2020.Tests
         [TestMethod()]
         public void ResolvePart1__Example()
         {
-            Day01 day01 = new Day01();
+            var day = new Day01();
 
-            string result = day01.ResolvePart1(new string[] {
+            string result = day.ResolvePart1(new string[] {
                 "1721",
                 "979",
                 "366",
@@ -31,9 +31,9 @@ namespace AdventOfCode2020.Tests
         [TestMethod()]
         public void ResolvePart2__Example()
         {
-            Day01 day01 = new Day01();
+            var day = new Day01();
 
-            string result = day01.ResolvePart2(new string[] {
+            string result = day.ResolvePart2(new string[] {
                 "1721",
                 "979",
                 "366",

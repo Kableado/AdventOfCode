@@ -1,5 +1,4 @@
-﻿using AdventOfCode2020;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2020.Tests
 {
@@ -9,9 +8,9 @@ namespace AdventOfCode2020.Tests
         [TestMethod()]
         public void ResolvePart1__Example()
         {
-            IDay day03 = new Day03();
+            var day = new Day03();
 
-            string result = day03.ResolvePart1(new string[] {
+            string result = day.ResolvePart1(new string[] {
                 "..##.......",
                 "#...#...#..",
                 ".#....#..#.",
@@ -31,9 +30,9 @@ namespace AdventOfCode2020.Tests
         [TestMethod()]
         public void ResolvePart2__Example()
         {
-            IDay day03 = new Day03();
+            var day = new Day03();
 
-            string result = day03.ResolvePart2(new string[] {
+            string result = day.ResolvePart2(new string[] {
                 "..##.......",
                 "#...#...#..",
                 ".#....#..#.",

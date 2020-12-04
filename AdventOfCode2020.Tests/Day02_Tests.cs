@@ -10,9 +10,9 @@ namespace AdventOfCode2020.Tests
         [TestMethod()]
         public void ResolvePart1__Example()
         {
-            IDay day02 = new Day02();
+            var day = new Day02();
 
-            string result = day02.ResolvePart1(new string[] {
+            string result = day.ResolvePart1(new string[] {
                 "1-3 a: abcde",
                 "1-3 b: cdefg",
                 "2-9 c: ccccccccc",
@@ -28,9 +28,9 @@ namespace AdventOfCode2020.Tests
         [TestMethod()]
         public void ResolvePart2__Example()
         {
-            IDay day02 = new Day02();
+            var day = new Day02();
 
-            string result = day02.ResolvePart2(new string[] {
+            string result = day.ResolvePart2(new string[] {
                 "1-3 a: abcde",
                 "1-3 b: cdefg",
                 "2-9 c: ccccccccc",
