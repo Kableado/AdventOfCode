@@ -7,19 +7,38 @@ namespace AdventOfCode2020
     {
         static void Main(string[] args)
         {
-            int currentDayNumber = 3;
-            IDay currentDay = null;
+            int currentDayNumber = 0;
 
-            switch (currentDayNumber)
+            DateTime date = DateTime.UtcNow.AddHours(-5);
+            if (date.Month == 12 && currentDayNumber == 0)
             {
-                case 1: currentDay = new Day01(); break;
-                case 2: currentDay = new Day02(); break;
-                case 3: currentDay = new Day03(); break;
+                currentDayNumber = date.Day;
             }
 
+            RunDay(currentDayNumber);
+
+            Console.Read();
+        }
+
+        public static void RunDay(int currentDayNumber)
+        {
             Console.WriteLine(string.Format("Day {0:00}", currentDayNumber));
             Console.WriteLine("------");
             Console.WriteLine();
+
+            IDay currentDay = null;
+            Type dayType = Type.GetType(string.Format("AdventOfCode2020.Day{0:00}", currentDayNumber));
+            if (dayType != null)
+            {
+                currentDay = Activator.CreateInstance(dayType) as IDay;
+            }
+            if (currentDay == null)
+            {
+                Console.WriteLine("!!!!!!!");
+                Console.WriteLine("Day implementation not found.");
+                return;
+            }
+
             string[] linesDay = File.ReadAllLines(string.Format("inputs/Day{0:00}.txt", currentDayNumber));
             try
             {
@@ -38,11 +57,10 @@ namespace AdventOfCode2020
             }
             catch (Exception ex)
             {
+                Console.WriteLine("!!!!!!!");
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
             }
-
-            Console.Read();
         }
     }
 }
