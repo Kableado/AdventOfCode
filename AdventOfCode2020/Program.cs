@@ -7,13 +7,14 @@ namespace AdventOfCode2020
     {
         static void Main(string[] args)
         {
-            int currentDayNumber = 2;
+            int currentDayNumber = 3;
             IDay currentDay = null;
 
             switch (currentDayNumber)
             {
                 case 1: currentDay = new Day01(); break;
                 case 2: currentDay = new Day02(); break;
+                case 3: currentDay = new Day03(); break;
             }
 
             Console.WriteLine(string.Format("Day {0:00}", currentDayNumber));
