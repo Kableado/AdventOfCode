@@ -2,10 +2,10 @@
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day12_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test()
         {
             Day12 day = new Day12();

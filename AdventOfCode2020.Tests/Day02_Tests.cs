@@ -2,12 +2,12 @@
 
 namespace AdventOfCode2020.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day02_Tests
     {
         #region ResolvePart1
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Example()
         {
             var day = new Day02();
@@ -25,7 +25,7 @@ namespace AdventOfCode2020.Tests
 
         #region ResolvePart2
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Example()
         {
             var day = new Day02();

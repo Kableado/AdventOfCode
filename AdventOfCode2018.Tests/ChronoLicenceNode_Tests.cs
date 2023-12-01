@@ -2,10 +2,10 @@
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ChronoLicenceNode_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void BuildFromIntStream__Test()
         {
             Day08 day = new Day08();

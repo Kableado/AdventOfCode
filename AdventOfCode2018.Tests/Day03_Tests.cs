@@ -2,10 +2,10 @@
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day03_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test()
         {
             Day03 day03 = new Day03();
@@ -19,7 +19,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("4", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test()
         {
             Day03 day03 = new Day03();

@@ -2,10 +2,10 @@
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day05_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test()
         {
             Day05 day05 = new Day05();
@@ -15,7 +15,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("10", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test()
         {
             Day05 day05 = new Day05();
@@ -27,7 +27,7 @@ namespace AdventOfCode2018.Tests
 
         #region ReducePolymer
 
-        [TestMethod()]
+        [TestMethod]
         public void ReducePolymer__Remove_cC()
         {
             Day05 day05 = new Day05();
@@ -37,7 +37,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("dabAaCBA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReducePolymer__Remove_cC_AtEnd()
         {
             Day05 day05 = new Day05();
@@ -47,7 +47,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("dabA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReducePolymer__Remove_Only_cC()
         {
             Day05 day05 = new Day05();
@@ -57,7 +57,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReducePolymer__Remove_cC_AtStart()
         {
             Day05 day05 = new Day05();
@@ -67,7 +67,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("AAAA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReducePolymer__Remove_Aa()
         {
             Day05 day05 = new Day05();
@@ -77,7 +77,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("dabCBA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReducePolymer__Remove_cCc()
         {
             Day05 day05 = new Day05();
@@ -87,7 +87,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("dabCBAcaDA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReducePolymer__Irreductible()
         {
             Day05 day05 = new Day05();
@@ -101,7 +101,7 @@ namespace AdventOfCode2018.Tests
 
         #region FullyReducePolymer
 
-        [TestMethod()]
+        [TestMethod]
         public void FullyReducePolymer__Test()
         {
             Day05 day05 = new Day05();
@@ -115,7 +115,7 @@ namespace AdventOfCode2018.Tests
 
         #region RemoveUnitTypeFromPolymer
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveUnitTypeFromPolymer__Remove_a()
         {
             Day05 day05 = new Day05();
@@ -125,7 +125,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("dbcCCBcCcD", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveUnitTypeFromPolymer__Remove_b()
         {
             Day05 day05 = new Day05();
@@ -135,7 +135,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("daAcCaCAcCcaDA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveUnitTypeFromPolymer__Remove_c()
         {
             Day05 day05 = new Day05();
@@ -145,7 +145,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("dabAaBAaDA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveUnitTypeFromPolymer__Remove_d()
         {
             Day05 day05 = new Day05();
@@ -155,7 +155,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("abAcCaCBAcCcaA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveUnitTypeFromPolymer__Remove_A()
         {
             Day05 day05 = new Day05();
@@ -165,7 +165,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("dbcCCBcCcD", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveUnitTypeFromPolymer__Remove_B()
         {
             Day05 day05 = new Day05();
@@ -175,7 +175,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("daAcCaCAcCcaDA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveUnitTypeFromPolymer__Remove_C()
         {
             Day05 day05 = new Day05();
@@ -185,7 +185,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("dabAaBAaDA", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveUnitTypeFromPolymer__Remove_D()
         {
             Day05 day05 = new Day05();

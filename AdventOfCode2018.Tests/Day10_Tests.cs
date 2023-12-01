@@ -1,11 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day10_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test()
         {
             Day10 day = new Day10 { Width = 12, Height = 10 };
@@ -45,19 +46,19 @@ namespace AdventOfCode2018.Tests
             });
 
             Assert.AreEqual(
-                "\r\n............" +
-                "\r\n.#...#..###." +
-                "\r\n.#...#...#.." +
-                "\r\n.#...#...#.." +
-                "\r\n.#####...#.." +
-                "\r\n.#...#...#.." +
-                "\r\n.#...#...#.." +
-                "\r\n.#...#...#.." +
-                "\r\n.#...#..###." +
-                "\r\n............", result);
+                Environment.NewLine + "............" +
+                Environment.NewLine + ".#...#..###." +
+                Environment.NewLine + ".#...#...#.." +
+                Environment.NewLine + ".#...#...#.." +
+                Environment.NewLine + ".#####...#.." +
+                Environment.NewLine + ".#...#...#.." +
+                Environment.NewLine + ".#...#...#.." +
+                Environment.NewLine + ".#...#...#.." +
+                Environment.NewLine + ".#...#..###." +
+                Environment.NewLine + "............", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test()
         {
             Day10 day = new Day10();

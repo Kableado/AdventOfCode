@@ -2,10 +2,10 @@
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class MarbleGame_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void PlayGame__Test1()
         {
             MarbleGame marbleGame = new MarbleGame();
@@ -16,7 +16,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(32, highScore);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void PlayGame__Test2()
         {
             MarbleGame marbleGame = new MarbleGame();
@@ -27,7 +27,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(8317, highScore);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void PlayGame__Test3()
         {
             MarbleGame marbleGame = new MarbleGame();
@@ -38,7 +38,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(146373, highScore);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void PlayGame__Test4()
         {
             MarbleGame marbleGame = new MarbleGame();
@@ -49,7 +49,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(2764, highScore);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void PlayGame__Test5()
         {
             MarbleGame marbleGame = new MarbleGame();
@@ -60,7 +60,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(54718, highScore);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void PlayGame__Test6()
         {
             MarbleGame marbleGame = new MarbleGame();

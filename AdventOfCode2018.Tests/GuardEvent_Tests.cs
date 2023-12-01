@@ -3,12 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class GuardEvent_Tests
     {
         #region FromString
 
-        [TestMethod()]
+        [TestMethod]
         public void FromString__ShiftBegin()
         {
             GuardEvent guardEvent = GuardEvent.FromString("[1518-11-01 00:00] Guard #10 begins shift");
@@ -21,7 +21,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(GuardEventType.ShiftBegin, guardEvent.Type);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void FromString__FallSleep()
         {
             GuardEvent guardEvent = GuardEvent.FromString("[1518-11-02 00:40] falls asleep");
@@ -34,7 +34,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(GuardEventType.FallSleep, guardEvent.Type);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void FromString__WakeUp()
         {
             GuardEvent guardEvent = GuardEvent.FromString("[1518-11-03 00:29] wakes up");
@@ -51,7 +51,7 @@ namespace AdventOfCode2018.Tests
 
         #region FromStringArray
 
-        [TestMethod()]
+        [TestMethod]
         public void FromStringArray__TestBase()
         {
             List<GuardEvent> guardEvents = GuardEvent.FromStringArray(new string[] {
@@ -90,7 +90,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(GuardEventType.WakeUp, guardEvents[7].Type);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void FromStringArray__TestBaseUnsorted()
         {
             List<GuardEvent> guardEvents = GuardEvent.FromStringArray(new string[] {

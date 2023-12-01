@@ -3,10 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day23_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test()
         {
             Day23 day = new Day23();
@@ -26,7 +26,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("7", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test()
         {
             Day23 day = new Day23();

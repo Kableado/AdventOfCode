@@ -2,12 +2,12 @@
 
 namespace AdventOfCode2017.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day01_Tests
     {
         #region ResolvePart1
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test1()
         {
             Day01 day01 = new Day01();
@@ -17,7 +17,7 @@ namespace AdventOfCode2017.Tests
             Assert.AreEqual("3", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test2()
         {
             Day01 day01 = new Day01();
@@ -27,7 +27,7 @@ namespace AdventOfCode2017.Tests
             Assert.AreEqual("4", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test3()
         {
             Day01 day01 = new Day01();
@@ -37,7 +37,7 @@ namespace AdventOfCode2017.Tests
             Assert.AreEqual("0", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test4()
         {
             Day01 day01 = new Day01();
@@ -51,7 +51,7 @@ namespace AdventOfCode2017.Tests
 
         #region ResolvePart2
         
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test1()
         {
             Day01 day01 = new Day01();
@@ -61,7 +61,7 @@ namespace AdventOfCode2017.Tests
             Assert.AreEqual("6", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test2()
         {
             Day01 day01 = new Day01();
@@ -71,7 +71,7 @@ namespace AdventOfCode2017.Tests
             Assert.AreEqual("0", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test3()
         {
             Day01 day01 = new Day01();
@@ -81,7 +81,7 @@ namespace AdventOfCode2017.Tests
             Assert.AreEqual("4", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test4()
         {
             Day01 day01 = new Day01();
@@ -91,7 +91,7 @@ namespace AdventOfCode2017.Tests
             Assert.AreEqual("12", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test5()
         {
             Day01 day01 = new Day01();

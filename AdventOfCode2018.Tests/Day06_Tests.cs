@@ -3,10 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day06_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test()
         {
             Day06 day06 = new Day06();
@@ -23,7 +23,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("17", result);
         }
         
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart2__Test()
         {
             Day06 day06 = new Day06 { DistanceThresold = 32, };

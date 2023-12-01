@@ -2,10 +2,10 @@
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day09_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test1()
         {
             Day09 day = new Day09();
@@ -15,7 +15,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("32", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test2()
         {
             Day09 day = new Day09();
@@ -25,7 +25,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("8317", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test3()
         {
             Day09 day = new Day09();
@@ -35,7 +35,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("146373", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test4()
         {
             Day09 day = new Day09();
@@ -45,7 +45,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("2764", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test5()
         {
             Day09 day = new Day09();
@@ -55,7 +55,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual("54718", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Test6()
         {
             Day09 day = new Day09();

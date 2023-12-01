@@ -2,10 +2,10 @@
 
 namespace AdventOfCode2020.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class Day05_Tests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Example1()
         {
             var day = new Day05();
@@ -17,7 +17,7 @@ namespace AdventOfCode2020.Tests
             Assert.AreEqual("357", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Example2()
         {
             var day = new Day05();
@@ -29,7 +29,7 @@ namespace AdventOfCode2020.Tests
             Assert.AreEqual("567", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Example3()
         {
             var day = new Day05();
@@ -41,7 +41,7 @@ namespace AdventOfCode2020.Tests
             Assert.AreEqual("119", result);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolvePart1__Example4()
         {
             var day = new Day05();

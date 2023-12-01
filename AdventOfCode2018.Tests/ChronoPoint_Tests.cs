@@ -2,12 +2,12 @@
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ChronoPoint_Tests
     {
         #region FromString
 
-        [TestMethod()]
+        [TestMethod]
         public void FromString__Test1()
         {
             ChronoPoint point = ChronoPoint.FromString("1, 1");
@@ -16,7 +16,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(1, point.Y);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void FromString__Test2()
         {
             ChronoPoint point = ChronoPoint.FromString("1, 6");
@@ -25,7 +25,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(6, point.Y);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void FromString__Test3()
         {
             ChronoPoint point = ChronoPoint.FromString("8, 9");
@@ -38,7 +38,7 @@ namespace AdventOfCode2018.Tests
 
         #region ManhattanDistance
 
-        [TestMethod()]
+        [TestMethod]
         public void ManhattanDistance__Test1()
         {
             ChronoPoint p0 = ChronoPoint.FromString("8, 9");
@@ -49,7 +49,7 @@ namespace AdventOfCode2018.Tests
             Assert.AreEqual(10, distance);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ManhattanDistance__Test2()
         {
             ChronoPoint p0 = ChronoPoint.FromString("1, 1");
