@@ -1,13 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2020.Tests
 {
-    [TestClass]
     public class Day01_Tests
     {
         #region ResolvePart1
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Example()
         {
             var day = new Day01();
@@ -21,14 +20,14 @@ namespace AdventOfCode2020.Tests
                 "1456",
             });
 
-            Assert.AreEqual("514579", result);
+            Assert.Equal("514579", result);
         }
 
         #endregion ResolvePart1
 
         #region ResolvePart2
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Example()
         {
             var day = new Day01();
@@ -42,7 +41,7 @@ namespace AdventOfCode2020.Tests
                 "1456",
             });
 
-            Assert.AreEqual("241861950", result);
+            Assert.Equal("241861950", result);
         }
 
         #endregion ResolvePart2

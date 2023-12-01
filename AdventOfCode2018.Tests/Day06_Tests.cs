@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class Day06_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test()
         {
             Day06 day06 = new Day06();
@@ -20,10 +19,10 @@ namespace AdventOfCode2018.Tests
                 "8, 9",
             });
 
-            Assert.AreEqual("17", result);
+            Assert.Equal("17", result);
         }
         
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test()
         {
             Day06 day06 = new Day06 { DistanceThresold = 32, };
@@ -37,7 +36,7 @@ namespace AdventOfCode2018.Tests
                 "8, 9",
             });
 
-            Assert.AreEqual("16", result);
+            Assert.Equal("16", result);
         }
     }
 }

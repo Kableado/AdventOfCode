@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using AdventOfCode2018;
 using System;
 using System.Collections.Generic;
@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class Day15_Tests
     {
         #region ResolvePart1
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test1()
         {
             Day15 day = new Day15();
@@ -28,10 +27,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("27730", result);
+            Assert.Equal("27730", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test2()
         {
             Day15 day = new Day15();
@@ -46,10 +45,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("36334", result);
+            Assert.Equal("36334", result);
         }
         
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test3()
         {
             Day15 day = new Day15();
@@ -64,10 +63,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("39514", result);
+            Assert.Equal("39514", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test4()
         {
             Day15 day = new Day15();
@@ -82,10 +81,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("27755", result);
+            Assert.Equal("27755", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test5()
         {
             Day15 day = new Day15();
@@ -100,10 +99,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("28944", result);
+            Assert.Equal("28944", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test6()
         {
             Day15 day = new Day15();
@@ -120,14 +119,14 @@ namespace AdventOfCode2018.Tests
                 "#########",
             });
 
-            Assert.AreEqual("18740", result);
+            Assert.Equal("18740", result);
         }
 
         #endregion ResolvePart1
 
         #region ResolvePart2
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test1()
         {
             Day15 day = new Day15();
@@ -142,10 +141,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("4988", result);
+            Assert.Equal("4988", result);
         }
         
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test3()
         {
             Day15 day = new Day15();
@@ -160,10 +159,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("31284", result);
+            Assert.Equal("31284", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test4()
         {
             Day15 day = new Day15();
@@ -178,10 +177,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("3478", result);
+            Assert.Equal("3478", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test5()
         {
             Day15 day = new Day15();
@@ -196,10 +195,10 @@ namespace AdventOfCode2018.Tests
                 "#######",
             });
 
-            Assert.AreEqual("6474", result);
+            Assert.Equal("6474", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test6()
         {
             Day15 day = new Day15();
@@ -216,7 +215,7 @@ namespace AdventOfCode2018.Tests
                 "#########",
             });
 
-            Assert.AreEqual("1140", result);
+            Assert.Equal("1140", result);
         }
 
         #endregion ResolvePart2

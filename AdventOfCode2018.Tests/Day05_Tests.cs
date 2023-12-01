@@ -1,198 +1,197 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class Day05_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ResolvePart1(new string[] { "dabAcCaCBAcCcaDA" });
 
-            Assert.AreEqual("10", result);
+            Assert.Equal("10", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ResolvePart2(new string[] { "dabAcCaCBAcCcaDA" });
 
-            Assert.AreEqual("4", result);
+            Assert.Equal("4", result);
         }
 
         #region ReducePolymer
 
-        [TestMethod]
+        [Fact]
         public void ReducePolymer__Remove_cC()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ReducePolymer("dabAcCaCBA");
 
-            Assert.AreEqual("dabAaCBA", result);
+            Assert.Equal("dabAaCBA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReducePolymer__Remove_cC_AtEnd()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ReducePolymer("dabAcC");
 
-            Assert.AreEqual("dabA", result);
+            Assert.Equal("dabA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReducePolymer__Remove_Only_cC()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ReducePolymer("cC");
 
-            Assert.AreEqual("", result);
+            Assert.Equal("", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReducePolymer__Remove_cC_AtStart()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ReducePolymer("cCAAAA");
 
-            Assert.AreEqual("AAAA", result);
+            Assert.Equal("AAAA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReducePolymer__Remove_Aa()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ReducePolymer("dabAaCBA");
 
-            Assert.AreEqual("dabCBA", result);
+            Assert.Equal("dabCBA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReducePolymer__Remove_cCc()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ReducePolymer("dabCBAcCcaDA");
 
-            Assert.AreEqual("dabCBAcaDA", result);
+            Assert.Equal("dabCBAcaDA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReducePolymer__Irreductible()
         {
             Day05 day05 = new Day05();
 
             string result = day05.ReducePolymer("dabCBAcaDA");
 
-            Assert.AreEqual("dabCBAcaDA", result);
+            Assert.Equal("dabCBAcaDA", result);
         }
 
         #endregion ReducePolymer
 
         #region FullyReducePolymer
 
-        [TestMethod]
+        [Fact]
         public void FullyReducePolymer__Test()
         {
             Day05 day05 = new Day05();
 
             string result = day05.FullyReducePolymer("dabAcCaCBAcCcaDA");
 
-            Assert.AreEqual("dabCBAcaDA", result);
+            Assert.Equal("dabCBAcaDA", result);
         }
 
         #endregion FullyReducePolymer
 
         #region RemoveUnitTypeFromPolymer
 
-        [TestMethod]
+        [Fact]
         public void RemoveUnitTypeFromPolymer__Remove_a()
         {
             Day05 day05 = new Day05();
 
             string result = day05.RemoveUnitTypeFromPolymer("dabAcCaCBAcCcaDA", 'a');
 
-            Assert.AreEqual("dbcCCBcCcD", result);
+            Assert.Equal("dbcCCBcCcD", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveUnitTypeFromPolymer__Remove_b()
         {
             Day05 day05 = new Day05();
 
             string result = day05.RemoveUnitTypeFromPolymer("dabAcCaCBAcCcaDA", 'b');
 
-            Assert.AreEqual("daAcCaCAcCcaDA", result);
+            Assert.Equal("daAcCaCAcCcaDA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveUnitTypeFromPolymer__Remove_c()
         {
             Day05 day05 = new Day05();
 
             string result = day05.RemoveUnitTypeFromPolymer("dabAcCaCBAcCcaDA", 'c');
 
-            Assert.AreEqual("dabAaBAaDA", result);
+            Assert.Equal("dabAaBAaDA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveUnitTypeFromPolymer__Remove_d()
         {
             Day05 day05 = new Day05();
 
             string result = day05.RemoveUnitTypeFromPolymer("dabAcCaCBAcCcaDA", 'd');
 
-            Assert.AreEqual("abAcCaCBAcCcaA", result);
+            Assert.Equal("abAcCaCBAcCcaA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveUnitTypeFromPolymer__Remove_A()
         {
             Day05 day05 = new Day05();
 
             string result = day05.RemoveUnitTypeFromPolymer("dabAcCaCBAcCcaDA", 'A');
 
-            Assert.AreEqual("dbcCCBcCcD", result);
+            Assert.Equal("dbcCCBcCcD", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveUnitTypeFromPolymer__Remove_B()
         {
             Day05 day05 = new Day05();
 
             string result = day05.RemoveUnitTypeFromPolymer("dabAcCaCBAcCcaDA", 'B');
 
-            Assert.AreEqual("daAcCaCAcCcaDA", result);
+            Assert.Equal("daAcCaCAcCcaDA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveUnitTypeFromPolymer__Remove_C()
         {
             Day05 day05 = new Day05();
 
             string result = day05.RemoveUnitTypeFromPolymer("dabAcCaCBAcCcaDA", 'C');
 
-            Assert.AreEqual("dabAaBAaDA", result);
+            Assert.Equal("dabAaBAaDA", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveUnitTypeFromPolymer__Remove_D()
         {
             Day05 day05 = new Day05();
 
             string result = day05.RemoveUnitTypeFromPolymer("dabAcCaCBAcCcaDA", 'D');
 
-            Assert.AreEqual("abAcCaCBAcCcaA", result);
+            Assert.Equal("abAcCaCBAcCcaA", result);
         }
 
         #endregion RemoveUnitTypeFromPolymer

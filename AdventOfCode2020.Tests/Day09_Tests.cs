@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2020.Tests
 {
-    [TestClass]
     public class Day09_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Example()
         {
             var day = new Day09();
@@ -33,10 +32,10 @@ namespace AdventOfCode2020.Tests
                 "576",
             });
 
-            Assert.AreEqual("127", result);
+            Assert.Equal("127", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Example()
         {
             var day = new Day09();
@@ -64,7 +63,7 @@ namespace AdventOfCode2020.Tests
                 "576",
             });
 
-            Assert.AreEqual("62", result);
+            Assert.Equal("62", result);
         }
     }
 }

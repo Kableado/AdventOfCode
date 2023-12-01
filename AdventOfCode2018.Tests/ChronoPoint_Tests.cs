@@ -1,44 +1,43 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class ChronoPoint_Tests
     {
         #region FromString
 
-        [TestMethod]
+        [Fact]
         public void FromString__Test1()
         {
             ChronoPoint point = ChronoPoint.FromString("1, 1");
 
-            Assert.AreEqual(1, point.X);
-            Assert.AreEqual(1, point.Y);
+            Assert.Equal(1, point.X);
+            Assert.Equal(1, point.Y);
         }
 
-        [TestMethod]
+        [Fact]
         public void FromString__Test2()
         {
             ChronoPoint point = ChronoPoint.FromString("1, 6");
 
-            Assert.AreEqual(1, point.X);
-            Assert.AreEqual(6, point.Y);
+            Assert.Equal(1, point.X);
+            Assert.Equal(6, point.Y);
         }
 
-        [TestMethod]
+        [Fact]
         public void FromString__Test3()
         {
             ChronoPoint point = ChronoPoint.FromString("8, 9");
 
-            Assert.AreEqual(8, point.X);
-            Assert.AreEqual(9, point.Y);
+            Assert.Equal(8, point.X);
+            Assert.Equal(9, point.Y);
         }
 
         #endregion FromString
 
         #region ManhattanDistance
 
-        [TestMethod]
+        [Fact]
         public void ManhattanDistance__Test1()
         {
             ChronoPoint p0 = ChronoPoint.FromString("8, 9");
@@ -46,10 +45,10 @@ namespace AdventOfCode2018.Tests
 
             int distance = ChronoPoint.ManhattanDistance(p0, p1);
 
-            Assert.AreEqual(10, distance);
+            Assert.Equal(10, distance);
         }
 
-        [TestMethod]
+        [Fact]
         public void ManhattanDistance__Test2()
         {
             ChronoPoint p0 = ChronoPoint.FromString("1, 1");
@@ -57,7 +56,7 @@ namespace AdventOfCode2018.Tests
 
             int distance = ChronoPoint.ManhattanDistance(p0, p1);
 
-            Assert.AreEqual(5, distance);
+            Assert.Equal(5, distance);
         }
 
         #endregion ManhattanDistance

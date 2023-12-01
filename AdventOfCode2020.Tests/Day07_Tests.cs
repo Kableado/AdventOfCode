@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2020.Tests
 {
-    [TestClass]
     public class Day07_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Example()
         {
             var day = new Day07();
@@ -22,10 +21,10 @@ namespace AdventOfCode2020.Tests
                 "dotted black bags contain no other bags.",
             });
 
-            Assert.AreEqual("4", result);
+            Assert.Equal("4", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Example()
         {
             var day = new Day07();
@@ -40,7 +39,7 @@ namespace AdventOfCode2020.Tests
                 "dark violet bags contain no other bags.",
             });
 
-            Assert.AreEqual("126", result);
+            Assert.Equal("126", result);
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class Day10_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test()
         {
             Day10 day = new Day10 { Width = 12, Height = 10 };
@@ -45,7 +44,7 @@ namespace AdventOfCode2018.Tests
                 "position=<-3,  6> velocity=< 2, -1>",
             });
 
-            Assert.AreEqual(
+            Assert.Equal(
                 Environment.NewLine + "............" +
                 Environment.NewLine + ".#...#..###." +
                 Environment.NewLine + ".#...#...#.." +
@@ -58,7 +57,7 @@ namespace AdventOfCode2018.Tests
                 Environment.NewLine + "............", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test()
         {
             Day10 day = new Day10();
@@ -97,7 +96,7 @@ namespace AdventOfCode2018.Tests
                 "position=<-3,  6> velocity=< 2, -1>",
             });
 
-            Assert.AreEqual("3", result);
+            Assert.Equal("3", result);
         }
     }
 }

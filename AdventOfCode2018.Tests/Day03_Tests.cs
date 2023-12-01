@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class Day03_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test()
         {
             Day03 day03 = new Day03();
@@ -16,10 +15,10 @@ namespace AdventOfCode2018.Tests
                 "#3 @ 5,5: 2x2",
             });
 
-            Assert.AreEqual("4", result);
+            Assert.Equal("4", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test()
         {
             Day03 day03 = new Day03();
@@ -30,7 +29,7 @@ namespace AdventOfCode2018.Tests
                 "#3 @ 5,5: 2x2",
             });
 
-            Assert.AreEqual("3", result);
+            Assert.Equal("3", result);
         }
     }
 }

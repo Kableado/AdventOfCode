@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class Day07_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test()
         {
             Day07 day07 = new Day07();
@@ -20,10 +19,10 @@ namespace AdventOfCode2018.Tests
                 "Step F must be finished before step E can begin.",
             });
 
-            Assert.AreEqual("CABDFE", result);
+            Assert.Equal("CABDFE", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test()
         {
             Day07 day07 = new Day07 { BaseCost = 0, NumberOfWorkers = 2 };
@@ -38,7 +37,7 @@ namespace AdventOfCode2018.Tests
                 "Step F must be finished before step E can begin.",
             });
 
-            Assert.AreEqual("15", result);
+            Assert.Equal("15", result);
         }
     }
 }

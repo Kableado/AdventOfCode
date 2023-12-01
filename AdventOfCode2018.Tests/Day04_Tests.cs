@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class Day04_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__BaseStatement()
         {
             Day04 day04 = new Day04();
@@ -30,10 +29,10 @@ namespace AdventOfCode2018.Tests
                 "[1518-11-05 00:55] wakes up",
             });
 
-            Assert.AreEqual("240", result);
+            Assert.Equal("240", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__BaseStatementUnsorted()
         {
             Day04 day04 = new Day04();
@@ -58,11 +57,11 @@ namespace AdventOfCode2018.Tests
                 "[1518-11-05 00:55] wakes up",
             });
 
-            Assert.AreEqual("240", result);
+            Assert.Equal("240", result);
         }
 
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__BaseStatement()
         {
             Day04 day04 = new Day04();
@@ -87,10 +86,10 @@ namespace AdventOfCode2018.Tests
                 "[1518-11-05 00:55] wakes up",
             });
 
-            Assert.AreEqual("4455", result);
+            Assert.Equal("4455", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__BaseStatementUnsorted()
         {
             Day04 day04 = new Day04();
@@ -115,7 +114,7 @@ namespace AdventOfCode2018.Tests
                 "[1518-11-05 00:55] wakes up",
             });
 
-            Assert.AreEqual("4455", result);
+            Assert.Equal("4455", result);
         }
     }
 }

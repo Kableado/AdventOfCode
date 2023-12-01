@@ -1,104 +1,103 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2018.Tests
 {
-    [TestClass]
     public class Day01_Tests
     {
         #region ResolvePart1
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test1()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart1(new string[] { "+1", "-2", "+3", "+1", });
 
-            Assert.AreEqual("3", result);
+            Assert.Equal("3", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test2()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart1(new string[] { "+1", "+1", "+1", });
 
-            Assert.AreEqual("3", result);
+            Assert.Equal("3", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test3()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart1(new string[] { "+1", "+1", "-2", });
 
-            Assert.AreEqual("0", result);
+            Assert.Equal("0", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Test4()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart1(new string[] { "-1", "-2", "-3", });
 
-            Assert.AreEqual("-6", result);
+            Assert.Equal("-6", result);
         }
 
         #endregion ResolveDay01
 
         #region ResolvePart2
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test1()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart2(new string[] { "+1", "-2", "+3", "+1", });
 
-            Assert.AreEqual("2", result);
+            Assert.Equal("2", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test2()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart2(new string[] { "+1", "-1", });
 
-            Assert.AreEqual("0", result);
+            Assert.Equal("0", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test3()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart2(new string[] { "+3", "+3", "+4", "-2", "-4", });
 
-            Assert.AreEqual("10", result);
+            Assert.Equal("10", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test4()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart2(new string[] { "-6", "+3", "+8", "+5", "-6", });
 
-            Assert.AreEqual("5", result);
+            Assert.Equal("5", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__Test5()
         {
             Day01 day01 = new Day01();
 
             string result = day01.ResolvePart2(new string[] { "+7", "+7", "-2", "-7", "-4", });
 
-            Assert.AreEqual("14", result);
+            Assert.Equal("14", result);
         }
 
         #endregion ResolvePart2

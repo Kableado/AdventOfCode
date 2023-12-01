@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace AdventOfCode2020.Tests
 {
-    [TestClass]
     public class Day04_Tests
     {
-        [TestMethod]
+        [Fact]
         public void ResolvePart1__Example()
         {
             var day = new Day04();
@@ -26,10 +25,10 @@ namespace AdventOfCode2020.Tests
                 "iyr:2011 ecl:brn hgt:59in",
             });
 
-            Assert.AreEqual("2", result);
+            Assert.Equal("2", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__ExampleInvalid()
         {
             var day = new Day04();
@@ -50,10 +49,10 @@ namespace AdventOfCode2020.Tests
                 "pid:3556412378 byr:2007",
             });
 
-            Assert.AreEqual("0", result);
+            Assert.Equal("0", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvePart2__ExampleValid()
         {
             var day = new Day04();
@@ -73,7 +72,7 @@ namespace AdventOfCode2020.Tests
                 "iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719",
             });
 
-            Assert.AreEqual("4", result);
+            Assert.Equal("4", result);
         }
     }
 }
