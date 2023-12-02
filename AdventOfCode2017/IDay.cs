@@ -1,8 +1,7 @@
-﻿namespace AdventOfCode2017
+﻿namespace AdventOfCode2017;
+
+public interface IDay
 {
-    public interface IDay
-    {
-        string ResolvePart1(string[] inputs);
-        string ResolvePart2(string[] inputs);
-    }
+    string ResolvePart1(string[] inputs);
+    string ResolvePart2(string[] inputs);
 }

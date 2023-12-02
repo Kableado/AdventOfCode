@@ -7,7 +7,7 @@ public class Day01_Tests
     {
         var day = new Day01();
 
-        string result = day.ResolvePart1(new string[] {
+        string result = day.ResolvePart1(new[] {
             "1abc2",
             "pqr3stu8vwx",
             "a1b2c3d4e5f",
@@ -22,7 +22,7 @@ public class Day01_Tests
     {
         var day = new Day01();
 
-        string result = day.ResolvePart2(new string[] {
+        string result = day.ResolvePart2(new[] {
             "two1nine",
             "eightwothree",
             "abcone2threexyz",

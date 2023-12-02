@@ -1,45 +1,42 @@
-﻿using Xunit;
+﻿namespace AdventOfCode2020.Tests;
 
-namespace AdventOfCode2020.Tests
+public class Day10_Tests
 {
-    public class Day10_Tests
+    [Fact(Skip="Not implemented")]
+    public void ResolvePart1__Example()
     {
-        [Fact(Skip="Not implemented")]
-        public void ResolvePart1__Example()
-        {
-            var day = new Day10();
+        var day = new Day10();
 
-            string result = day.ResolvePart1(new string[] {
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-            });
+        string result = day.ResolvePart1(new[] {
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+        });
 
-            Assert.Equal("YYY", result);
-        }
+        Assert.Equal("YYY", result);
+    }
 
-        [Fact(Skip="Not implemented")]
-        public void ResolvePart2__Example()
-        {
-            var day = new Day09();
+    [Fact(Skip="Not implemented")]
+    public void ResolvePart2__Example()
+    {
+        var day = new Day09();
 
-            string result = day.ResolvePart2(new string[] {
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-                "XXXXXXXXXXXXXXX",
-            });
+        string result = day.ResolvePart2(new[] {
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+            "XXXXXXXXXXXXXXX",
+        });
 
-            Assert.Equal("YYY", result);
-        }
+        Assert.Equal("YYY", result);
     }
 }

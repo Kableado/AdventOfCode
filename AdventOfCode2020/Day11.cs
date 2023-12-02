@@ -7,18 +7,17 @@
 
 */
 
-namespace AdventOfCode2020
-{
-    public class Day11 : IDay
-    {
-        public string ResolvePart1(string[] inputs)
-        {
-            throw new NotImplementedException();
-        }
+namespace AdventOfCode2020;
 
-        public string ResolvePart2(string[] inputs)
-        {
-            throw new NotImplementedException();
-        }
+public class Day11 : IDay
+{
+    public string ResolvePart1(string[] inputs)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string ResolvePart2(string[] inputs)
+    {
+        throw new NotImplementedException();
     }
 }

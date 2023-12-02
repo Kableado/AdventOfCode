@@ -68,140 +68,139 @@ How many individual bags are required inside your single shiny gold bag?
 
 */
 
-namespace AdventOfCode2020
+namespace AdventOfCode2020;
+
+public class Day07 : IDay
 {
-    public class Day07 : IDay
+    public string ResolvePart1(string[] inputs)
     {
-        public string ResolvePart1(string[] inputs)
+        string myBagColor = "shiny gold";
+
+        List<BaggageRule> rules = new();
+        foreach (string input in inputs)
         {
-            string myBagColor = "shiny gold";
+            BaggageRule rule = BaggageRule_Parse(input);
+            rules.Add(rule);
+        }
 
-            List<BaggageRule> rules = new List<BaggageRule>();
-            foreach (string input in inputs)
+        List<string> bagColorsToCheck = new() { myBagColor };
+        List<string> bagColorsChecked = new() { myBagColor };
+        int cntBagColors = 0;
+        while (bagColorsToCheck.Count > 0)
+        {
+            string currentColor = bagColorsToCheck[0];
+            bagColorsToCheck.RemoveAt(0);
+
+            foreach (BaggageRule rule in rules)
             {
-                BaggageRule rule = BaggageRule_Parse(input);
-                rules.Add(rule);
-            }
-
-            List<string> bagColorsToCheck = new List<string> { myBagColor };
-            List<string> bagColorsChecked = new List<string> { myBagColor };
-            int cntBagColors = 0;
-            while (bagColorsToCheck.Count > 0)
-            {
-                string currentColor = bagColorsToCheck[0];
-                bagColorsToCheck.RemoveAt(0);
-
-                foreach (BaggageRule rule in rules)
+                if (rule.Contain.Any(r => r.BagColor == currentColor))
                 {
-                    if (rule.Contain.Any(r => r.BagColor == currentColor))
+                    if (bagColorsChecked.Contains(rule.BagColor) == false)
                     {
-                        if (bagColorsChecked.Contains(rule.BagColor) == false)
-                        {
-                            bagColorsToCheck.Add(rule.BagColor);
-                            bagColorsChecked.Add(rule.BagColor);
-                            cntBagColors++;
-                        }
+                        bagColorsToCheck.Add(rule.BagColor);
+                        bagColorsChecked.Add(rule.BagColor);
+                        cntBagColors++;
                     }
                 }
             }
-
-            return cntBagColors.ToString();
         }
 
-        public string ResolvePart2(string[] inputs)
-        {
-            string myBagColor = "shiny gold";
+        return cntBagColors.ToString();
+    }
 
-            List<BaggageRule> rules = new List<BaggageRule>();
-            foreach (string input in inputs)
+    public string ResolvePart2(string[] inputs)
+    {
+        string myBagColor = "shiny gold";
+
+        List<BaggageRule> rules = new();
+        foreach (string input in inputs)
+        {
+            BaggageRule rule = BaggageRule_Parse(input);
+            rules.Add(rule);
+        }
+        Dictionary<string, BaggageRule> dictRules = rules.ToDictionary(x => x.BagColor);
+
+        int cnt = BaggageRule_CountChilds(myBagColor, dictRules);
+
+        return cnt.ToString();
+    }
+
+    public class BaggageContainRule
+    {
+        public string BagColor { get; set; }
+        public int Count { get; set; }
+    }
+
+    public class BaggageRule
+    {
+        public string BagColor { get; set; }
+
+        public List<BaggageContainRule> Contain { get; set; }
+    }
+
+    public BaggageRule BaggageRule_Parse(string input)
+    {
+        string[] words = input.Split(' ');
+        string status = "Parse Color 1";
+        BaggageRule rule = new();
+        rule.Contain = new List<BaggageContainRule>();
+        BaggageContainRule containRule = null;
+        string color1 = string.Empty;
+
+        foreach (string word in words)
+        {
+            switch (status)
             {
-                BaggageRule rule = BaggageRule_Parse(input);
-                rules.Add(rule);
+                case "Parse Color 1":
+                    color1 = word;
+                    status = "Parse Color 2";
+                    break;
+                case "Parse Color 2":
+                    rule.BagColor = string.Concat(color1, " ", word);
+                    status = "Expect bags";
+                    break;
+                case "Expect bags":
+                    if (word != "bags") { throw new Exception("Expecting bags"); }
+                    status = "Expect contain";
+                    break;
+                case "Expect contain":
+                    if (word != "contain") { throw new Exception("Expecting contain"); }
+                    status = "Parse Contain count";
+                    break;
+                case "Parse Contain count":
+                    if (word == "no") { status = "End"; break; }
+                    containRule = new BaggageContainRule();
+                    containRule.Count = Convert.ToInt32(word);
+                    status = "Parse Contain color 1";
+                    break;
+                case "Parse Contain color 1":
+                    color1 = word;
+                    status = "Parse Contain color 2";
+                    break;
+                case "Parse Contain color 2":
+                    containRule.BagColor = string.Concat(color1, " ", word);
+                    rule.Contain.Add(containRule);
+                    status = "Parse Contain continue";
+                    break;
+                case "Parse Contain continue":
+                    if (word == "bag," || word == "bags,") { status = "Parse Contain count"; break; }
+                    status = "End";
+                    break;
+                case "End":
+                    break;
             }
-            Dictionary<string, BaggageRule> dictRules = rules.ToDictionary(x => x.BagColor);
-
-            int cnt = BaggageRule_CountChilds(myBagColor, dictRules);
-
-            return cnt.ToString();
         }
+        return rule;
+    }
 
-        public class BaggageContainRule
+    public int BaggageRule_CountChilds(string color, Dictionary<string, BaggageRule> dictRules)
+    {
+        int cnt = 0;
+        BaggageRule rule = dictRules[color];
+        foreach (BaggageContainRule containRule in rule.Contain)
         {
-            public string BagColor { get; set; }
-            public int Count { get; set; }
+            cnt += (BaggageRule_CountChilds(containRule.BagColor, dictRules) + 1) * containRule.Count;
         }
-
-        public class BaggageRule
-        {
-            public string BagColor { get; set; }
-
-            public List<BaggageContainRule> Contain { get; set; }
-        }
-
-        public BaggageRule BaggageRule_Parse(string input)
-        {
-            string[] words = input.Split(' ');
-            string status = "Parse Color 1";
-            BaggageRule rule = new BaggageRule();
-            rule.Contain = new List<BaggageContainRule>();
-            BaggageContainRule containRule = null;
-            string color1 = string.Empty;
-
-            foreach (string word in words)
-            {
-                switch (status)
-                {
-                    case "Parse Color 1":
-                        color1 = word;
-                        status = "Parse Color 2";
-                        break;
-                    case "Parse Color 2":
-                        rule.BagColor = string.Concat(color1, " ", word);
-                        status = "Expect bags";
-                        break;
-                    case "Expect bags":
-                        if (word != "bags") { throw new Exception("Expecting bags"); }
-                        status = "Expect contain";
-                        break;
-                    case "Expect contain":
-                        if (word != "contain") { throw new Exception("Expecting contain"); }
-                        status = "Parse Contain count";
-                        break;
-                    case "Parse Contain count":
-                        if (word == "no") { status = "End"; break; }
-                        containRule = new BaggageContainRule();
-                        containRule.Count = Convert.ToInt32(word);
-                        status = "Parse Contain color 1";
-                        break;
-                    case "Parse Contain color 1":
-                        color1 = word;
-                        status = "Parse Contain color 2";
-                        break;
-                    case "Parse Contain color 2":
-                        containRule.BagColor = string.Concat(color1, " ", word);
-                        rule.Contain.Add(containRule);
-                        status = "Parse Contain continue";
-                        break;
-                    case "Parse Contain continue":
-                        if (word == "bag," || word == "bags,") { status = "Parse Contain count"; break; }
-                        status = "End";
-                        break;
-                    case "End":
-                        break;
-                }
-            }
-            return rule;
-        }
-
-        public int BaggageRule_CountChilds(string color, Dictionary<string, BaggageRule> dictRules)
-        {
-            int cnt = 0;
-            BaggageRule rule = dictRules[color];
-            foreach (BaggageContainRule containRule in rule.Contain)
-            {
-                cnt += (BaggageRule_CountChilds(containRule.BagColor, dictRules) + 1) * containRule.Count;
-            }
-            return cnt;
-        }
+        return cnt;
     }
 }

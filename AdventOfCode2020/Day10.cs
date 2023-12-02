@@ -91,18 +91,17 @@ Find a chain that uses all of your adapters to connect the charging outlet to yo
 
 */
 
-namespace AdventOfCode2020
-{
-    public class Day10 : IDay
-    {
-        public string ResolvePart1(string[] inputs)
-        {
-            throw new NotImplementedException();
-        }
+namespace AdventOfCode2020;
 
-        public string ResolvePart2(string[] inputs)
-        {
-            throw new NotImplementedException();
-        }
+public class Day10 : IDay
+{
+    public string ResolvePart1(string[] inputs)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string ResolvePart2(string[] inputs)
+    {
+        throw new NotImplementedException();
     }
 }

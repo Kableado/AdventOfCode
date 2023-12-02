@@ -93,135 +93,134 @@ Fix the program so that it terminates normally by changing exactly one jmp (to n
 
 */
 
-namespace AdventOfCode2020
+namespace AdventOfCode2020;
+
+public class Day08 : IDay
 {
-    public class Day08 : IDay
+    public string ResolvePart1(string[] inputs)
     {
-        public string ResolvePart1(string[] inputs)
-        {
-            VM vm = new VM(inputs);
-            vm.Run();
-            return vm.Accumulator.ToString();
-        }
+        VM vm = new(inputs);
+        vm.Run();
+        return vm.Accumulator.ToString();
+    }
 
-        public string ResolvePart2(string[] inputs)
+    public string ResolvePart2(string[] inputs)
+    {
+        VM vm = new(inputs);
+        foreach (Instruction instruction in vm.Instructions)
         {
-            VM vm = new VM(inputs);
-            foreach (Instruction instruction in vm.Instructions)
+            if (instruction.OpCode == OpCode.Acc) { continue; }
+            if (instruction.OpCode == OpCode.Nop)
             {
-                if (instruction.OpCode == OpCode.Acc) { continue; }
-                if (instruction.OpCode == OpCode.Nop)
-                {
-                    instruction.OpCode = OpCode.Jmp;
-                    vm.Run();
-                    if (vm.Ended) { break; }
-                    instruction.OpCode = OpCode.Nop;
-                }
-                if (instruction.OpCode == OpCode.Jmp)
-                {
-                    instruction.OpCode = OpCode.Nop;
-                    vm.Run();
-                    if (vm.Ended) { break; }
-                    instruction.OpCode = OpCode.Jmp;
-                }
+                instruction.OpCode = OpCode.Jmp;
+                vm.Run();
+                if (vm.Ended) { break; }
+                instruction.OpCode = OpCode.Nop;
             }
-            return vm.Accumulator.ToString();
-        }
-
-        public enum OpCode
-        {
-            Acc,
-            Jmp,
-            Nop,
-        };
-
-        public class Instruction
-        {
-            public OpCode OpCode { get; set; }
-            public int Value { get; set; }
-            public bool Executed { get; set; }
-
-            public Instruction(string input)
+            if (instruction.OpCode == OpCode.Jmp)
             {
-                string[] parts = input.Split(' ');
-
-                if (parts[0] == "acc")
-                {
-                    OpCode = OpCode.Acc;
-                }
-                if (parts[0] == "jmp")
-                {
-                    OpCode = OpCode.Jmp;
-                }
-                if (parts[0] == "nop")
-                {
-                    OpCode = OpCode.Nop;
-                }
-
-                if (parts[1].StartsWith("+"))
-                {
-                    Value = Convert.ToInt32(parts[1].Substring(1));
-                }
-                else
-                {
-                    Value = Convert.ToInt32(parts[1]);
-                }
-                Executed = false;
+                instruction.OpCode = OpCode.Nop;
+                vm.Run();
+                if (vm.Ended) { break; }
+                instruction.OpCode = OpCode.Jmp;
             }
         }
+        return vm.Accumulator.ToString();
+    }
 
-        public class VM
+    public enum OpCode
+    {
+        Acc,
+        Jmp,
+        Nop,
+    }
+
+    public class Instruction
+    {
+        public OpCode OpCode { get; set; }
+        public int Value { get; set; }
+        public bool Executed { get; set; }
+
+        public Instruction(string input)
         {
-            public List<Instruction> Instructions { get; set; }
+            string[] parts = input.Split(' ');
 
-            public int Accumulator { get; set; }
-
-            public bool Ended { get; set; }
-
-            public VM(string[] inputs)
+            if (parts[0] == "acc")
             {
-                Instructions = new List<Instruction>();
-                foreach (string input in inputs)
-                {
-                    Instructions.Add(new Instruction(input));
-                }
-                Accumulator = 0;
-                Ended = false;
+                OpCode = OpCode.Acc;
+            }
+            if (parts[0] == "jmp")
+            {
+                OpCode = OpCode.Jmp;
+            }
+            if (parts[0] == "nop")
+            {
+                OpCode = OpCode.Nop;
             }
 
-            public void Run()
+            if (parts[1].StartsWith("+"))
             {
-                foreach (Instruction instruction in Instructions)
+                Value = Convert.ToInt32(parts[1].Substring(1));
+            }
+            else
+            {
+                Value = Convert.ToInt32(parts[1]);
+            }
+            Executed = false;
+        }
+    }
+
+    private class VM
+    {
+        public List<Instruction> Instructions { get; set; }
+
+        public int Accumulator { get; set; }
+
+        public bool Ended { get; set; }
+
+        public VM(string[] inputs)
+        {
+            Instructions = new List<Instruction>();
+            foreach (string input in inputs)
+            {
+                Instructions.Add(new Instruction(input));
+            }
+            Accumulator = 0;
+            Ended = false;
+        }
+
+        public void Run()
+        {
+            foreach (Instruction instruction in Instructions)
+            {
+                instruction.Executed = false;
+            }
+            Ended = false;
+            Accumulator = 0;
+            int idx = 0;
+            while (Instructions[idx].Executed == false)
+            {
+                Instruction currentInstruction = Instructions[idx];
+                if (currentInstruction.OpCode == OpCode.Acc)
                 {
-                    instruction.Executed = false;
+                    Accumulator += currentInstruction.Value;
+                    currentInstruction.Executed = true;
+                    idx++;
                 }
-                Ended = false;
-                Accumulator = 0;
-                int idx = 0;
-                while (Instructions[idx].Executed == false)
+                if (currentInstruction.OpCode == OpCode.Jmp)
                 {
-                    Instruction currentInstruction = Instructions[idx];
-                    if (currentInstruction.OpCode == OpCode.Acc)
-                    {
-                        Accumulator += currentInstruction.Value;
-                        currentInstruction.Executed = true;
-                        idx++;
-                    }
-                    if (currentInstruction.OpCode == OpCode.Jmp)
-                    {
-                        currentInstruction.Executed = true;
-                        idx += currentInstruction.Value;
-                    }
-                    if (currentInstruction.OpCode == OpCode.Nop)
-                    {
-                        currentInstruction.Executed = true;
-                        idx++;
-                    }
-                    if (idx >= Instructions.Count)
-                    {
-                        Ended = true;
-                        break;
-                    }
+                    currentInstruction.Executed = true;
+                    idx += currentInstruction.Value;
+                }
+                if (currentInstruction.OpCode == OpCode.Nop)
+                {
+                    currentInstruction.Executed = true;
+                    idx++;
+                }
+                if (idx >= Instructions.Count)
+                {
+                    Ended = true;
+                    break;
                 }
             }
         }

@@ -1,8 +1,7 @@
-﻿namespace AdventOfCode2020
+﻿namespace AdventOfCode2020;
+
+public interface IDay
 {
-    public interface IDay
-    {
-        string ResolvePart1(string[] inputs);
-        string ResolvePart2(string[] inputs);
-    }
+    string ResolvePart1(string[] inputs);
+    string ResolvePart2(string[] inputs);
 }

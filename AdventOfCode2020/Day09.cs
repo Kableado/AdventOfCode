@@ -91,83 +91,82 @@ What is the encryption weakness in your XMAS-encrypted list of numbers?
 
 */
 
-namespace AdventOfCode2020
+namespace AdventOfCode2020;
+
+public class Day09 : IDay
 {
-    public class Day09 : IDay
+    public string ResolvePart1(string[] inputs)
     {
-        public string ResolvePart1(string[] inputs)
+        int preamble = 25;
+        if (inputs.Length < preamble) { preamble = 5; }
+
+        List<long> numbers = inputs.Select(x => Convert.ToInt64(x)).ToList();
+        int firstInvalid = XMAS_FindFirstInvalid(preamble, numbers);
+        return numbers[firstInvalid].ToString();
+    }
+
+    public string ResolvePart2(string[] inputs)
+    {
+        int preamble = 25;
+        if (inputs.Length < preamble) { preamble = 5; }
+
+        List<long> numbers = inputs.Select(x => Convert.ToInt64(x)).ToList();
+        int firstInvalid = XMAS_FindFirstInvalid(preamble, numbers);
+
+        long numberInvalid = numbers[firstInvalid];
+        long numberChecksum = -1;
+        bool found = false;
+        for (int i = firstInvalid - 1; i > 0 && found == false; i--)
         {
-            int preamble = 25;
-            if (inputs.Length < preamble) { preamble = 5; }
-
-            List<long> numbers = inputs.Select(x => Convert.ToInt64(x)).ToList();
-            int firstInvalid = XMAS_FindFirstInvalid(preamble, numbers);
-            return numbers[firstInvalid].ToString();
-        }
-
-        public string ResolvePart2(string[] inputs)
-        {
-            int preamble = 25;
-            if (inputs.Length < preamble) { preamble = 5; }
-
-            List<long> numbers = inputs.Select(x => Convert.ToInt64(x)).ToList();
-            int firstInvalid = XMAS_FindFirstInvalid(preamble, numbers);
-
-            long numberInvalid = numbers[firstInvalid];
-            long numberChecksum = -1;
-            bool found = false;
-            for (int i = firstInvalid - 1; i > 0 && found == false; i--)
+            long sum = numbers[i];
+            long max = numbers[i];
+            long min = numbers[i];
+            for (int j = (i - 1); j >= 0 && found == false; j--)
             {
-                long sum = numbers[i];
-                long max = numbers[i];
-                long min = numbers[i];
-                for (int j = (i - 1); j >= 0 && found == false; j--)
+                sum += numbers[j];
+                if (numbers[j] > max) { max = numbers[j]; }
+                if (numbers[j] < min) { min = numbers[j]; }
+                if (sum == numberInvalid)
                 {
-                    sum += numbers[j];
-                    if (numbers[j] > max) { max = numbers[j]; }
-                    if (numbers[j] < min) { min = numbers[j]; }
-                    if (sum == numberInvalid)
-                    {
-                        found = true;
-                        numberChecksum = max + min;
-                    }
-                    if (sum > numberInvalid)
-                    {
-                        break;
-                    }
+                    found = true;
+                    numberChecksum = max + min;
                 }
-            }
-
-            return numberChecksum.ToString();
-        }
-
-        private static int XMAS_FindFirstInvalid(int preamble, List<long> numbers)
-        {
-            int firstInvalid = -1;
-            for (int i = preamble; i < numbers.Count; i++)
-            {
-                bool valid = false;
-                long number = numbers[i];
-                for (int j = (i - preamble); j < (i - 1) && valid == false; j++)
+                if (sum > numberInvalid)
                 {
-                    for (int k = (j + 1); k < i && valid == false; k++)
-                    {
-                        long sum = numbers[j] + numbers[k];
-                        if (sum == number)
-                        {
-                            valid = true;
-                        }
-                    }
-                }
-                if (valid == false)
-                {
-                    firstInvalid = i;
                     break;
                 }
             }
-
-            return firstInvalid;
         }
 
+        return numberChecksum.ToString();
     }
+
+    private static int XMAS_FindFirstInvalid(int preamble, List<long> numbers)
+    {
+        int firstInvalid = -1;
+        for (int i = preamble; i < numbers.Count; i++)
+        {
+            bool valid = false;
+            long number = numbers[i];
+            for (int j = (i - preamble); j < (i - 1) && valid == false; j++)
+            {
+                for (int k = (j + 1); k < i && valid == false; k++)
+                {
+                    long sum = numbers[j] + numbers[k];
+                    if (sum == number)
+                    {
+                        valid = true;
+                    }
+                }
+            }
+            if (valid == false)
+            {
+                firstInvalid = i;
+                break;
+            }
+        }
+
+        return firstInvalid;
+    }
+
 }

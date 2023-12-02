@@ -59,156 +59,155 @@ What is the ID of your seat?
 using System;
 using System.Linq;
 
-namespace AdventOfCode2020
+namespace AdventOfCode2020;
+
+public class Day05 : IDay
 {
-    public class Day05 : IDay
+    public string ResolvePart1(string[] inputs)
     {
-        public string ResolvePart1(string[] inputs)
+        int maxSerialNumber = 0;
+        foreach (string input in inputs)
         {
-            int maxSerialNumber = 0;
-            foreach (string input in inputs)
-            {
-                Seat seat = Seat_Parse(input);
-                if (seat == null) { continue; }
-                int newSerialNumber = seat.GetSerialNumber();
-                if (newSerialNumber > maxSerialNumber) { maxSerialNumber = newSerialNumber; }
-            }
-            return maxSerialNumber.ToString();
+            Seat seat = Seat_Parse(input);
+            if (seat == null) { continue; }
+            int newSerialNumber = seat.GetSerialNumber();
+            if (newSerialNumber > maxSerialNumber) { maxSerialNumber = newSerialNumber; }
+        }
+        return maxSerialNumber.ToString();
+    }
+
+    public string ResolvePart2(string[] inputs)
+    {
+        // Fill the seats
+        char[][] seats = new char[8][];
+        for (int i = 0; i < 8; i++)
+        {
+            seats[i] = new char[128];
+            for (int j = 0; j < 128; j++) { seats[i][j] = '.'; }
+        }
+        foreach (string input in inputs)
+        {
+            Seat seat = Seat_Parse(input);
+            if (seat == null) { continue; }
+
+            seats[seat.Column][seat.Row] = 'X';
         }
 
-        public string ResolvePart2(string[] inputs)
+        // Show seats
+        for (int i = 0; i < 8; i++)
         {
-            // Fill the seats
-            char[][] seats = new char[8][];
-            for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 128; j++)
             {
-                seats[i] = new char[128];
-                for (int j = 0; j < 128; j++) { seats[i][j] = '.'; }
+                Console.Write(seats[i][j]);
             }
-            foreach (string input in inputs)
-            {
-                Seat seat = Seat_Parse(input);
-                if (seat == null) { continue; }
+            Console.WriteLine();
+        }
 
-                seats[seat.Column][seat.Row] = 'X';
-            }
-
-            // Show seats
-            for (int i = 0; i < 8; i++)
+        // Find my seat
+        int mySeatSerialNumber = -1;
+        for (int i = 0; i < 8 && mySeatSerialNumber < 0; i++)
+        {
+            for (int j = 0; j < 128 && mySeatSerialNumber < 0; j++)
             {
-                for (int j = 0; j < 128; j++)
+                if (seats[i][j] == '.')
                 {
-                    Console.Write(seats[i][j]);
-                }
-                Console.WriteLine();
-            }
-
-            // Find my seat
-            int mySeatSerialNumber = -1;
-            for (int i = 0; i < 8 && mySeatSerialNumber < 0; i++)
-            {
-                for (int j = 0; j < 128 && mySeatSerialNumber < 0; j++)
-                {
-                    if (seats[i][j] == '.')
+                    int neighbourCount = 0;
+                    for (int k = -1; k < 2; k++)
                     {
-                        int neighbourCount = 0;
-                        for (int k = -1; k < 2; k++)
+                        for (int l = -1; l < 2; l++)
                         {
-                            for (int l = -1; l < 2; l++)
+                            int col = (i + k);
+                            if (col < 0) { col += 8; }
+                            if (col >= 8) { col -= 8; }
+                            int row = (j + l);
+                            if (row < 0) { row += 128; }
+                            if (row >= 128) { row -= 128; }
+                            if (seats[col][row] == 'X')
                             {
-                                int col = (i + k);
-                                if (col < 0) { col += 8; }
-                                if (col >= 8) { col -= 8; }
-                                int row = (j + l);
-                                if (row < 0) { row += 128; }
-                                if (row >= 128) { row -= 128; }
-                                if (seats[col][row] == 'X')
-                                {
-                                    neighbourCount++;
-                                }
+                                neighbourCount++;
                             }
                         }
-                        if (neighbourCount == 8)
-                        {
-                            Seat mySeat = new Seat { Row = j, Column = i, };
-                            mySeatSerialNumber = mySeat.GetSerialNumber();
-                        }
+                    }
+                    if (neighbourCount == 8)
+                    {
+                        Seat mySeat = new() { Row = j, Column = i, };
+                        mySeatSerialNumber = mySeat.GetSerialNumber();
                     }
                 }
             }
-            return mySeatSerialNumber.ToString();
         }
+        return mySeatSerialNumber.ToString();
+    }
 
-        private class Range
+    private class Range
+    {
+        public int Start { get; set; }
+        public int End { get; set; }
+
+        public void SplitLeft()
         {
-            public int Start { get; set; }
-            public int End { get; set; }
-
-            public void SplitLeft()
-            {
-                int len = End - Start;
-                int half = (len + 1) / 2;
-                End -= half;
-            }
-
-            public void SplitRight()
-            {
-                int len = End - Start;
-                int half = (len + 1) / 2;
-                Start += half;
-            }
+            int len = End - Start;
+            int half = (len + 1) / 2;
+            End -= half;
         }
 
-        private class Seat
+        public void SplitRight()
         {
-            public int Row { get; set; }
-            public int Column { get; set; }
-
-            public int GetSerialNumber()
-            {
-                return (Row * 8) + Column;
-            }
+            int len = End - Start;
+            int half = (len + 1) / 2;
+            Start += half;
         }
+    }
 
-        private Seat Seat_Parse(string input)
+    private class Seat
+    {
+        public int Row { get; set; }
+        public int Column { get; set; }
+
+        public int GetSerialNumber()
         {
-            if (input.Length != 10 ||
-                input.All(c => c == 'F' || c == 'B' || c == 'L' || c == 'R') == false ||
-                false)
-            {
-                return null;
-            }
-            Seat seat = new Seat();
-
-            Range row = new Range { Start = 0, End = 127, };
-            for (int i = 0; i < 7; i++)
-            {
-                if (input[i] == 'F')
-                {
-                    row.SplitLeft();
-                }
-                if (input[i] == 'B')
-                {
-                    row.SplitRight();
-                }
-            }
-            seat.Row = row.Start;
-
-            Range column = new Range { Start = 0, End = 7, };
-            for (int i = 7; i < 10; i++)
-            {
-                if (input[i] == 'L')
-                {
-                    column.SplitLeft();
-                }
-                if (input[i] == 'R')
-                {
-                    column.SplitRight();
-                }
-            }
-            seat.Column = column.Start;
-
-            return seat;
+            return (Row * 8) + Column;
         }
+    }
+
+    private Seat Seat_Parse(string input)
+    {
+        if (input.Length != 10 ||
+            input.All(c => c == 'F' || c == 'B' || c == 'L' || c == 'R') == false ||
+            false)
+        {
+            return null;
+        }
+        Seat seat = new();
+
+        Range row = new() { Start = 0, End = 127, };
+        for (int i = 0; i < 7; i++)
+        {
+            if (input[i] == 'F')
+            {
+                row.SplitLeft();
+            }
+            if (input[i] == 'B')
+            {
+                row.SplitRight();
+            }
+        }
+        seat.Row = row.Start;
+
+        Range column = new() { Start = 0, End = 7, };
+        for (int i = 7; i < 10; i++)
+        {
+            if (input[i] == 'L')
+            {
+                column.SplitLeft();
+            }
+            if (input[i] == 'R')
+            {
+                column.SplitRight();
+            }
+        }
+        seat.Column = column.Start;
+
+        return seat;
     }
 }

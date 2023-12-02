@@ -1,35 +1,32 @@
-﻿using Xunit;
+﻿namespace AdventOfCode2018.Tests;
 
-namespace AdventOfCode2018.Tests
+public class Day12_Tests
 {
-    public class Day12_Tests
+    [Fact]
+    public void ResolvePart1__Test()
     {
-        [Fact]
-        public void ResolvePart1__Test()
+        Day12 day = new();
+
+        string result = day.ResolvePart1(new[]
         {
-            Day12 day = new Day12();
+            "initial state: #..#.#..##......###...###",
+            "",
+            "...## => #",
+            "..#.. => #",
+            ".#... => #",
+            ".#.#. => #",
+            ".#.## => #",
+            ".##.. => #",
+            ".#### => #",
+            "#.#.# => #",
+            "#.### => #",
+            "##.#. => #",
+            "##.## => #",
+            "###.. => #",
+            "###.# => #",
+            "####. => #",
+        });
 
-            string result = day.ResolvePart1(new string[]
-            {
-                "initial state: #..#.#..##......###...###",
-                "",
-                "...## => #",
-                "..#.. => #",
-                ".#... => #",
-                ".#.#. => #",
-                ".#.## => #",
-                ".##.. => #",
-                ".#### => #",
-                "#.#.# => #",
-                "#.### => #",
-                "##.#. => #",
-                "##.## => #",
-                "###.. => #",
-                "###.# => #",
-                "####. => #",
-            });
-
-            Assert.Equal("325", result);
-        }
+        Assert.Equal("325", result);
     }
 }

@@ -52,79 +52,78 @@ For each group, count the number of questions to which anyone answered "yes". Wh
 
 */
 
-namespace AdventOfCode2020
-{
-    public class Day06 : IDay
-    {
-        public string ResolvePart1(string[] inputs)
-        {
-            Dictionary<char, bool> groupMap = new Dictionary<char, bool>();
-            List<Dictionary<char, bool>> groupMaps = new List<Dictionary<char, bool>>();
-            foreach (string input in inputs)
-            {
-                if (string.IsNullOrEmpty(input) && groupMap.Count > 0)
-                {
-                    groupMaps.Add(groupMap);
-                    groupMap = new Dictionary<char, bool>();
-                    continue;
-                }
+namespace AdventOfCode2020;
 
-                foreach (char c in input)
-                {
-                    if (groupMap.ContainsKey(c) == false)
-                    {
-                        groupMap.Add(c, true);
-                    }
-                }
-            }
-            if (groupMap.Count > 0)
+public class Day06 : IDay
+{
+    public string ResolvePart1(string[] inputs)
+    {
+        Dictionary<char, bool> groupMap = new();
+        List<Dictionary<char, bool>> groupMaps = new();
+        foreach (string input in inputs)
+        {
+            if (string.IsNullOrEmpty(input) && groupMap.Count > 0)
             {
                 groupMaps.Add(groupMap);
+                groupMap = new Dictionary<char, bool>();
+                continue;
             }
 
-            int total = groupMaps.Sum(groupMap => groupMap.Count);
-            return total.ToString();
-
+            foreach (char c in input)
+            {
+                if (groupMap.ContainsKey(c) == false)
+                {
+                    groupMap.Add(c, true);
+                }
+            }
+        }
+        if (groupMap.Count > 0)
+        {
+            groupMaps.Add(groupMap);
         }
 
-        public string ResolvePart2(string[] inputs)
-        {
-            int groupCount = 0;
-            Dictionary<char, int> groupMap = new Dictionary<char, int>();
-            List<Tuple<int, Dictionary<char, int>>> groupMaps = new List<Tuple<int, Dictionary<char, int>>>();
-            foreach (string input in inputs)
-            {
-                if (string.IsNullOrEmpty(input) && groupCount > 0)
-                {
-                    groupMaps.Add(new Tuple<int, Dictionary<char, int>>(groupCount, groupMap));
-                    groupCount = 0;
-                    groupMap = new Dictionary<char, int>();
-                    continue;
-                }
+        int total = groupMaps.Sum(groupMap => groupMap.Count);
+        return total.ToString();
 
-                groupCount++;
-                foreach (char c in input)
-                {
-                    if (groupMap.ContainsKey(c) == false)
-                    {
-                        groupMap.Add(c, 1);
-                    }
-                    else
-                    {
-                        groupMap[c] = groupMap[c] + 1;
-                    }
-                }
-            }
-            if (groupCount > 0)
+    }
+
+    public string ResolvePart2(string[] inputs)
+    {
+        int groupCount = 0;
+        Dictionary<char, int> groupMap = new();
+        List<Tuple<int, Dictionary<char, int>>> groupMaps = new();
+        foreach (string input in inputs)
+        {
+            if (string.IsNullOrEmpty(input) && groupCount > 0)
             {
                 groupMaps.Add(new Tuple<int, Dictionary<char, int>>(groupCount, groupMap));
+                groupCount = 0;
+                groupMap = new Dictionary<char, int>();
+                continue;
             }
 
-            int total = groupMaps.Sum(group =>
+            groupCount++;
+            foreach (char c in input)
             {
-                return group.Item2.Count(p => p.Value == group.Item1);
-            });
-            return total.ToString();
+                if (groupMap.ContainsKey(c) == false)
+                {
+                    groupMap.Add(c, 1);
+                }
+                else
+                {
+                    groupMap[c] = groupMap[c] + 1;
+                }
+            }
         }
+        if (groupCount > 0)
+        {
+            groupMaps.Add(new Tuple<int, Dictionary<char, int>>(groupCount, groupMap));
+        }
+
+        int total = groupMaps.Sum(group =>
+        {
+            return group.Item2.Count(p => p.Value == group.Item1);
+        });
+        return total.ToString();
     }
 }

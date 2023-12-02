@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace AdventOfCode2020
-{
-    /*
+namespace AdventOfCode2020;
+
+/*
 --- Day 1: Report Repair ---
 
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island. Surely, Christmas will go on without you.
@@ -41,49 +41,48 @@ In your expense report, what is the product of the three entries that sum to 202
 
 
 
-    */
-    public class Day01 : IDay
+*/
+public class Day01 : IDay
+{
+    public string ResolvePart1(string[] inputs)
     {
-        public string ResolvePart1(string[] inputs)
+        int result = -1;
+        for (int i = 0; i < (inputs.Length - 1) && result < 0; i++)
         {
-            int result = -1;
-            for (int i = 0; i < (inputs.Length - 1) && result < 0; i++)
+            for (int j = i + 1; j < inputs.Length && result < 0; j++)
             {
-                for (int j = i + 1; j < inputs.Length && result < 0; j++)
+                if (string.IsNullOrEmpty(inputs[i]) || string.IsNullOrEmpty(inputs[j])) { continue; }
+                int numI = Convert.ToInt32(inputs[i]);
+                int numJ = Convert.ToInt32(inputs[j]);
+                if ((numI + numJ) == 2020)
                 {
-                    if (string.IsNullOrEmpty(inputs[i]) || string.IsNullOrEmpty(inputs[j])) { continue; }
-                    int numI = Convert.ToInt32(inputs[i]);
-                    int numJ = Convert.ToInt32(inputs[j]);
-                    if ((numI + numJ) == 2020)
-                    {
-                        result = numI * numJ;
-                    }
+                    result = numI * numJ;
                 }
             }
-            return result.ToString();
         }
+        return result.ToString();
+    }
 
-        public string ResolvePart2(string[] inputs)
+    public string ResolvePart2(string[] inputs)
+    {
+        long result = -1;
+        for (int i = 0; i < (inputs.Length - 2) && result < 0; i++)
         {
-            long result = -1;
-            for (int i = 0; i < (inputs.Length - 2) && result < 0; i++)
+            for (int j = i + 1; j < (inputs.Length - 1) && result < 0; j++)
             {
-                for (int j = i + 1; j < (inputs.Length - 1) && result < 0; j++)
+                for (int k = j + 1; k < inputs.Length && result < 0; k++)
                 {
-                    for (int k = j + 1; k < inputs.Length && result < 0; k++)
+                    if (string.IsNullOrEmpty(inputs[i]) || string.IsNullOrEmpty(inputs[j]) || string.IsNullOrEmpty(inputs[k])) { continue; }
+                    long numI = Convert.ToInt64(inputs[i]);
+                    long numJ = Convert.ToInt64(inputs[j]);
+                    long numK = Convert.ToInt64(inputs[k]);
+                    if ((numI + numJ + numK) == 2020)
                     {
-                        if (string.IsNullOrEmpty(inputs[i]) || string.IsNullOrEmpty(inputs[j]) || string.IsNullOrEmpty(inputs[k])) { continue; }
-                        long numI = Convert.ToInt64(inputs[i]);
-                        long numJ = Convert.ToInt64(inputs[j]);
-                        long numK = Convert.ToInt64(inputs[k]);
-                        if ((numI + numJ + numK) == 2020)
-                        {
-                            result = numI * numJ * numK;
-                        }
+                        result = numI * numJ * numK;
                     }
                 }
             }
-            return result.ToString();
         }
+        return result.ToString();
     }
 }

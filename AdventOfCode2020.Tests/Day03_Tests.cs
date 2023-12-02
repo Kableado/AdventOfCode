@@ -1,51 +1,48 @@
-﻿using Xunit;
+﻿namespace AdventOfCode2020.Tests;
 
-namespace AdventOfCode2020.Tests
+public class Day03_Tests
 {
-    public class Day03_Tests
+    [Fact]
+    public void ResolvePart1__Example()
     {
-        [Fact]
-        public void ResolvePart1__Example()
-        {
-            var day = new Day03();
+        var day = new Day03();
 
-            string result = day.ResolvePart1(new string[] {
-                "..##.......",
-                "#...#...#..",
-                ".#....#..#.",
-                "..#.#...#.#",
-                ".#...##..#.",
-                "..#.##.....",
-                ".#.#.#....#",
-                ".#........#",
-                "#.##...#...",
-                "#...##....#",
-                ".#..#...#.#",
-            });
+        string result = day.ResolvePart1(new[] {
+            "..##.......",
+            "#...#...#..",
+            ".#....#..#.",
+            "..#.#...#.#",
+            ".#...##..#.",
+            "..#.##.....",
+            ".#.#.#....#",
+            ".#........#",
+            "#.##...#...",
+            "#...##....#",
+            ".#..#...#.#",
+        });
 
-            Assert.Equal("7", result);
-        }
+        Assert.Equal("7", result);
+    }
 
-        [Fact]
-        public void ResolvePart2__Example()
-        {
-            var day = new Day03();
+    [Fact]
+    public void ResolvePart2__Example()
+    {
+        var day = new Day03();
 
-            string result = day.ResolvePart2(new string[] {
-                "..##.......",
-                "#...#...#..",
-                ".#....#..#.",
-                "..#.#...#.#",
-                ".#...##..#.",
-                "..#.##.....",
-                ".#.#.#....#",
-                ".#........#",
-                "#.##...#...",
-                "#...##....#",
-                ".#..#...#.#",
-            });
+        string result = day.ResolvePart2(new[] {
+            "..##.......",
+            "#...#...#..",
+            ".#....#..#.",
+            "..#.#...#.#",
+            ".#...##..#.",
+            "..#.##.....",
+            ".#.#.#....#",
+            ".#........#",
+            "#.##...#...",
+            "#...##....#",
+            ".#..#...#.#",
+        });
 
-            Assert.Equal("336", result);
-        }
+        Assert.Equal("336", result);
     }
 }

@@ -74,44 +74,43 @@ What do you get if you multiply together the number of trees encountered on each
 
 */
 
-namespace AdventOfCode2020
+namespace AdventOfCode2020;
+
+public class Day03 : IDay
 {
-    public class Day03 : IDay
+    public string ResolvePart1(string[] inputs)
     {
-        public string ResolvePart1(string[] inputs)
-        {
-            int treeCnt = FollowSlope(inputs, 3, 1);
-            return treeCnt.ToString();
-        }
+        int treeCnt = FollowSlope(inputs, 3, 1);
+        return treeCnt.ToString();
+    }
 
-        public string ResolvePart2(string[] inputs)
-        {
-            int treeCnt1 = FollowSlope(inputs, 1, 1);
-            int treeCnt2 = FollowSlope(inputs, 3, 1);
-            int treeCnt3 = FollowSlope(inputs, 5, 1);
-            int treeCnt4 = FollowSlope(inputs, 7, 1);
-            int treeCnt5 = FollowSlope(inputs, 1, 2);
-            long treeMult = treeCnt1 * treeCnt2 * treeCnt3 * treeCnt4 * treeCnt5;
-            return treeMult.ToString();
-        }
+    public string ResolvePart2(string[] inputs)
+    {
+        int treeCnt1 = FollowSlope(inputs, 1, 1);
+        int treeCnt2 = FollowSlope(inputs, 3, 1);
+        int treeCnt3 = FollowSlope(inputs, 5, 1);
+        int treeCnt4 = FollowSlope(inputs, 7, 1);
+        int treeCnt5 = FollowSlope(inputs, 1, 2);
+        long treeMult = treeCnt1 * treeCnt2 * treeCnt3 * treeCnt4 * treeCnt5;
+        return treeMult.ToString();
+    }
 
-        private static int FollowSlope(string[] inputs, int dx, int dy)
+    private static int FollowSlope(string[] inputs, int dx, int dy)
+    {
+        int x = 0;
+        int y = 0;
+        int treeCnt = 0;
+        x += dx;
+        y += dy;
+        while (y < inputs.Length)
         {
-            int x = 0;
-            int y = 0;
-            int treeCnt = 0;
+            string input = inputs[y];
+            char c = input[x % input.Length];
+            if (c == '#') { treeCnt++; }
             x += dx;
             y += dy;
-            while (y < inputs.Length)
-            {
-                string input = inputs[y];
-                char c = input[x % input.Length];
-                if (c == '#') { treeCnt++; }
-                x += dx;
-                y += dy;
-            }
-            return treeCnt;
         }
-
+        return treeCnt;
     }
+
 }

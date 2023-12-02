@@ -124,145 +124,143 @@ Count the number of valid passports - those that have all required fields and va
  
 */
 
-namespace AdventOfCode2020
+namespace AdventOfCode2020;
+
+public class Day04 : IDay
 {
-    public class Day04 : IDay
+    public string ResolvePart1(string[] inputs)
     {
-        public string ResolvePart1(string[] inputs)
-        {
-            List<Dictionary<string, string>> passports = Passports_Parse(inputs);
-            int cnt = 0;
-            List<string> neededFields = new List<string>
-            {
-                "byr", // Birth Year
-                "iyr", // Issue Year
-                "eyr", // Expiration Year
-                "hgt", // Height
-                "hcl", // Hair Color
-                "ecl", // Eye Color
-                "pid", // Passport ID
-            };
+        List<Dictionary<string, string>> passports = Passports_Parse(inputs);
+        int cnt = 0;
+        List<string> neededFields = new() {
+            "byr", // Birth Year
+            "iyr", // Issue Year
+            "eyr", // Expiration Year
+            "hgt", // Height
+            "hcl", // Hair Color
+            "ecl", // Eye Color
+            "pid", // Passport ID
+        };
 
-            foreach (Dictionary<string, string> passport in passports)
-            {
-                bool valid = true;
-                foreach (string field in neededFields)
-                {
-                    if (passport.ContainsKey(field) == false)
-                    {
-                        valid = false;
-                        break;
-                    }
-                }
-                if (valid) { cnt++; }
-            }
-            return cnt.ToString();
-        }
-
-        public string ResolvePart2(string[] inputs)
+        foreach (Dictionary<string, string> passport in passports)
         {
-            List<Dictionary<string, string>> passports = Passports_Parse(inputs);
-            int cnt = 0;
-            foreach (Dictionary<string, string> passport in passports)
+            bool valid = true;
+            foreach (string field in neededFields)
             {
-                if (Passport_Validate(passport) == false) { continue; }
-                cnt++;
-            }
-            return cnt.ToString();
-        }
-
-        private List<Dictionary<string, string>> Passports_Parse(string[] inputs)
-        {
-            List<Dictionary<string, string>> passports = new List<Dictionary<string, string>>();
-            Dictionary<string, string> passport = new Dictionary<string, string>();
-            foreach (string input in inputs)
-            {
-                if (string.IsNullOrEmpty(input))
+                if (passport.ContainsKey(field) == false)
                 {
-                    if (passport.Count > 0)
-                    {
-                        passports.Add(passport);
-                        passport = new Dictionary<string, string>();
-                    }
-                    continue;
-                }
-                string[] pairs = input.Split(' ');
-                foreach (string pair in pairs)
-                {
-                    string[] data = pair.Split(':');
-                    if (passport.ContainsKey(data[0]))
-                    {
-                        passport[data[0]] = data[1];
-                    }
-                    else
-                    {
-                        passport.Add(data[0], data[1]);
-                    }
+                    valid = false;
+                    break;
                 }
             }
-            if (passport.Count > 0)
-            {
-                passports.Add(passport);
-            }
-            return passports;
+            if (valid) { cnt++; }
         }
-
-        private bool Passport_Validate(Dictionary<string, string> passport)
-        {
-            if (passport.ContainsKey("byr") == false) { return false; }
-            int? birthYear = Year_Parse(passport["byr"]);
-            if (birthYear == null || birthYear < 1920 || birthYear > 2002) { return false; }
-
-            if (passport.ContainsKey("iyr") == false) { return false; }
-            int? issueYear = Year_Parse(passport["iyr"]);
-            if (issueYear == null || issueYear < 2010 || issueYear > 2020) { return false; }
-
-            if (passport.ContainsKey("eyr") == false) { return false; }
-            int? expirationYear = Year_Parse(passport["eyr"]);
-            if (expirationYear == null || expirationYear < 2020 || expirationYear > 2030) { return false; }
-
-            if (passport.ContainsKey("hgt") == false) { return false; }
-            string strHeight = passport["hgt"];
-            if (strHeight.EndsWith("cm"))
-            {
-                string strHeightCm = strHeight.Substring(0, strHeight.Length - 2);
-                if (strHeightCm.All(char.IsNumber) == false) { return false; }
-                int heightCm = Convert.ToInt32(strHeightCm);
-                if (heightCm < 150 || heightCm > 193) { return false; }
-            }
-            else if (strHeight.EndsWith("in"))
-            {
-                string strHeightIn = strHeight.Substring(0, strHeight.Length - 2);
-                if (strHeightIn.All(char.IsNumber) == false) { return false; }
-                int heightIn = Convert.ToInt32(strHeightIn);
-                if (heightIn < 59 || heightIn > 76) { return false; }
-            }
-            else { return false; }
-
-            if (passport.ContainsKey("hcl") == false) { return false; }
-            string strHairColor = passport["hcl"];
-            if (strHairColor.StartsWith("#") == false) { return false; }
-            string strHairColorHex = strHairColor.Substring(1);
-            if (strHairColorHex.All(c => char.IsNumber(c) || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')) == false) { return false; }
-
-            if (passport.ContainsKey("ecl") == false) { return false; }
-            string strEyeColor = passport["ecl"];
-            if (strEyeColor != "amb" && strEyeColor != "blu" && strEyeColor != "brn" && strEyeColor != "gry" && strEyeColor != "grn" && strEyeColor != "hzl" && strEyeColor != "oth") { return false; }
-
-            if (passport.ContainsKey("pid") == false) { return false; }
-            string strPassportID = passport["pid"];
-            if (strPassportID.Length != 9) { return false; }
-            if (strPassportID.All(char.IsNumber) == false) { return false; }
-
-            return true;
-        }
-
-        private int? Year_Parse(string input)
-        {
-            if (input.Length != 4) { return null; }
-            if (input.All(char.IsNumber) == false) { return null; }
-            return Convert.ToInt32(input);
-        }
-
+        return cnt.ToString();
     }
+
+    public string ResolvePart2(string[] inputs)
+    {
+        List<Dictionary<string, string>> passports = Passports_Parse(inputs);
+        int cnt = 0;
+        foreach (Dictionary<string, string> passport in passports)
+        {
+            if (Passport_Validate(passport) == false) { continue; }
+            cnt++;
+        }
+        return cnt.ToString();
+    }
+
+    private List<Dictionary<string, string>> Passports_Parse(string[] inputs)
+    {
+        List<Dictionary<string, string>> passports = new();
+        Dictionary<string, string> passport = new();
+        foreach (string input in inputs)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                if (passport.Count > 0)
+                {
+                    passports.Add(passport);
+                    passport = new Dictionary<string, string>();
+                }
+                continue;
+            }
+            string[] pairs = input.Split(' ');
+            foreach (string pair in pairs)
+            {
+                string[] data = pair.Split(':');
+                if (passport.ContainsKey(data[0]))
+                {
+                    passport[data[0]] = data[1];
+                }
+                else
+                {
+                    passport.Add(data[0], data[1]);
+                }
+            }
+        }
+        if (passport.Count > 0)
+        {
+            passports.Add(passport);
+        }
+        return passports;
+    }
+
+    private bool Passport_Validate(Dictionary<string, string> passport)
+    {
+        if (passport.ContainsKey("byr") == false) { return false; }
+        int? birthYear = Year_Parse(passport["byr"]);
+        if (birthYear == null || birthYear < 1920 || birthYear > 2002) { return false; }
+
+        if (passport.ContainsKey("iyr") == false) { return false; }
+        int? issueYear = Year_Parse(passport["iyr"]);
+        if (issueYear == null || issueYear < 2010 || issueYear > 2020) { return false; }
+
+        if (passport.ContainsKey("eyr") == false) { return false; }
+        int? expirationYear = Year_Parse(passport["eyr"]);
+        if (expirationYear == null || expirationYear < 2020 || expirationYear > 2030) { return false; }
+
+        if (passport.ContainsKey("hgt") == false) { return false; }
+        string strHeight = passport["hgt"];
+        if (strHeight.EndsWith("cm"))
+        {
+            string strHeightCm = strHeight.Substring(0, strHeight.Length - 2);
+            if (strHeightCm.All(char.IsNumber) == false) { return false; }
+            int heightCm = Convert.ToInt32(strHeightCm);
+            if (heightCm < 150 || heightCm > 193) { return false; }
+        }
+        else if (strHeight.EndsWith("in"))
+        {
+            string strHeightIn = strHeight.Substring(0, strHeight.Length - 2);
+            if (strHeightIn.All(char.IsNumber) == false) { return false; }
+            int heightIn = Convert.ToInt32(strHeightIn);
+            if (heightIn < 59 || heightIn > 76) { return false; }
+        }
+        else { return false; }
+
+        if (passport.ContainsKey("hcl") == false) { return false; }
+        string strHairColor = passport["hcl"];
+        if (strHairColor.StartsWith("#") == false) { return false; }
+        string strHairColorHex = strHairColor.Substring(1);
+        if (strHairColorHex.All(c => char.IsNumber(c) || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')) == false) { return false; }
+
+        if (passport.ContainsKey("ecl") == false) { return false; }
+        string strEyeColor = passport["ecl"];
+        if (strEyeColor != "amb" && strEyeColor != "blu" && strEyeColor != "brn" && strEyeColor != "gry" && strEyeColor != "grn" && strEyeColor != "hzl" && strEyeColor != "oth") { return false; }
+
+        if (passport.ContainsKey("pid") == false) { return false; }
+        string strPassportID = passport["pid"];
+        if (strPassportID.Length != 9) { return false; }
+        if (strPassportID.All(char.IsNumber) == false) { return false; }
+
+        return true;
+    }
+
+    private int? Year_Parse(string input)
+    {
+        if (input.Length != 4) { return null; }
+        if (input.All(char.IsNumber) == false) { return null; }
+        return Convert.ToInt32(input);
+    }
+
 }

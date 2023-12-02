@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-namespace AdventOfCode2020
-{
-    /*
+namespace AdventOfCode2020;
+/*
 --- Day 2: Password Philosophy ---
 
 Your flight departs in a few days from the coastal airport; the easiest way down to the coast from here is via toboggan.
@@ -36,57 +35,56 @@ Each policy actually describes two positions in the password, where 1 means the 
 
 Given the same example list from above:
 
-    1-3 a: abcde is valid: position 1 contains a and position 3 does not.
-    1-3 b: cdefg is invalid: neither position 1 nor position 3 contains b.
-    2-9 c: ccccccccc is invalid: both position 2 and position 9 contain c.
+1-3 a: abcde is valid: position 1 contains a and position 3 does not.
+1-3 b: cdefg is invalid: neither position 1 nor position 3 contains b.
+2-9 c: ccccccccc is invalid: both position 2 and position 9 contain c.
 
 How many passwords are valid according to the new interpretation of the policies?
 
 
 
-    */
+*/
 
-    public class Day02 : IDay
+public class Day02 : IDay
+{
+    public string ResolvePart1(string[] inputs)
     {
-        public string ResolvePart1(string[] inputs)
+        int cntValid = 0;
+
+        foreach (string input in inputs)
         {
-            int cntValid = 0;
-
-            foreach (string input in inputs)
-            {
-                if (string.IsNullOrEmpty(input)) { continue; }
-                string[] parts = input.Split('-', ' ', ':');
-                int min = Convert.ToInt32(parts[0]);
-                int max = Convert.ToInt32(parts[1]);
-                string character = parts[2];
-                string password = parts[4];
-                int cnt = password.Count(c => c == character[0]);
-                if (cnt <= max && cnt >= min) { cntValid++; }
-            }
-
-            return cntValid.ToString();
+            if (string.IsNullOrEmpty(input)) { continue; }
+            string[] parts = input.Split('-', ' ', ':');
+            int min = Convert.ToInt32(parts[0]);
+            int max = Convert.ToInt32(parts[1]);
+            string character = parts[2];
+            string password = parts[4];
+            int cnt = password.Count(c => c == character[0]);
+            if (cnt <= max && cnt >= min) { cntValid++; }
         }
 
-        public string ResolvePart2(string[] inputs)
+        return cntValid.ToString();
+    }
+
+    public string ResolvePart2(string[] inputs)
+    {
+        int cntValid = 0;
+
+        foreach (string input in inputs)
         {
-            int cntValid = 0;
-
-            foreach (string input in inputs)
-            {
-                if (string.IsNullOrEmpty(input)) { continue; }
-                string[] parts = input.Split('-', ' ', ':');
-                int index0 = Convert.ToInt32(parts[0]);
-                int index1 = Convert.ToInt32(parts[1]);
-                string character = parts[2];
-                string password = parts[4];
-                if (password.Length < index0 || password.Length < index1) { continue; }
-                bool hasIndex0 = (password[index0 - 1] == character[0]);
-                bool hasIndex1 = (password[index1 - 1] == character[0]);
-                if ((hasIndex0 && hasIndex1) || (hasIndex0 == false && hasIndex1 == false)) { continue; }
-                if (hasIndex0 || hasIndex1) { cntValid++; }
-            }
-
-            return cntValid.ToString();
+            if (string.IsNullOrEmpty(input)) { continue; }
+            string[] parts = input.Split('-', ' ', ':');
+            int index0 = Convert.ToInt32(parts[0]);
+            int index1 = Convert.ToInt32(parts[1]);
+            string character = parts[2];
+            string password = parts[4];
+            if (password.Length < index0 || password.Length < index1) { continue; }
+            bool hasIndex0 = (password[index0 - 1] == character[0]);
+            bool hasIndex1 = (password[index1 - 1] == character[0]);
+            if ((hasIndex0 && hasIndex1) || (hasIndex0 == false && hasIndex1 == false)) { continue; }
+            if (hasIndex0 || hasIndex1) { cntValid++; }
         }
+
+        return cntValid.ToString();
     }
 }

@@ -78,8 +78,7 @@ public class Day01 : IDay
 
     public string ResolvePart2(string[] inputs)
     {
-        List<(string Text, int Value)> digits = new List<(string Text, int Value)>
-        {
+        List<(string Text, int Value)> digits = new() {
             ("1", 1),
             ("2", 2),
             ("3", 3),
