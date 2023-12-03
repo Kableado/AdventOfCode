@@ -176,132 +176,132 @@ public class Day10 : IDay
         int t = lightField.SearchSmallerBoundindBox();
         return t.ToString();
     }
-}
 
-public class LightPoint
-{
-    public int X { get; set; }
-    public int Y { get; set; }
-    public int VX { get; set; }
-    public int VY { get; set; }
-
-    public static LightPoint FromString(string strPoint)
+    public class LightPoint
     {
-        string[] parts = strPoint.Split(new[] { "position=<", " ", ",", "> velocity=<", ">" }, StringSplitOptions.RemoveEmptyEntries);
-        LightPoint point = new() {
-            X = Convert.ToInt32(parts[0]),
-            Y = Convert.ToInt32(parts[1]),
-            VX = Convert.ToInt32(parts[2]),
-            VY = Convert.ToInt32(parts[3]),
-        };
-        return point;
-    }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int VX { get; set; }
+        public int VY { get; set; }
 
-    public int GetX(int t)
-    {
-        return X + (VX * t);
-    }
-
-    public int GetY(int t)
-    {
-        return Y + (VY * t);
-    }
-}
-
-public class LightField
-{
-    private readonly List<LightPoint> _points;
-
-    public LightField(string[] strPoints)
-    {
-        _points = strPoints.Select(strPoint => LightPoint.FromString(strPoint)).ToList();
-    }
-
-    public int SearchSmallerBoundindBox()
-    {
-        int minHeight = int.MaxValue;
-        int minT = 0;
-        int missCount = 0;
-        int t = 0;
-        do
+        public static LightPoint FromString(string strPoint)
         {
-            int minY = int.MaxValue;
-            int maxY = int.MinValue;
-            foreach (LightPoint point in _points)
-            {
-                int y = point.GetY(t);
-                if (y < minY) { minY = y; }
-                if (y > maxY) { maxY = y; }
-            }
-            int height = (maxY - minY);
-            if (height < minHeight)
-            {
-                minHeight = height;
-                minT = t;
-                missCount = 0;
-            }
-            else
-            {
-                missCount++;
-            }
-
-            t++;
-        } while (missCount < 1000);
-        return minT;
-    }
-
-    public string Render(int t, int width, int height)
-    {
-        int minX = int.MaxValue;
-        int minY = int.MaxValue;
-        int maxX = int.MinValue;
-        int maxY = int.MinValue;
-
-        foreach (LightPoint point in _points)
-        {
-            int x = point.GetX(t);
-            int y = point.GetY(t);
-            if (x < minX) { minX = x; }
-            if (y < minY) { minY = y; }
-            if (x > maxX) { maxX = x; }
-            if (y > maxY) { maxY = y; }
-        }
-        minX--;
-        minY--;
-        maxX += 2;
-        maxY += 2;
-
-        double scaleX = (maxX - minX) / (double)width;
-        double scaleY = (maxY - minY) / (double)height;
-
-        int[,] field = new int[width, height];
-        foreach (LightPoint point in _points)
-        {
-            int x = point.GetX(t);
-            int y = point.GetY(t);
-            x = (int)(((x - minX) / scaleX) + 0.5);
-            y = (int)(((y - minY) / scaleY) + 0.5);
-            if (x < 0 || x >= width) { continue; }
-            if (y < 0 || y >= height) { continue; }
-            field[x, y]++;
+            string[] parts = strPoint.Split(new[] { "position=<", " ", ",", "> velocity=<", ">" }, StringSplitOptions.RemoveEmptyEntries);
+            LightPoint point = new() {
+                X = Convert.ToInt32(parts[0]),
+                Y = Convert.ToInt32(parts[1]),
+                VX = Convert.ToInt32(parts[2]),
+                VY = Convert.ToInt32(parts[3]),
+            };
+            return point;
         }
 
-        StringBuilder sb = new();
-        for (int j = 0; j < height; j++)
+        public int GetX(int t)
         {
-            sb.AppendLine();
-            for (int i = 0; i < width; i++)
+            return X + (VX * t);
+        }
+
+        public int GetY(int t)
+        {
+            return Y + (VY * t);
+        }
+    }
+
+    public class LightField
+    {
+        private readonly List<LightPoint> _points;
+
+        public LightField(string[] strPoints)
+        {
+            _points = strPoints.Select(strPoint => LightPoint.FromString(strPoint)).ToList();
+        }
+
+        public int SearchSmallerBoundindBox()
+        {
+            int minHeight = int.MaxValue;
+            int minT = 0;
+            int missCount = 0;
+            int t = 0;
+            do
             {
-                if (field[i, j] > 0)
+                int minY = int.MaxValue;
+                int maxY = int.MinValue;
+                foreach (LightPoint point in _points)
                 {
-                    sb.Append("#");
+                    int y = point.GetY(t);
+                    if (y < minY) { minY = y; }
+                    if (y > maxY) { maxY = y; }
+                }
+                int height = (maxY - minY);
+                if (height < minHeight)
+                {
+                    minHeight = height;
+                    minT = t;
+                    missCount = 0;
                 }
                 else
                 {
-                    sb.Append(".");
+                    missCount++;
+                }
+
+                t++;
+            } while (missCount < 1000);
+            return minT;
+        }
+
+        public string Render(int t, int width, int height)
+        {
+            int minX = int.MaxValue;
+            int minY = int.MaxValue;
+            int maxX = int.MinValue;
+            int maxY = int.MinValue;
+
+            foreach (LightPoint point in _points)
+            {
+                int x = point.GetX(t);
+                int y = point.GetY(t);
+                if (x < minX) { minX = x; }
+                if (y < minY) { minY = y; }
+                if (x > maxX) { maxX = x; }
+                if (y > maxY) { maxY = y; }
+            }
+            minX--;
+            minY--;
+            maxX += 2;
+            maxY += 2;
+
+            double scaleX = (maxX - minX) / (double)width;
+            double scaleY = (maxY - minY) / (double)height;
+
+            int[,] field = new int[width, height];
+            foreach (LightPoint point in _points)
+            {
+                int x = point.GetX(t);
+                int y = point.GetY(t);
+                x = (int)(((x - minX) / scaleX) + 0.5);
+                y = (int)(((y - minY) / scaleY) + 0.5);
+                if (x < 0 || x >= width) { continue; }
+                if (y < 0 || y >= height) { continue; }
+                field[x, y]++;
+            }
+
+            StringBuilder sb = new();
+            for (int j = 0; j < height; j++)
+            {
+                sb.AppendLine();
+                for (int i = 0; i < width; i++)
+                {
+                    if (field[i, j] > 0)
+                    {
+                        sb.Append("#");
+                    }
+                    else
+                    {
+                        sb.Append(".");
+                    }
                 }
             }
+            return sb.ToString();
         }
-        return sb.ToString();
     }
 }

@@ -78,82 +78,82 @@ public class Day08 : IDay
         int result = licenceTree.GetValue();
         return result.ToString();
     }
-}
 
-public class IntStream
-{
-    private int[] _values;
-    private int _index;
-
-    public IntStream(string strValues)
+    public class IntStream
     {
-        _values = strValues
-            .Split(new[] { " ", }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(strVal => Convert.ToInt32(strVal))
-            .ToArray();
-        _index = 0;
-    }
+        private int[] _values;
+        private int _index;
 
-    public int Get()
-    {
-        int value = _values[_index];
-        _index++;
-        return value;
-    }
-}
-
-public class ChronoLicenceNode
-{
-    public List<ChronoLicenceNode> Childs { get; } = new();
-
-    public List<int> Metadata { get; } = new();
-
-    public static ChronoLicenceNode BuildFromIntStream(IntStream stream)
-    {
-        ChronoLicenceNode node = new();
-        int numChilds = stream.Get();
-        int numMetadata = stream.Get();
-
-        for (int i = 0; i < numChilds; i++)
+        public IntStream(string strValues)
         {
-            ChronoLicenceNode childNode = BuildFromIntStream(stream);
-            node.Childs.Add(childNode);
+            _values = strValues
+                .Split(new[] { " ", }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(strVal => Convert.ToInt32(strVal))
+                .ToArray();
+            _index = 0;
         }
 
-        for (int i = 0; i < numMetadata; i++)
+        public int Get()
         {
-            node.Metadata.Add(stream.Get());
+            int value = _values[_index];
+            _index++;
+            return value;
         }
-
-        return node;
     }
 
-    public int GetChecksum()
+    public class ChronoLicenceNode
     {
-        int checksum = Metadata.Sum();
-        foreach (ChronoLicenceNode child in Childs)
-        {
-            checksum += child.GetChecksum();
-        }
-        return checksum;
-    }
+        public List<ChronoLicenceNode> Childs { get; } = new();
 
-    public int GetValue()
-    {
-        int value = 0;
-        if (Childs.Count == 0)
+        public List<int> Metadata { get; } = new();
+
+        public static ChronoLicenceNode BuildFromIntStream(IntStream stream)
         {
-            value = Metadata.Sum();
-        }
-        else
-        {
-            foreach (int metadata in Metadata)
+            ChronoLicenceNode node = new();
+            int numChilds = stream.Get();
+            int numMetadata = stream.Get();
+
+            for (int i = 0; i < numChilds; i++)
             {
-                int index = metadata - 1;
-                if (index < 0 || index >= Childs.Count) { continue; }
-                value += Childs[index].GetValue();
+                ChronoLicenceNode childNode = BuildFromIntStream(stream);
+                node.Childs.Add(childNode);
             }
+
+            for (int i = 0; i < numMetadata; i++)
+            {
+                node.Metadata.Add(stream.Get());
+            }
+
+            return node;
         }
-        return value;
+
+        public int GetChecksum()
+        {
+            int checksum = Metadata.Sum();
+            foreach (ChronoLicenceNode child in Childs)
+            {
+                checksum += child.GetChecksum();
+            }
+            return checksum;
+        }
+
+        public int GetValue()
+        {
+            int value = 0;
+            if (Childs.Count == 0)
+            {
+                value = Metadata.Sum();
+            }
+            else
+            {
+                foreach (int metadata in Metadata)
+                {
+                    int index = metadata - 1;
+                    if (index < 0 || index >= Childs.Count) { continue; }
+                    value += Childs[index].GetValue();
+                }
+            }
+            return value;
+        }
     }
 }

@@ -175,100 +175,100 @@ public class Day04 : IDay
 
         return dictFullHistogram;
     }
-}
 
-public enum GuardEventType
-{
-    ShiftBegin,
-    FallSleep,
-    WakeUp,
-}
-
-public class GuardEvent
-{
-    public DateTime Date { get; set; }
-    public int? ID { get; set; }
-    public GuardEventType Type { get; set; }
-
-    public static GuardEvent FromString(string strEvent)
+    public enum GuardEventType
     {
-        GuardEvent guardEvent = new();
-        string[] parts = strEvent.Split(new[] { "[", "-", " ", ":", "]", "#", }, StringSplitOptions.RemoveEmptyEntries);
-        guardEvent.Date = new DateTime(
-            Convert.ToInt32(parts[0]),
-            Convert.ToInt32(parts[1]),
-            Convert.ToInt32(parts[2]),
-            Convert.ToInt32(parts[3]),
-            Convert.ToInt32(parts[4]),
-            0
-        );
-        if (parts[5] == "Guard")
-        {
-            guardEvent.ID = Convert.ToInt32(parts[6]);
-            guardEvent.Type = GuardEventType.ShiftBegin;
-        }
-        if (parts[5] == "falls")
-        {
-            guardEvent.Type = GuardEventType.FallSleep;
-        }
-        if (parts[5] == "wakes")
-        {
-            guardEvent.Type = GuardEventType.WakeUp;
-        }
-        return guardEvent;
+        ShiftBegin,
+        FallSleep,
+        WakeUp,
     }
 
-    public static List<GuardEvent> FromStringArray(string[] strEvents)
+    public class GuardEvent
     {
-        List<GuardEvent> guardEvents = strEvents
-            .Select(strEvent => FromString(strEvent))
-            .OrderBy(guardEvent => guardEvent.Date)
-            .ToList();
+        public DateTime Date { get; set; }
+        public int? ID { get; set; }
+        public GuardEventType Type { get; set; }
 
-        int? guardID = null;
-        foreach (GuardEvent guardEvent in guardEvents)
+        public static GuardEvent FromString(string strEvent)
         {
-            if (guardEvent.Type == GuardEventType.ShiftBegin)
+            GuardEvent guardEvent = new();
+            string[] parts = strEvent.Split(new[] { "[", "-", " ", ":", "]", "#", }, StringSplitOptions.RemoveEmptyEntries);
+            guardEvent.Date = new DateTime(
+                Convert.ToInt32(parts[0]),
+                Convert.ToInt32(parts[1]),
+                Convert.ToInt32(parts[2]),
+                Convert.ToInt32(parts[3]),
+                Convert.ToInt32(parts[4]),
+                0
+            );
+            if (parts[5] == "Guard")
             {
-                guardID = guardEvent.ID;
+                guardEvent.ID = Convert.ToInt32(parts[6]);
+                guardEvent.Type = GuardEventType.ShiftBegin;
             }
-            else
+            if (parts[5] == "falls")
             {
-                guardEvent.ID = guardID;
+                guardEvent.Type = GuardEventType.FallSleep;
+            }
+            if (parts[5] == "wakes")
+            {
+                guardEvent.Type = GuardEventType.WakeUp;
+            }
+            return guardEvent;
+        }
+
+        public static List<GuardEvent> FromStringArray(string[] strEvents)
+        {
+            List<GuardEvent> guardEvents = strEvents
+                .Select(strEvent => FromString(strEvent))
+                .OrderBy(guardEvent => guardEvent.Date)
+                .ToList();
+
+            int? guardID = null;
+            foreach (GuardEvent guardEvent in guardEvents)
+            {
+                if (guardEvent.Type == GuardEventType.ShiftBegin)
+                {
+                    guardID = guardEvent.ID;
+                }
+                else
+                {
+                    guardEvent.ID = guardID;
+                }
+            }
+
+            return guardEvents;
+        }
+    }
+
+    public class GuardSleepHistogram
+    {
+        public const int MinutesOnHour = 60;
+        public int ID { get; set; }
+        public int[] SleepOnMunute { get; } = new int[MinutesOnHour];
+
+        public void FallSleep(int minute)
+        {
+            for (int i = minute; i < MinutesOnHour; i++)
+            {
+                SleepOnMunute[i] = 1;
             }
         }
 
-        return guardEvents;
-    }
-}
-
-public class GuardSleepHistogram
-{
-    public const int MinutesOnHour = 60;
-    public int ID { get; set; }
-    public int[] SleepOnMunute { get; } = new int[MinutesOnHour];
-
-    public void FallSleep(int minute)
-    {
-        for (int i = minute; i < MinutesOnHour; i++)
+        public void WakeUp(int minute)
         {
-            SleepOnMunute[i] = 1;
+            for (int i = minute; i < MinutesOnHour; i++)
+            {
+                SleepOnMunute[i] = 0;
+            }
         }
-    }
 
-    public void WakeUp(int minute)
-    {
-        for (int i = minute; i < MinutesOnHour; i++)
+        public void AddHistogram(GuardSleepHistogram histogram)
         {
-            SleepOnMunute[i] = 0;
-        }
-    }
-
-    public void AddHistogram(GuardSleepHistogram histogram)
-    {
-        for (int i = 0; i < MinutesOnHour; i++)
-        {
-            SleepOnMunute[i] += histogram.SleepOnMunute[i];
+            for (int i = 0; i < MinutesOnHour; i++)
+            {
+                SleepOnMunute[i] += histogram.SleepOnMunute[i];
+            }
         }
     }
 }

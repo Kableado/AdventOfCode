@@ -112,16 +112,16 @@ public class Day06 : IDay
         {
             pointsAreas.Add(i, 0);
         }
-            
+
         int minX = points.Min(p => p.X) - 1;
         int maxX = points.Max(p => p.X) + 1;
         int minY = points.Min(p => p.Y) - 1;
         int maxY = points.Max(p => p.Y) + 1;
 
         ChronoPoint samplingPoint = new();
-        for(int i=minX; i <= maxX; i++)
+        for (int i = minX; i <= maxX; i++)
         {
-            for(int j = minY; j <= maxY; j++)
+            for (int j = minY; j <= maxY; j++)
             {
                 samplingPoint.X = i;
                 samplingPoint.Y = j;
@@ -195,28 +195,28 @@ public class Day06 : IDay
         int areaInRange = AreaInThresold(points, DistanceThresold);
         return areaInRange.ToString();
     }
-}
 
-public class ChronoPoint
-{
-    public int X { get; set; }
-    public int Y { get; set; }
-
-    public static ChronoPoint FromString(string strPoint)
+    public class ChronoPoint
     {
-        if (string.IsNullOrEmpty(strPoint)) { return null; }
-        string[] parts = strPoint.Split(new[] { ", ", }, StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length < 2) { return null; }
-        ChronoPoint point = new() {
-            X = Convert.ToInt32(parts[0]),
-            Y = Convert.ToInt32(parts[1]),
-        };
-        return point;
-    }
+        public int X { get; set; }
+        public int Y { get; set; }
 
-    public static int ManhattanDistance(ChronoPoint p0, ChronoPoint p1)
-    {
-        int distance = Math.Abs(p1.X - p0.X) + Math.Abs(p1.Y - p0.Y);
-        return distance;
+        public static ChronoPoint FromString(string strPoint)
+        {
+            if (string.IsNullOrEmpty(strPoint)) { return null; }
+            string[] parts = strPoint.Split(new[] { ", ", }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length < 2) { return null; }
+            ChronoPoint point = new() {
+                X = Convert.ToInt32(parts[0]),
+                Y = Convert.ToInt32(parts[1]),
+            };
+            return point;
+        }
+
+        public static int ManhattanDistance(ChronoPoint p0, ChronoPoint p1)
+        {
+            int distance = Math.Abs(p1.X - p0.X) + Math.Abs(p1.Y - p0.Y);
+            return distance;
+        }
     }
 }

@@ -87,86 +87,86 @@ public class Day09 : IDay
         long result = marbleGame.GetHighScore();
         return result.ToString();
     }
-}
 
-public class Marble
-{
-    public long Value { get; set; }
-    public Marble Previous { get; set; }
-    public Marble Next { get; set; }
-}
-
-public class MarbleGame
-{
-    public Dictionary<long, long> Scores { get; } = new();
-
-    private Marble _firstMarble;
-    private Marble _currentMarble;
-    private long _currentPlayer;
-
-    private const long PointValueMultiple = 23;
-
-    public void PlayGame(long numPlayers, long lastMarble, bool showStatus = false)
+    public class Marble
     {
-        Scores.Clear();
-        _firstMarble = new Marble { Value = 0 };
-        _firstMarble.Previous = _firstMarble;
-        _firstMarble.Next = _firstMarble;
-        _currentMarble = _firstMarble;
+        public long Value { get; set; }
+        public Marble Previous { get; set; }
+        public Marble Next { get; set; }
+    }
 
-        for (long i = 1; i <= numPlayers; i++) { Scores.Add(i, 0); }
+    public class MarbleGame
+    {
+        public Dictionary<long, long> Scores { get; } = new();
 
-        for (long i = 0; i <= lastMarble; i++)
+        private Marble _firstMarble;
+        private Marble _currentMarble;
+        private long _currentPlayer;
+
+        private const long PointValueMultiple = 23;
+
+        public void PlayGame(long numPlayers, long lastMarble, bool showStatus = false)
         {
-            if (showStatus) { PrintStatus(); }
+            Scores.Clear();
+            _firstMarble = new Marble { Value = 0 };
+            _firstMarble.Previous = _firstMarble;
+            _firstMarble.Next = _firstMarble;
+            _currentMarble = _firstMarble;
 
-            _currentPlayer = (i % numPlayers) + 1;
-            Marble newMarble = new() { Value = i + 1 };
-            if ((newMarble.Value % PointValueMultiple) > 0)
+            for (long i = 1; i <= numPlayers; i++) { Scores.Add(i, 0); }
+
+            for (long i = 0; i <= lastMarble; i++)
             {
-                Marble previousMarble = _currentMarble.Next;
-                Marble nextMarble = previousMarble.Next;
-                newMarble.Previous = previousMarble;
-                newMarble.Next = nextMarble;
-                previousMarble.Next = newMarble;
-                nextMarble.Previous = newMarble;
-                _currentMarble = newMarble;
-            }
-            else
-            {
-                Marble marbleToRemove = _currentMarble.Previous.Previous.Previous.Previous.Previous.Previous.Previous;
-                _currentMarble = marbleToRemove.Next;
-                marbleToRemove.Previous.Next = marbleToRemove.Next;
-                marbleToRemove.Next.Previous = marbleToRemove.Previous;
+                if (showStatus) { PrintStatus(); }
 
-                long currentPlayerScore = Scores[_currentPlayer] + (newMarble.Value + marbleToRemove.Value);
-                Scores[_currentPlayer] = currentPlayerScore;
-            }
+                _currentPlayer = (i % numPlayers) + 1;
+                Marble newMarble = new() { Value = i + 1 };
+                if ((newMarble.Value % PointValueMultiple) > 0)
+                {
+                    Marble previousMarble = _currentMarble.Next;
+                    Marble nextMarble = previousMarble.Next;
+                    newMarble.Previous = previousMarble;
+                    newMarble.Next = nextMarble;
+                    previousMarble.Next = newMarble;
+                    nextMarble.Previous = newMarble;
+                    _currentMarble = newMarble;
+                }
+                else
+                {
+                    Marble marbleToRemove = _currentMarble.Previous.Previous.Previous.Previous.Previous.Previous.Previous;
+                    _currentMarble = marbleToRemove.Next;
+                    marbleToRemove.Previous.Next = marbleToRemove.Next;
+                    marbleToRemove.Next.Previous = marbleToRemove.Previous;
 
+                    long currentPlayerScore = Scores[_currentPlayer] + (newMarble.Value + marbleToRemove.Value);
+                    Scores[_currentPlayer] = currentPlayerScore;
+                }
+
+            }
         }
-    }
 
-    public void PrintStatus()
-    {
-        Console.Write("[{0}] ", _currentPlayer);
-        Marble marble = _firstMarble;
-        do
+        public void PrintStatus()
         {
-            if (_currentMarble.Value == marble.Value)
+            Console.Write("[{0}] ", _currentPlayer);
+            Marble marble = _firstMarble;
+            do
             {
-                Console.Write("({0}) ", marble.Value);
-            }
-            else
-            {
-                Console.Write("{0} ", marble.Value);
-            }
-            marble = marble.Next;
-        } while (marble.Value != 0);
-        Console.WriteLine();
-    }
+                if (_currentMarble.Value == marble.Value)
+                {
+                    Console.Write("({0}) ", marble.Value);
+                }
+                else
+                {
+                    Console.Write("{0} ", marble.Value);
+                }
+                marble = marble.Next;
+            } while (marble.Value != 0);
+            Console.WriteLine();
+        }
 
-    public long GetHighScore()
-    {
-        return Scores.Values.Max();
+        public long GetHighScore()
+        {
+            return Scores.Values.Max();
+        }
     }
 }

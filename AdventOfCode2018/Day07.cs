@@ -130,154 +130,154 @@ public class Day07 : IDay
         int totalElapsedTime = instructions.SimulateInstructionsUsage(NumberOfWorkers);
         return totalElapsedTime.ToString();
     }
-}
 
-public class InstructionNode
-{
-    public string NodeID { get; set; }
-
-    public List<string> PreviousNodeIDs { get; } = new();
-
-    public int Cost { get; set; }
-
-    public bool Running { get; set; }
-
-    public bool Used { get; set; }
-
-    public bool CanBeUsed(Dictionary<string, InstructionNode> allNodes)
+    public class InstructionNode
     {
-        if (PreviousNodeIDs.Count == 0) { return true; }
-        bool allPreviousUsed = PreviousNodeIDs.All(nodeID => allNodes[nodeID].Used);
-        return allPreviousUsed;
-    }
-}
+        public string NodeID { get; set; }
 
-public class Instructions
-{
-    public Dictionary<string, InstructionNode> Nodes { get; } = new();
+        public List<string> PreviousNodeIDs { get; } = new();
 
-    public InstructionNode GetNode(string nodeID)
-    {
-        InstructionNode node = null;
-        if (Nodes.ContainsKey(nodeID))
+        public int Cost { get; set; }
+
+        public bool Running { get; set; }
+
+        public bool Used { get; set; }
+
+        public bool CanBeUsed(Dictionary<string, InstructionNode> allNodes)
         {
-            node = Nodes[nodeID];
+            if (PreviousNodeIDs.Count == 0) { return true; }
+            bool allPreviousUsed = PreviousNodeIDs.All(nodeID => allNodes[nodeID].Used);
+            return allPreviousUsed;
         }
-        else
-        {
-            node = new InstructionNode { NodeID = nodeID, };
-            Nodes.Add(nodeID, node);
-        }
-        return node;
     }
 
-    public void AddNodeRelation(string nodeID, string previousNodeID)
+    public class Instructions
     {
-        InstructionNode node = GetNode(nodeID);
-        InstructionNode previousNode = GetNode(previousNodeID);
-        node.PreviousNodeIDs.Add(previousNode.NodeID);
-    }
+        public Dictionary<string, InstructionNode> Nodes { get; } = new();
 
-    public List<InstructionNode> SortInstructions()
-    {
-        List<InstructionNode> finalNodes = new();
-
-        foreach (InstructionNode node in Nodes.Values)
+        public InstructionNode GetNode(string nodeID)
         {
-            node.Used = false;
-        }
-
-        List<InstructionNode> unusedNodes;
-        do
-        {
-            unusedNodes = Nodes.Values
-                .Where(n =>
-                    n.Used == false &&
-                    n.CanBeUsed(Nodes))
-                .OrderBy(n => n.NodeID)
-                .ToList();
-            if (unusedNodes.Count > 0)
+            InstructionNode node = null;
+            if (Nodes.ContainsKey(nodeID))
             {
-                InstructionNode node = unusedNodes.FirstOrDefault();
-                finalNodes.Add(node);
-                node.Used = true;
+                node = Nodes[nodeID];
             }
-        } while (unusedNodes.Count > 0);
-        return finalNodes;
-    }
-
-    private class SimulatedWorker
-    {
-        public InstructionNode CurrentInstruction { get; set; }
-        public int ElapsedTime { get; set; }
-
-        public void SetInstruction(InstructionNode instruction)
-        {
-            CurrentInstruction = instruction;
-            ElapsedTime = 0;
-            instruction.Running = true;
-        }
-
-        public bool Work()
-        {
-            if (CurrentInstruction == null) { return false; }
-            ElapsedTime++;
-            if (CurrentInstruction.Cost <= ElapsedTime)
+            else
             {
-                CurrentInstruction.Running = false;
-                CurrentInstruction.Used = true;
-                CurrentInstruction = null;
+                node = new InstructionNode { NodeID = nodeID, };
+                Nodes.Add(nodeID, node);
             }
-            return true;
-        }
-    }
-
-    public int SimulateInstructionsUsage(int numberOfWorkers)
-    {
-        int totalElapsedTime = 0;
-        foreach (InstructionNode node in Nodes.Values)
-        {
-            node.Used = false;
-            node.Running = false;
-        }
-        List<SimulatedWorker> workers = new(numberOfWorkers);
-        for (int i = 0; i < numberOfWorkers; i++)
-        {
-            workers.Add(new SimulatedWorker());
+            return node;
         }
 
-        bool anyWorkerWitoutWork;
-        do
+        public void AddNodeRelation(string nodeID, string previousNodeID)
         {
-            bool anyWorkDone = false;
-            foreach (SimulatedWorker worker in workers)
+            InstructionNode node = GetNode(nodeID);
+            InstructionNode previousNode = GetNode(previousNodeID);
+            node.PreviousNodeIDs.Add(previousNode.NodeID);
+        }
+
+        public List<InstructionNode> SortInstructions()
+        {
+            List<InstructionNode> finalNodes = new();
+
+            foreach (InstructionNode node in Nodes.Values)
             {
-                if (worker.Work())
-                {
-                    anyWorkDone = true;
-                }
+                node.Used = false;
             }
-            if (anyWorkDone) { totalElapsedTime++; }
 
-            anyWorkerWitoutWork = workers.Any(w => w.CurrentInstruction == null);
-            if (anyWorkerWitoutWork)
+            List<InstructionNode> unusedNodes;
+            do
             {
-                List<InstructionNode> unusedNodes = Nodes.Values
+                unusedNodes = Nodes.Values
                     .Where(n =>
-                        n.Used == false && n.Running == false &&
+                        n.Used == false &&
                         n.CanBeUsed(Nodes))
                     .OrderBy(n => n.NodeID)
                     .ToList();
                 if (unusedNodes.Count > 0)
                 {
-                    List<SimulatedWorker> workersWithoutWork = workers.Where(w => w.CurrentInstruction == null).ToList();
-                    for (int i = 0; i < workersWithoutWork.Count && i < unusedNodes.Count; i++)
+                    InstructionNode node = unusedNodes.FirstOrDefault();
+                    finalNodes.Add(node);
+                    node.Used = true;
+                }
+            } while (unusedNodes.Count > 0);
+            return finalNodes;
+        }
+
+        private class SimulatedWorker
+        {
+            public InstructionNode CurrentInstruction { get; set; }
+            public int ElapsedTime { get; set; }
+
+            public void SetInstruction(InstructionNode instruction)
+            {
+                CurrentInstruction = instruction;
+                ElapsedTime = 0;
+                instruction.Running = true;
+            }
+
+            public bool Work()
+            {
+                if (CurrentInstruction == null) { return false; }
+                ElapsedTime++;
+                if (CurrentInstruction.Cost <= ElapsedTime)
+                {
+                    CurrentInstruction.Running = false;
+                    CurrentInstruction.Used = true;
+                    CurrentInstruction = null;
+                }
+                return true;
+            }
+        }
+
+        public int SimulateInstructionsUsage(int numberOfWorkers)
+        {
+            int totalElapsedTime = 0;
+            foreach (InstructionNode node in Nodes.Values)
+            {
+                node.Used = false;
+                node.Running = false;
+            }
+            List<SimulatedWorker> workers = new(numberOfWorkers);
+            for (int i = 0; i < numberOfWorkers; i++)
+            {
+                workers.Add(new SimulatedWorker());
+            }
+
+            bool anyWorkerWitoutWork;
+            do
+            {
+                bool anyWorkDone = false;
+                foreach (SimulatedWorker worker in workers)
+                {
+                    if (worker.Work())
                     {
-                        workersWithoutWork[i].SetInstruction(unusedNodes[i]);
+                        anyWorkDone = true;
                     }
                 }
-            }
-        } while (workers.Any(w => w.CurrentInstruction != null));
-        return totalElapsedTime;
+                if (anyWorkDone) { totalElapsedTime++; }
+
+                anyWorkerWitoutWork = workers.Any(w => w.CurrentInstruction == null);
+                if (anyWorkerWitoutWork)
+                {
+                    List<InstructionNode> unusedNodes = Nodes.Values
+                        .Where(n =>
+                            n.Used == false && n.Running == false &&
+                            n.CanBeUsed(Nodes))
+                        .OrderBy(n => n.NodeID)
+                        .ToList();
+                    if (unusedNodes.Count > 0)
+                    {
+                        List<SimulatedWorker> workersWithoutWork = workers.Where(w => w.CurrentInstruction == null).ToList();
+                        for (int i = 0; i < workersWithoutWork.Count && i < unusedNodes.Count; i++)
+                        {
+                            workersWithoutWork[i].SetInstruction(unusedNodes[i]);
+                        }
+                    }
+                }
+            } while (workers.Any(w => w.CurrentInstruction != null));
+            return totalElapsedTime;
+        }
     }
 }
