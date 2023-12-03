@@ -1,21 +1,15 @@
-﻿namespace AdventOfCode2023;
-
-public interface IDay
-{
-    string ResolvePart1(string[] inputs);
-    string ResolvePart2(string[] inputs);
-}
+namespace AdventOfCode.Common;
 
 public static class DayHelper
 {
-    public static void RunDay(int currentDayNumber)
+    public static void RunDay(string eventName, int dayNumber)
     {
-        Console.WriteLine($"Day {currentDayNumber:00}");
+        Console.WriteLine($"Day {dayNumber:00}");
         Console.WriteLine("------");
         Console.WriteLine();
 
         IDay? currentDay = null;
-        Type? dayType = Type.GetType($"AdventOfCode2023.Day{currentDayNumber:00}");
+        Type? dayType = Type.GetType($"{eventName}.Day{dayNumber:00}");
         if (dayType != null)
         {
             currentDay = Activator.CreateInstance(dayType) as IDay;
@@ -27,11 +21,11 @@ public static class DayHelper
             return;
         }
 
-        string[] linesDay = File.ReadAllLines($"inputs/Day{currentDayNumber:00}.txt");
+        string[] linesDay = File.ReadAllLines($"inputs/Day{dayNumber:00}.txt");
         try
         {
             string resultPart1 = currentDay.ResolvePart1(linesDay);
-            Console.WriteLine("Day{1:00} Result Part1: {0}", resultPart1, currentDayNumber);
+            Console.WriteLine("Day{1:00} Result Part1: {0}", resultPart1, dayNumber);
         }
         catch (Exception ex)
         {
@@ -41,7 +35,7 @@ public static class DayHelper
         try
         {
             string resultPart2 = currentDay.ResolvePart2(linesDay);
-            Console.WriteLine("Day{1:00} Result Part2: {0}", resultPart2, currentDayNumber);
+            Console.WriteLine("Day{1:00} Result Part2: {0}", resultPart2, dayNumber);
         }
         catch (Exception ex)
         {

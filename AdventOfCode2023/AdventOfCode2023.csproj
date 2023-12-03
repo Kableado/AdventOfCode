@@ -8,4 +8,14 @@
         <RootNamespace>AdventOfCode2023</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+        <None Update="inputs\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AdventOfCode.Common\AdventOfCode.Common.csproj" />
+    </ItemGroup>
+
 </Project>
