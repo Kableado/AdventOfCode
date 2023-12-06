@@ -37,8 +37,11 @@ public static class DayHelper
         string[] linesDay = File.ReadAllLines($"inputs/Day{dayNumber:00}.txt");
         try
         {
+            DateTime dateStart = DateTime.UtcNow;
             string resultPart1 = currentDay.ResolvePart1(linesDay);
             Console.WriteLine("Day{1:00} Result Part1: {0}", resultPart1, dayNumber);
+            TimeSpan timeElapsed = DateTime.UtcNow - dateStart;
+            Console.WriteLine($"Elapsed: {timeElapsed}");
         }
         catch (Exception ex)
         {
@@ -47,8 +50,11 @@ public static class DayHelper
         }
         try
         {
+            DateTime dateStart = DateTime.UtcNow;
             string resultPart2 = currentDay.ResolvePart2(linesDay);
             Console.WriteLine("Day{1:00} Result Part2: {0}", resultPart2, dayNumber);
+            TimeSpan timeElapsed = DateTime.UtcNow - dateStart;
+            Console.WriteLine($"Elapsed: {timeElapsed}");
         }
         catch (Exception ex)
         {
