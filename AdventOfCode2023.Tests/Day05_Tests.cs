@@ -49,6 +49,16 @@ public class Day05_Tests
     }
 
     [Fact]
+    public void ResolvePart2__Example()
+    {
+        Day05 day = new();
+        
+        string result = day.ResolvePart2(_example);
+
+        Assert.Equal("46", result);
+    }
+
+    [Fact]
     public void AlamanacMapping_ParseNext__Empty__Null()
     {
         Day05.LinesReader reader = new(Array.Empty<string>());
