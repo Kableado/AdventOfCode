@@ -135,19 +135,22 @@ public class Day05 : IDay
     {
         LinesReader reader = new(inputs);
         Almanac? almanac = Almanac.Parse(reader);
-        long minLocation = long.MaxValue;
         int i = 0;
+        List<AlmanacRangeMapping> ranges = new();
         while (almanac?.Seeds.Count > i)
         {
-            long seed = almanac?.Seeds[i] ?? 0;
-            long seedLen = almanac?.Seeds[i + 1] ?? 0;
-            for (long j = 0; j < seedLen; j++)
-            {
-                long currentSeed = almanac?.ApplyMapping(seed + j) ?? 0;
-                if (currentSeed < minLocation) { minLocation = currentSeed; }
-            }
+            long seed = almanac.Seeds[i];
+            long seedLen = almanac.Seeds[i + 1];
+            AlmanacRangeMapping range = new() {
+                OriginStart = seed,
+                DestinationStart = seed,
+                Length = seedLen,
+            };
+            ranges.Add(range);
             i += 2;
         }
+        List<AlmanacRangeMapping> mappedRanges = almanac?.ApplyMapping(ranges) ?? ranges;
+        long minLocation = mappedRanges.Select(range => range.DestinationStart).Min();
         return minLocation.ToString();
     }
 
@@ -176,14 +179,118 @@ public class Day05 : IDay
     {
         public long DestinationStart { get; init; }
         public long OriginStart { get; init; }
-        public long Lenght { get; init; }
+        public long Length { get; init; }
 
         public long? Apply(long value)
         {
             if (value < OriginStart) { return null; }
             long diff = value - OriginStart;
-            if (diff >= Lenght) { return null; }
+            if (diff >= Length) { return null; }
             return DestinationStart + diff;
+        }
+
+        public class ClipResult
+        {
+            public AlmanacRangeMapping? Clipped { get; init; }
+            public AlmanacRangeMapping? PreClip { get; init; }
+            public AlmanacRangeMapping? PostClip { get; init; }
+        }
+
+        public ClipResult Clip(AlmanacRangeMapping range)
+        {
+            long rangeOriginEnd = range.OriginStart + range.Length;
+
+            if (rangeOriginEnd < OriginStart)
+            {
+                return new ClipResult { PreClip = range, };
+            }
+
+            long originEnd = OriginStart + Length;
+
+            if (originEnd < range.OriginStart)
+            {
+                return new ClipResult { PostClip = range, };
+            }
+
+            if (OriginStart <= range.OriginStart)
+            {
+                if (range.OriginStart == originEnd)
+                {
+                    return new ClipResult() {
+                        PostClip = range,
+                    };
+                }
+
+                if (rangeOriginEnd <= originEnd)
+                {
+                    long lenInside = range.OriginStart - OriginStart;
+                    return new ClipResult() {
+                        Clipped = range with {
+                            DestinationStart = DestinationStart + lenInside,
+                        },
+                    };
+                }
+
+                if (rangeOriginEnd >= originEnd)
+                {
+                    long lenInside = range.OriginStart - OriginStart;
+                    long lenOverlap = originEnd - range.OriginStart;
+                    return new ClipResult() {
+                        Clipped = range with {
+                            DestinationStart = DestinationStart + lenInside,
+                            Length = Length - lenInside,
+                        },
+                        PostClip = new AlmanacRangeMapping {
+                            OriginStart = range.OriginStart + lenOverlap,
+                            DestinationStart = range.DestinationStart + lenOverlap,
+                            Length = range.Length - lenOverlap,
+                        },
+                    };
+                }
+            }
+
+            if (range.OriginStart < OriginStart)
+            {
+                if (rangeOriginEnd <= originEnd)
+                {
+                    long lenClipped = (rangeOriginEnd) - OriginStart;
+                    long lenPre = range.Length - lenClipped;
+
+                    return new ClipResult() {
+                        PreClip = range with {
+                            Length = lenPre,
+                        },
+                        Clipped = lenClipped > 0
+                            ? this with {
+                                Length = lenClipped,
+                            }
+                            : null,
+                    };
+                }
+
+                if (rangeOriginEnd > originEnd)
+                {
+                    long lenClipped = Length;
+                    long lenPre = OriginStart - range.OriginStart;
+                    long lenToPost = originEnd - range.OriginStart;
+                    long lenPost = rangeOriginEnd - originEnd;
+                    return new ClipResult() {
+                        PreClip = range with {
+                            Length = lenPre,
+                        },
+                        Clipped = this with {
+                            Length = lenClipped,
+                        },
+                        PostClip = new AlmanacRangeMapping {
+                            OriginStart = range.OriginStart + lenToPost,
+                            DestinationStart = range.DestinationStart + lenToPost,
+                            Length = lenPost,
+                        },
+                    };
+                }
+            }
+
+            return new ClipResult();
         }
     }
 
@@ -217,7 +324,7 @@ public class Day05 : IDay
                 AlmanacRangeMapping rangeMapping = new() {
                     DestinationStart = Convert.ToInt64(mappingParts[0]),
                     OriginStart = Convert.ToInt64(mappingParts[1]),
-                    Lenght = Convert.ToInt64(mappingParts[2]),
+                    Length = Convert.ToInt64(mappingParts[2]),
                 };
                 mapping.RangeMappings.Add(rangeMapping);
             } while (true);
@@ -235,6 +342,33 @@ public class Day05 : IDay
                 i++;
             }
             return value;
+        }
+
+        public List<AlmanacRangeMapping> Apply(AlmanacRangeMapping range)
+        {
+            List<AlmanacRangeMapping> unMappedRanges = new() {
+                range,
+            };
+            List<AlmanacRangeMapping> newUnMappedRanges = new();
+            List<AlmanacRangeMapping> mappedRanges = new();
+
+            int i = 0;
+            while (RangeMappings.Count > i)
+            {
+                AlmanacRangeMapping rangeMapping = RangeMappings[i];
+                for (int j = 0; j < unMappedRanges.Count; j++)
+                {
+                    AlmanacRangeMapping.ClipResult result = rangeMapping.Clip(unMappedRanges[j]);
+                    if (result.Clipped != null) { mappedRanges.Add(result.Clipped.Value); }
+                    if (result.PreClip != null) { newUnMappedRanges.Add(result.PreClip.Value); }
+                    if (result.PostClip != null) { newUnMappedRanges.Add(result.PostClip.Value); }
+                }
+                unMappedRanges = newUnMappedRanges;
+                newUnMappedRanges = new List<AlmanacRangeMapping>();
+                i++;
+            }
+
+            return mappedRanges.Union(unMappedRanges).ToList();
         }
     }
 
@@ -276,6 +410,24 @@ public class Day05 : IDay
                 i++;
             }
             return value;
+        }
+
+        public List<AlmanacRangeMapping> ApplyMapping(List<AlmanacRangeMapping> ranges)
+        {
+            List<AlmanacRangeMapping> currentRanges = ranges;
+            int i = 0;
+            while (i < Mappings.Count)
+            {
+                List<AlmanacRangeMapping> mappedRanges = currentRanges
+                    .Select(range => Mappings[i].Apply(range))
+                    .SelectMany(x => x)
+                    .ToList();
+                currentRanges = mappedRanges
+                    .Select(x => x with { OriginStart = x.DestinationStart, })
+                    .ToList();
+                i++;
+            }
+            return currentRanges;
         }
     }
 }
