@@ -63,4 +63,29 @@ public static class DayHelper
             Console.WriteLine(ex.StackTrace);
         }
     }
+    
+    public static void RunDay(string eventName)
+    {
+        for (int currentDay = 1; currentDay < 25; currentDay++)
+        {
+            RunDay(eventName, currentDay);
+            Console.WriteLine(string.Empty);
+            Console.WriteLine("-------------------------");
+            Console.WriteLine(string.Empty);
+        }
+    }
+    
+    public static void RunDay(string eventName, string[] args)
+    {
+        if (args.Length > 0)
+        {
+            int currentDay = Convert.ToInt32(args[0]);
+            if (currentDay != 0)
+            {
+                RunDay(eventName, currentDay);
+                return;
+            }
+        }
+        RunDay(eventName);
+    }
 }

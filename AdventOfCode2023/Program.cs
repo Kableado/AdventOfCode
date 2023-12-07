@@ -1,3 +1,3 @@
 ﻿global using AdventOfCode.Common;
 
-DayHelper.RunDay("AdventOfCode2023", 5);
+DayHelper.RunDay("AdventOfCode2023", args);
