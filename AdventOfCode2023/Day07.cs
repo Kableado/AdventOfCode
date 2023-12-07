@@ -58,6 +58,30 @@ Now, you can determine the total winnings of this set of hands by adding up the 
 
 Find the rank of every hand in your set. What are the total winnings?
 
+--- Part Two ---
+
+To make things a little more interesting, the Elf introduces one additional rule. Now, J cards are jokers - wildcards that can act like whatever card would make the hand the strongest type possible.
+
+To balance this, J cards are now the weakest individual cards, weaker even than 2. The other cards stay in the same order: A, K, Q, T, 9, 8, 7, 6, 5, 4, 3, 2, J.
+
+J cards can pretend to be whatever card is best for the purpose of determining hand type; for example, QJJQ2 is now considered four of a kind. However, for the purpose of breaking ties between two hands of the same type, J is always treated as J, not the card it's pretending to be: JKKK2 is weaker than QQQQ2 because J is weaker than Q.
+
+Now, the above example goes very differently:
+
+32T3K 765
+T55J5 684
+KK677 28
+KTJJT 220
+QQQJA 483
+
+    32T3K is still the only one pair; it doesn't contain any jokers, so its strength doesn't increase.
+    KK677 is now the only two pair, making it the second-weakest hand.
+    T55J5, KTJJT, and QQQJA are now all four of a kind! T55J5 gets rank 3, QQQJA gets rank 4, and KTJJT gets rank 5.
+
+With the new joker rule, the total winnings in this example are 5905.
+
+Using the new joker rule, find the rank of every hand in your set. What are the new total winnings?
+
 */
 
 public class Day07 : IDay
@@ -77,12 +101,23 @@ public class Day07 : IDay
 
     public string ResolvePart2(string[] inputs)
     {
-        throw new NotImplementedException();
+        List<Hand> hands = inputs.Select(input => new Hand(input, withJoker: true)).ToList();
+        hands.Sort((handA, handB) => handB.Card.CompareTo(handA.Card));
+
+        long sum = 0;
+        for (int i = 0; i < hands.Count; i++)
+        {
+            sum += hands[i].Bid * (i + 1);
+        }
+        return sum.ToString();
     }
 
     public class CamelCard
     {
         private readonly static char[] Labels = { 'A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2' };
+
+        private readonly static char[] LabelsWithJoker = { 'A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J' };
+        private const char JokerLabel = 'J';
 
         public enum Types
         {
@@ -96,12 +131,14 @@ public class Day07 : IDay
         }
 
         private string CardLabels { get; }
+        private readonly bool _withJoker;
         public Types Type { get; }
 
-        public CamelCard(string cardLabels)
+        public CamelCard(string cardLabels, bool withJoker = false)
         {
             if (cardLabels.Length != 5) { throw new ArgumentException("cardLabels must be a string of 5 characters"); }
             CardLabels = cardLabels;
+            _withJoker = withJoker;
             Type = CalculateType(cardLabels);
         }
 
@@ -111,6 +148,7 @@ public class Day07 : IDay
             for (int i = 0; i < 5; i++)
             {
                 char label = cardLabels[i];
+                if (_withJoker && label == JokerLabel) { continue; }
                 if (dictLabelCounts.TryGetValue(label, out int value))
                 {
                     value++;
@@ -122,6 +160,21 @@ public class Day07 : IDay
                 }
             }
 
+            if (_withJoker)
+            {
+                int jokerCount = cardLabels.Count(c => c == JokerLabel);
+                if (jokerCount < 5)
+                {
+                    char maxLabel = dictLabelCounts.MaxBy(p => p.Value).Key;
+                    int value = dictLabelCounts[maxLabel] + jokerCount;
+                    dictLabelCounts[maxLabel] = value;
+                }
+                else
+                {
+                    dictLabelCounts.Add(JokerLabel, 5);
+                }
+            }
+            
             if (dictLabelCounts.Count == 1) { return Types.FiveOfAKind; }
             if (dictLabelCounts.Count == 5) { return Types.HighCard; }
             if (dictLabelCounts.Count == 2)
@@ -148,8 +201,9 @@ public class Day07 : IDay
             while (i < 5 && CardLabels[i] == other.CardLabels[i]) { i++; }
             if (i == 5) { return 0; }
 
-            int indexOfLabel = Array.IndexOf(Labels, CardLabels[i]);
-            int indexOfLabelOther = Array.IndexOf(Labels, other.CardLabels[i]);
+            char[] labels = _withJoker ? LabelsWithJoker : Labels;
+            int indexOfLabel = Array.IndexOf(labels, CardLabels[i]);
+            int indexOfLabelOther = Array.IndexOf(labels, other.CardLabels[i]);
             if (indexOfLabel < indexOfLabelOther) { return -1; }
             if (indexOfLabel > indexOfLabelOther) { return 1; }
 
@@ -162,10 +216,10 @@ public class Day07 : IDay
         public CamelCard Card { get; }
         public long Bid { get; }
 
-        public Hand(string strHand)
+        public Hand(string strHand, bool withJoker = false)
         {
             string[] strHandParts = strHand.Split(' ');
-            Card = new CamelCard(strHandParts[0]);
+            Card = new CamelCard(strHandParts[0], withJoker);
             Bid = Convert.ToInt64(strHandParts[1]);
         }
     }

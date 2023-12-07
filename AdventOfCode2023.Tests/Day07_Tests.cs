@@ -21,6 +21,16 @@ public class Day07_Tests
     }
 
     [Fact]
+    public void ResolvePart2__Example()
+    {
+        Day07 day = new();
+        
+        string result = day.ResolvePart2(_example);
+
+        Assert.Equal("5905", result);
+    }
+
+    [Fact]
     public void CamelCard_Type__Examples()
     {
         Day07.CamelCard card_FiveOfAKind = new("AAAAA");
