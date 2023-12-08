@@ -42,4 +42,27 @@ public class Day08_Tests
         Assert.Equal("6", result);
     }
 
+    private readonly string[] _example3 = {
+        "LR",
+        "",
+        "11A = (11B, XXX)",
+        "11B = (XXX, 11Z)",
+        "11Z = (11B, XXX)",
+        "22A = (22B, XXX)",
+        "22B = (22C, 22C)",
+        "22C = (22Z, 22Z)",
+        "22Z = (22B, 22B)",
+        "XXX = (XXX, XXX)",
+    };
+
+    [Fact]
+    public void ResolvePart2__Example3()
+    {
+        Day08 day = new();
+        
+        string result = day.ResolvePart2(_example3);
+
+        Assert.Equal("6", result);
+    }
+
 }
