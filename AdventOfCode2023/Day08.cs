@@ -42,32 +42,16 @@ public class Day08 : IDay
 {
     public string ResolvePart1(string[] inputs)
     {
-        string startNodeKey = "AAA";
-        string endNodeKey = "ZZZ";
-        string strLeftRightInstructions = inputs[0];
-        Dictionary<string, MapNode> dictNodes = new();
-        for (int i = 2; i < inputs.Length; i++)
-        {
-            MapNode node = new(inputs[i]);
-            dictNodes.Add(node.Key, node);
-        }
+        const string startNodeKey = "AAA";
+        const string endNodeKey = "ZZZ";
+        Map map = new(inputs);
 
-        MapNode currentNode = dictNodes[startNodeKey];
-        int steps = 0;
-        while (currentNode.Key != endNodeKey)
+        MapWalker walker = new(map, startNodeKey);
+        while (walker.CurrentNode.Key != endNodeKey)
         {
-            char leftRightInstruction = strLeftRightInstructions[steps % strLeftRightInstructions.Length];
-            if (leftRightInstruction == 'L')
-            {
-                currentNode = dictNodes[currentNode.LeftKey];
-            }
-            if (leftRightInstruction == 'R')
-            {
-                currentNode = dictNodes[currentNode.RightKey];
-            }
-            steps++;
+            walker.Step();
         }
-        return steps.ToString();
+        return walker.Steps.ToString();
     }
 
     public string ResolvePart2(string[] inputs)
@@ -75,7 +59,7 @@ public class Day08 : IDay
         throw new NotImplementedException();
     }
 
-    public class MapNode
+    private class MapNode
     {
         public string Key { get; set; }
         public string LeftKey { get; set; }
@@ -86,6 +70,81 @@ public class Day08 : IDay
             Key = strMapNode.Substring(0, 3);
             LeftKey = strMapNode.Substring(7, 3);
             RightKey = strMapNode.Substring(12, 3);
+        }
+    }
+
+    private class Map
+    {
+        private readonly List<MapNode> _mapNodes;
+        private readonly Dictionary<string, MapNode> _dictMapNodes;
+        private readonly string _strLeftRightInstructions;
+
+        public Map(string[] inputs)
+        {
+            _mapNodes = new List<MapNode>();
+            _dictMapNodes = new Dictionary<string, MapNode>();
+            _strLeftRightInstructions = inputs[0];
+            for (int i = 2; i < inputs.Length; i++)
+            {
+                MapNode node = new(inputs[i]);
+                _mapNodes.Add(node);
+                _dictMapNodes.Add(node.Key, node);
+            }
+        }
+
+        public List<MapNode> Nodes
+        {
+            get { return _mapNodes; }
+        }
+
+        public MapNode? GetByKey(string key)
+        {
+            return _dictMapNodes.GetValueOrDefault(key);
+        }
+
+        public char GetInstruction(int step)
+        {
+            char leftRightInstruction = _strLeftRightInstructions[step % _strLeftRightInstructions.Length];
+            return leftRightInstruction;
+        }
+    }
+
+    private class MapWalker
+    {
+        private readonly Map _map;
+
+        private MapNode _currentNode;
+        private int _steps;
+
+        public MapWalker(Map map, string startKey)
+        {
+            _map = map;
+            _currentNode = map.GetByKey(startKey) ?? map.Nodes.First();
+            _steps = 0;
+        }
+
+        public void Step()
+        {
+            char leftRightInstruction = _map.GetInstruction(_steps);
+            if (leftRightInstruction == 'L')
+            {
+                _currentNode = _map.GetByKey(_currentNode.LeftKey) ?? _map.Nodes.First();
+            }
+            if (leftRightInstruction == 'R')
+            {
+                _currentNode = _map.GetByKey(_currentNode.RightKey) ?? _map.Nodes.First();
+            }
+            _steps++;
+        }
+
+        public MapNode CurrentNode
+        {
+            get { return _currentNode; }
+        }
+
+        public int Steps
+        {
+            get { return _steps; }
         }
     }
 }
