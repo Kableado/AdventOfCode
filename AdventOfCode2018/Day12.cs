@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AdventOfCode2018;
+﻿namespace AdventOfCode2018;
 /*
 --- Day 12: Subterranean Sustainability ---
 

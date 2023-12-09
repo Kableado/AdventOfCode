@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AdventOfCode2018.Tests;
+﻿namespace AdventOfCode2018.Tests;
 
 public class Day04_Tests
 {

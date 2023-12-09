@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿namespace AdventOfCode2020;
 
 /*
 
@@ -92,8 +90,6 @@ Fix the program so that it terminates normally by changing exactly one jmp (to n
 
 
 */
-
-namespace AdventOfCode2020;
 
 public class Day08 : IDay
 {

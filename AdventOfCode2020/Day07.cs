@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿namespace AdventOfCode2020;
 
 /*
 
@@ -67,8 +65,6 @@ In this example, a single shiny gold bag must contain 126 other bags.
 How many individual bags are required inside your single shiny gold bag?
 
 */
-
-namespace AdventOfCode2020;
 
 public class Day07 : IDay
 {

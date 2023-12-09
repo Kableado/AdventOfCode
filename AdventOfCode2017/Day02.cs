@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿namespace AdventOfCode2017;
 
-namespace AdventOfCode2017;
 /*
 
 --- Day 2: Corruption Checksum ---

@@ -1,4 +1,5 @@
-﻿
+﻿namespace AdventOfCode2020;
+
 /*
 
 --- Day 5: Binary Boarding ---
@@ -55,11 +56,6 @@ What is the ID of your seat?
 
 
 */
-
-using System;
-using System.Linq;
-
-namespace AdventOfCode2020;
 
 public class Day05 : IDay
 {

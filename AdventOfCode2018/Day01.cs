@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AdventOfCode2018;
+﻿namespace AdventOfCode2018;
 /*
  --- Day 1: Chronal Calibration ---
 

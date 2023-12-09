@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿namespace AdventOfCode2020;
 
-namespace AdventOfCode2020;
 /*
 --- Day 2: Password Philosophy ---
 

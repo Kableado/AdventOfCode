@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>AdventOfCode2023.Tests</RootNamespace>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>

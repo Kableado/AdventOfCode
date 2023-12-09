@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventOfCode2018.Tests;
+﻿namespace AdventOfCode2018.Tests;
 
 public class Day10_Tests
 {

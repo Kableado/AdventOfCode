@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventOfCode2020;
+﻿namespace AdventOfCode2020;
 
 /*
 --- Day 1: Report Repair ---

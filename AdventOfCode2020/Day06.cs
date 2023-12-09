@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿namespace AdventOfCode2020;
 
 /*
 
@@ -51,8 +49,6 @@ For each group, count the number of questions to which anyone answered "yes". Wh
 
 
 */
-
-namespace AdventOfCode2020;
 
 public class Day06 : IDay
 {

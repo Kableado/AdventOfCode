@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿namespace AdventOfCode2020;
 
 /*
 
@@ -90,8 +87,6 @@ What is the encryption weakness in your XMAS-encrypted list of numbers?
 
 
 */
-
-namespace AdventOfCode2020;
 
 public class Day09 : IDay
 {

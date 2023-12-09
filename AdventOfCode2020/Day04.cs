@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿namespace AdventOfCode2020;
 
 /*
 --- Day 4: Passport Processing ---
@@ -123,8 +120,6 @@ Count the number of valid passports - those that have all required fields and va
 
  
 */
-
-namespace AdventOfCode2020;
 
 public class Day04 : IDay
 {

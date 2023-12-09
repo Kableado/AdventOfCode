@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventOfCode2018;
+﻿namespace AdventOfCode2018;
 /*
 
 --- Day 11: Chronal Charge ---
