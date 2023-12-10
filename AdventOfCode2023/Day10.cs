@@ -106,6 +106,106 @@ Here are the distances for each tile on that loop:
 
 Find the single giant loop starting at S. How many steps along the loop does it take to get from the starting position to the point farthest from the starting position?
 
+--- Part Two ---
+
+You quickly reach the farthest point of the loop, but the animal never emerges. Maybe its nest is within the area enclosed by the loop?
+
+To determine whether it's even worth taking the time to search for such a nest, you should calculate how many tiles are contained within the loop. For example:
+
+...........
+.S-------7.
+.|F-----7|.
+.||.....||.
+.||.....||.
+.|L-7.F-J|.
+.|..|.|..|.
+.L--J.L--J.
+...........
+
+The above loop encloses merely four tiles - the two pairs of . in the southwest and southeast (marked I below). The middle . tiles (marked O below) are not in the loop. Here is the same loop again with those regions marked:
+
+...........
+.S-------7.
+.|F-----7|.
+.||OOOOO||.
+.||OOOOO||.
+.|L-7OF-J|.
+.|II|O|II|.
+.L--JOL--J.
+.....O.....
+
+In fact, there doesn't even need to be a full tile path to the outside for tiles to count as outside the loop - squeezing between pipes is also allowed! Here, I is still within the loop and O is still outside the loop:
+
+..........
+.S------7.
+.|F----7|.
+.||OOOO||.
+.||OOOO||.
+.|L-7F-J|.
+.|II||II|.
+.L--JL--J.
+..........
+
+In both of the above examples, 4 tiles are enclosed by the loop.
+
+Here's a larger example:
+
+.F----7F7F7F7F-7....
+.|F--7||||||||FJ....
+.||.FJ||||||||L7....
+FJL7L7LJLJ||LJ.L-7..
+L--J.L7...LJS7F-7L7.
+....F-J..F7FJ|L7L7L7
+....L7.F7||L7|.L7L7|
+.....|FJLJ|FJ|F7|.LJ
+....FJL-7.||.||||...
+....L---J.LJ.LJLJ...
+
+The above sketch has many random bits of ground, some of which are in the loop (I) and some of which are outside it (O):
+
+OF----7F7F7F7F-7OOOO
+O|F--7||||||||FJOOOO
+O||OFJ||||||||L7OOOO
+FJL7L7LJLJ||LJIL-7OO
+L--JOL7IIILJS7F-7L7O
+OOOOF-JIIF7FJ|L7L7L7
+OOOOL7IF7||L7|IL7L7|
+OOOOO|FJLJ|FJ|F7|OLJ
+OOOOFJL-7O||O||||OOO
+OOOOL---JOLJOLJLJOOO
+
+In this larger example, 8 tiles are enclosed by the loop.
+
+Any tile that isn't part of the main loop can count as being enclosed by the loop. Here's another example with many bits of junk pipe lying around that aren't connected to the main loop at all:
+
+FF7FSF7F7F7F7F7F---7
+L|LJ||||||||||||F--J
+FL-7LJLJ||||||LJL-77
+F--JF--7||LJLJ7F7FJ-
+L---JF-JLJ.||-FJLJJ7
+|F|F-JF---7F7-L7L|7|
+|FFJF7L7F-JF7|JL---7
+7-L-JL7||F7|L7F-7F7|
+L.L7LFJ|||||FJL7||LJ
+L7JLJL-JLJLJL--JLJ.L
+
+Here are just the tiles that are enclosed by the loop marked with I:
+
+FF7FSF7F7F7F7F7F---7
+L|LJ||||||||||||F--J
+FL-7LJLJ||||||LJL-77
+F--JF--7||LJLJIF7FJ-
+L---JF-JLJIIIIFJLJJ7
+|F|F-JF---7IIIL7L|7|
+|FFJF7L7F-JF7IIL---7
+7-L-JL7||F7|L7F-7F7|
+L.L7LFJ|||||FJL7||LJ
+L7JLJL-JLJLJL--JLJ.L
+
+In this last example, 10 tiles are enclosed by the loop.
+
+Figure out whether you have time to search for the nest by calculating the area within the loop. How many tiles are enclosed by the loop?
+
 
 */
 
@@ -114,13 +214,7 @@ public class Day10 : IDay
     public string ResolvePart1(string[] inputs)
     {
         PipeMaze maze = new(inputs);
-        Point startPoint = maze.SearchCell('S') ?? new Point(0, 0);
-        maze.SetDistance(startPoint, 0);
-
-        maze.FollowPipeSettingDistance(new Point(startPoint.X + 1, startPoint.Y), startPoint);
-        maze.FollowPipeSettingDistance(new Point(startPoint.X - 1, startPoint.Y), startPoint);
-        maze.FollowPipeSettingDistance(new Point(startPoint.X, startPoint.Y + 1), startPoint);
-        maze.FollowPipeSettingDistance(new Point(startPoint.X, startPoint.Y - 1), startPoint);
+        maze.TraceLoop();
 
         int maxDistance = maze.GetMaxDistance();
         return maxDistance.ToString();
@@ -128,13 +222,16 @@ public class Day10 : IDay
 
     public string ResolvePart2(string[] inputs)
     {
-        throw new NotImplementedException();
+        PipeMaze maze = new(inputs);
+        maze.TraceLoop();
+        int countInside = maze.CountInsideLoop();
+        return countInside.ToString();
     }
 
-    private readonly struct Point
+    private struct Point
     {
-        public readonly int X;
-        public readonly int Y;
+        public int X;
+        public int Y;
 
         public Point(int x, int y)
         {
@@ -158,7 +255,7 @@ public class Day10 : IDay
             _distances = Enumerable.Repeat<int?>(null, _width * _height).ToArray();
         }
 
-        public Point? SearchCell(char cell)
+        private Point? SearchCell(char cell)
         {
             for (int j = 0; j < _maze.Length; j++)
             {
@@ -173,7 +270,7 @@ public class Day10 : IDay
             return null;
         }
 
-        public char? GetCell(Point point)
+        private char? GetCell(Point point)
         {
             if (point.Y < 0 || point.Y >= _maze.Length) { return null; }
             string mazeRow = _maze[point.Y];
@@ -181,7 +278,7 @@ public class Day10 : IDay
             return mazeRow[point.X];
         }
 
-        public int? GetDistance(Point point)
+        private int? GetDistance(Point point)
         {
             if (point.X < 0 || point.X >= _width) { return null; }
             if (point.Y < 0 || point.Y >= _height) { return null; }
@@ -189,7 +286,7 @@ public class Day10 : IDay
             return _distances[offset];
         }
 
-        public void SetDistance(Point point, int distance)
+        private void SetDistance(Point point, int distance)
         {
             if (point.X < 0 || point.X >= _width) { return; }
             if (point.Y < 0 || point.Y >= _height) { return; }
@@ -197,7 +294,7 @@ public class Day10 : IDay
             _distances[offset] = distance;
         }
 
-        public Point? FollowPipe(Point point, Point prevPoint)
+        private Point? FollowPipe(Point point, Point prevPoint)
         {
             char? cell = GetCell(point);
             if (cell == null)
@@ -293,7 +390,7 @@ public class Day10 : IDay
             return null;
         }
 
-        public void FollowPipeSettingDistance(Point point, Point prevPoint)
+        private void FollowPipeSettingDistance(Point point, Point prevPoint)
         {
             int distance = 0;
             do
@@ -326,6 +423,147 @@ public class Day10 : IDay
                 }
             }
             return max;
+        }
+
+        public void TraceLoop()
+        {
+            Point startPoint = SearchCell('S') ?? new Point(0, 0);
+            SetDistance(startPoint, 0);
+
+            FollowPipeSettingDistance(new Point(startPoint.X + 1, startPoint.Y), startPoint);
+            FollowPipeSettingDistance(new Point(startPoint.X - 1, startPoint.Y), startPoint);
+            FollowPipeSettingDistance(new Point(startPoint.X, startPoint.Y + 1), startPoint);
+            FollowPipeSettingDistance(new Point(startPoint.X, startPoint.Y - 1), startPoint);
+        }
+
+        private char CalculateCell(Point point)
+        {
+            Point? pointRight =FollowPipe(new Point(point.X + 1, point.Y), point);
+            Point? pointLeft =FollowPipe(new Point(point.X - 1, point.Y), point);
+            Point? pointDown =FollowPipe(new Point(point.X, point.Y + 1), point);
+            Point? pointUp =FollowPipe(new Point(point.X, point.Y - 1), point);
+            if (pointRight != null && pointLeft == null && pointDown != null && pointUp == null)
+            {
+                return 'F';
+            }
+            if (pointRight != null && pointLeft == null && pointDown == null && pointUp != null)
+            {
+                return 'L';
+            }
+            if (pointRight == null && pointLeft != null && pointDown != null && pointUp == null)
+            {
+                return '7';
+            }
+            if (pointRight == null && pointLeft != null && pointDown == null && pointUp != null)
+            {
+                return 'J';
+            }
+            if (pointRight == null && pointLeft == null && pointDown != null && pointUp != null)
+            {
+                return '|';
+            }
+            if (pointRight != null && pointLeft != null && pointDown == null && pointUp == null)
+            {
+                return '-';
+            }
+            return '.';
+        }
+
+        private char GetCellInLoop(Point point)
+        {
+            int? distance = GetDistance(point);
+            if (distance == null) { return '.'; }
+            char? cell = GetCell(point);
+            if (cell == 'S')
+            {
+                cell = CalculateCell(point);
+            }
+            return cell ?? '.';
+        }
+
+        public int CountInsideLoop()
+        {
+            int countInside = 0;
+            Point point = new(0, 0);
+            for (int j = 0; j < _height; j++)
+            {
+                bool? inside = false;
+                char? cellStart = null;
+                for (int i = 0; i < _width; i++)
+                {
+                    point.X = i;
+                    point.Y = j;
+                    char cell = GetCellInLoop(point);
+                    if (cell == '.')
+                    {
+                        if (inside == true)
+                        {
+                            countInside++;
+                        }
+                    }
+                    else if (cell == '|')
+                    {
+                        inside = inside != true;
+                    }
+                    else if (cell == 'J')
+                    {
+                        if(cellStart == 'F')
+                        {
+                            inside = inside != true;
+                            cellStart = null;
+                        }
+                        else if(cellStart == 'L')
+                        {
+                            cellStart = null;
+                        }
+                    }
+                    else if (cell == 'F')
+                    {
+                        if (cellStart == null)
+                        {
+                            cellStart = 'F';
+                        }
+                        else if(cellStart == 'J')
+                        {
+                            inside = inside != true;
+                            cellStart = null;
+                        }
+                        else if(cellStart == '7')
+                        {
+                            cellStart = null;
+                        }
+                    }
+                    else if (cell == '7')
+                    {
+                        if(cellStart == 'F')
+                        {
+                            cellStart = null;
+                        }
+                        else if(cellStart == 'L')
+                        {
+                            inside = inside != true;
+                            cellStart = null;
+                        }
+                    }
+                    else if (cell == 'L')
+                    {
+                        if (cellStart == null)
+                        {
+                            cellStart = 'L';
+                        }
+                        else if(cellStart == 'J')
+                        {
+                            cellStart = null;
+                        }
+                        else if(cellStart == '7')
+                        {
+                            inside = inside != true;
+                            cellStart = null;
+                        }
+                    }
+                }
+            }
+            return countInside;
         }
     }
 }
