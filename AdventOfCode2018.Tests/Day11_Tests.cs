@@ -59,7 +59,7 @@ public class Day11_Tests
     public void ResolvePart2__Test1()
     {
         Day11 day = new();
-        string result = day.ResolvePart2(new[] { "18" });
+        string result = day.ResolvePart2(["18"]);
         Assert.Equal("90,269,16", result);
     }
 
@@ -67,7 +67,7 @@ public class Day11_Tests
     public void ResolvePart2__Test2()
     {
         Day11 day = new();
-        string result = day.ResolvePart2(new[] { "42" });
+        string result = day.ResolvePart2(["42"]);
         Assert.Equal("232,251,12", result);
     }
 }

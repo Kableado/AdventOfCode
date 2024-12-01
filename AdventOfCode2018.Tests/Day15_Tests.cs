@@ -9,7 +9,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "#######",
             "#.G...#",
             "#...EG#",
@@ -17,7 +17,7 @@ public class Day15_Tests
             "#..G#E#",
             "#.....#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("27730", result);
     }
@@ -27,7 +27,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "#######",
             "#G..#E#",
             "#E#E.E#",
@@ -35,17 +35,17 @@ public class Day15_Tests
             "#...#E#",
             "#...E.#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("36334", result);
     }
-        
+
     [Fact]
     public void ResolvePart1__Test3()
     {
         Day15 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "#######",
             "#E..EG#",
             "#.#G.E#",
@@ -53,7 +53,7 @@ public class Day15_Tests
             "#G..#.#",
             "#..E#.#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("39514", result);
     }
@@ -63,7 +63,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "#######",
             "#E.G#.#",
             "#.#G..#",
@@ -71,7 +71,7 @@ public class Day15_Tests
             "#G..#.#",
             "#...E.#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("27755", result);
     }
@@ -81,7 +81,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "#######",
             "#.E...#",
             "#.#..G#",
@@ -89,7 +89,7 @@ public class Day15_Tests
             "#E#G#G#",
             "#...#G#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("28944", result);
     }
@@ -99,7 +99,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "#########",
             "#G......#",
             "#.E.#...#",
@@ -109,7 +109,7 @@ public class Day15_Tests
             "#.G...G.#",
             "#.....G.#",
             "#########",
-        });
+        ]);
 
         Assert.Equal("18740", result);
     }
@@ -123,7 +123,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "#######",
             "#.G...#",
             "#...EG#",
@@ -131,17 +131,17 @@ public class Day15_Tests
             "#..G#E#",
             "#.....#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("4988", result);
     }
-        
+
     [Fact]
     public void ResolvePart2__Test3()
     {
         Day15 day = new();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "#######",
             "#E..EG#",
             "#.#G.E#",
@@ -149,7 +149,7 @@ public class Day15_Tests
             "#G..#.#",
             "#..E#.#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("31284", result);
     }
@@ -159,7 +159,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "#######",
             "#E.G#.#",
             "#.#G..#",
@@ -167,7 +167,7 @@ public class Day15_Tests
             "#G..#.#",
             "#...E.#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("3478", result);
     }
@@ -177,7 +177,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "#######",
             "#.E...#",
             "#.#..G#",
@@ -185,7 +185,7 @@ public class Day15_Tests
             "#E#G#G#",
             "#...#G#",
             "#######",
-        });
+        ]);
 
         Assert.Equal("6474", result);
     }
@@ -195,7 +195,7 @@ public class Day15_Tests
     {
         Day15 day = new();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "#########",
             "#G......#",
             "#.E.#...#",
@@ -205,7 +205,7 @@ public class Day15_Tests
             "#.G...G.#",
             "#.....G.#",
             "#########",
-        });
+        ]);
 
         Assert.Equal("1140", result);
     }

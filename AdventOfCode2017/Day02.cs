@@ -51,10 +51,10 @@ public class Day02 : IDay
     public string ResolvePart1(string[] inputs)
     {
         int checksum = 0;
-        foreach(string input in inputs)
+        foreach (string input in inputs)
         {
             int[] row = input
-                .Split(new[] { " ", "	" }, StringSplitOptions.RemoveEmptyEntries)
+                .Split([" ", "	"], StringSplitOptions.RemoveEmptyEntries)
                 .Select(cell => Convert.ToInt32(cell))
                 .ToArray();
             int max = row.Max();
@@ -70,7 +70,7 @@ public class Day02 : IDay
         foreach (string input in inputs)
         {
             int[] row = input
-                .Split(new[] { " ", "	" }, StringSplitOptions.RemoveEmptyEntries)
+                .Split([" ", "	"], StringSplitOptions.RemoveEmptyEntries)
                 .Select(cell => Convert.ToInt32(cell))
                 .ToArray();
 

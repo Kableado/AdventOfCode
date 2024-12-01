@@ -160,17 +160,11 @@ public class Day16 : IDay
 
         private readonly List<ChronoInstruction> _instructions;
 
-        private class ChronoInstruction
+        private class ChronoInstruction(string opName, Action<int, int, int> opFunc)
         {
             public int OpCode { get; set; } = -1;
-            public string OpName { get; }
-            public Action<int, int, int> OpFunc { get; }
-
-            public ChronoInstruction(string opName, Action<int, int, int> opFunc)
-            {
-                OpName = opName;
-                OpFunc = opFunc;
-            }
+            public string OpName { get; } = opName;
+            public Action<int, int, int> OpFunc { get; } = opFunc;
 
             public Dictionary<int, int> OpCodeHistogram { get; } = new();
 
@@ -191,7 +185,7 @@ public class Day16 : IDay
         public ChronoMachine()
         {
             _registers = new int[4];
-            _instructions = new List<ChronoInstruction> {
+            _instructions = [
                 new("addr", Op_AddR),
                 new("addi", Op_AddI),
                 new("mulr", Op_MulR),
@@ -208,7 +202,7 @@ public class Day16 : IDay
                 new("eqir", Op_EqIR),
                 new("eqri", Op_EqRI),
                 new("eqrr", Op_EqRR),
-            };
+            ];
         }
 
         public void ResetRegisters()
@@ -341,7 +335,7 @@ public class Day16 : IDay
 
         public void InitOpCodes(bool debug = false)
         {
-            if(debug)
+            if (debug)
             {
                 foreach (ChronoInstruction instruction in _instructions)
                 {
@@ -374,7 +368,7 @@ public class Day16 : IDay
 
                     instruction.OpCode = opCode;
                     _dictInstructions.Add(opCode, instruction);
-                    if(debug) { Console.WriteLine($"{instruction.OpName}: {instruction.OpCode}"); }
+                    if (debug) { Console.WriteLine($"{instruction.OpName}: {instruction.OpCode}"); }
                 }
             }
         }

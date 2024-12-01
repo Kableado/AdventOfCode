@@ -69,7 +69,7 @@ public class Day23 : IDay
     {
         List<NanoBot> nanoBots = NanoBot.ListFromStrings(inputs);
         NanoBot bestNanoBot = nanoBots.OrderBy(nanoBot => nanoBot.Range).LastOrDefault();
-        int countInRange = nanoBots.Where(nanoBot => bestNanoBot.InRange(nanoBot)).Count();
+        int countInRange = nanoBots.Count(nanoBot => bestNanoBot.InRange(nanoBot));
         return countInRange.ToString();
     }
 
@@ -82,7 +82,7 @@ public class Day23 : IDay
         long minX = long.MaxValue;
         long minY = long.MaxValue;
         long minZ = long.MaxValue;
-        foreach(NanoBot nanoBot in nanoBots)
+        foreach (NanoBot nanoBot in nanoBots)
         {
             if (nanoBot.X < minX) { minX = nanoBot.X; }
             if (nanoBot.X > maxX) { maxX = nanoBot.X; }
@@ -95,7 +95,7 @@ public class Day23 : IDay
         long sizeY = maxY - minY;
         long sizeZ = maxZ - minZ;
         long scale = Math.Min(sizeX, Math.Min(sizeY, sizeZ));
-            
+
         do
         {
             scale /= 2;
@@ -112,11 +112,11 @@ public class Day23 : IDay
                     for (long i = minX; i <= maxX; i += scale)
                     {
                         int count = 0;
-                        foreach(NanoBot nanoBot in nanoBots)
+                        foreach (NanoBot nanoBot in nanoBots)
                         {
                             if (nanoBot.InRange(i, j, k, scale)) { count++; }
                         }
-                        if(count> bestCount)
+                        if (count > bestCount)
                         {
                             bestX = i;
                             bestY = j;
@@ -134,7 +134,7 @@ public class Day23 : IDay
             minZ = bestZ - scale;
             maxZ = bestZ + scale;
 
-            if(scale == 1)
+            if (scale == 1)
             {
                 long distance = bestX + bestY + bestZ;
                 return distance.ToString();
@@ -145,14 +145,14 @@ public class Day23 : IDay
 
     public class NanoBot
     {
-        public long X { get; set; }
-        public long Y { get; set; }
-        public long Z { get; set; }
-        public long Range { get; set; }
+        public long X { get; private init; }
+        public long Y { get; private init; }
+        public long Z { get; private init; }
+        public long Range { get; private init; }
 
-        public static NanoBot FromString(string strInput)
+        private static NanoBot FromString(string strInput)
         {
-            string[] parts = strInput.Split(new[] { "pos=<", ",", ">, r=", }, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = strInput.Split(["pos=<", ",", ">, r="], StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length != 4) { return null; }
             NanoBot nanoBot = new() {
                 X = Convert.ToInt64(parts[0]),
@@ -166,18 +166,18 @@ public class Day23 : IDay
         public static List<NanoBot> ListFromStrings(string[] inputs)
         {
             List<NanoBot> nanoBots = inputs
-                .Select(strInput => FromString(strInput))
+                .Select(FromString)
                 .Where(nanoBot => nanoBot != null)
                 .ToList();
             return nanoBots;
         }
 
-        public long ManhattanDistance(NanoBot other)
+        private long ManhattanDistance(NanoBot other)
         {
             return ManhattanDistance(other.X, other.Y, other.Z);
         }
 
-        public long ManhattanDistance(long x, long y, long z)
+        private long ManhattanDistance(long x, long y, long z)
         {
             long distance = Math.Abs(X - x) + Math.Abs(Y - y) + Math.Abs(Z - z);
             return distance;

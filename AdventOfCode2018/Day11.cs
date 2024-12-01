@@ -190,7 +190,7 @@ public class Day11 : IDay
         return powerLevel;
     }
 
-    public static void SearchBestRegion(int width, int height, int serial, out int x, out int y, out int size)
+    private static void SearchBestRegion(int width, int height, int serial, out int x, out int y, out int size)
     {
         int[,] summationFiled = GenerateSumationField(width, height, serial);
         int bestPowerLevel = int.MinValue;

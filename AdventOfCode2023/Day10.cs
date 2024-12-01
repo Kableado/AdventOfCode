@@ -228,16 +228,10 @@ public class Day10 : IDay
         return countInside.ToString();
     }
 
-    private struct Point
+    private struct Point(int x, int y)
     {
-        public int X;
-        public int Y;
-
-        public Point(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
+        public int X = x;
+        public int Y = y;
     }
 
     private class PipeMaze
@@ -323,7 +317,7 @@ public class Day10 : IDay
                         x: point.X + 1,
                         y: point.Y);
                 }
-                if(point.Y == prevPoint.Y && prevPoint.X > point.X)
+                if (point.Y == prevPoint.Y && prevPoint.X > point.X)
                 {
                     return new Point(
                         x: point.X,
@@ -339,7 +333,7 @@ public class Day10 : IDay
                         x: point.X - 1,
                         y: point.Y);
                 }
-                if(point.Y == prevPoint.Y && prevPoint.X < point.X)
+                if (point.Y == prevPoint.Y && prevPoint.X < point.X)
                 {
                     return new Point(
                         x: point.X,
@@ -355,7 +349,7 @@ public class Day10 : IDay
                         x: point.X - 1,
                         y: point.Y);
                 }
-                if(point.Y == prevPoint.Y && prevPoint.X < point.X)
+                if (point.Y == prevPoint.Y && prevPoint.X < point.X)
                 {
                     return new Point(
                         x: point.X,
@@ -371,7 +365,7 @@ public class Day10 : IDay
                         x: point.X + 1,
                         y: point.Y);
                 }
-                if(point.Y == prevPoint.Y && prevPoint.X > point.X)
+                if (point.Y == prevPoint.Y && prevPoint.X > point.X)
                 {
                     return new Point(
                         x: point.X,
@@ -397,7 +391,7 @@ public class Day10 : IDay
             {
                 Point? nextPoint = FollowPipe(point, prevPoint);
                 if (nextPoint == null) { break; }
-                
+
                 distance++;
                 int? currentDistance = GetDistance(point);
                 if (currentDistance > distance || currentDistance == null)
@@ -409,7 +403,7 @@ public class Day10 : IDay
                 point = nextPoint.Value;
             } while (true);
         }
-        
+
         public int GetMaxDistance()
         {
             int max = int.MinValue;
@@ -438,10 +432,10 @@ public class Day10 : IDay
 
         private char CalculateCell(Point point)
         {
-            Point? pointRight =FollowPipe(new Point(point.X + 1, point.Y), point);
-            Point? pointLeft =FollowPipe(new Point(point.X - 1, point.Y), point);
-            Point? pointDown =FollowPipe(new Point(point.X, point.Y + 1), point);
-            Point? pointUp =FollowPipe(new Point(point.X, point.Y - 1), point);
+            Point? pointRight = FollowPipe(new Point(point.X + 1, point.Y), point);
+            Point? pointLeft = FollowPipe(new Point(point.X - 1, point.Y), point);
+            Point? pointDown = FollowPipe(new Point(point.X, point.Y + 1), point);
+            Point? pointUp = FollowPipe(new Point(point.X, point.Y - 1), point);
             if (pointRight != null && pointLeft == null && pointDown != null && pointUp == null)
             {
                 return 'F';
@@ -507,12 +501,12 @@ public class Day10 : IDay
                     }
                     else if (cell == 'J')
                     {
-                        if(cellStart == 'F')
+                        if (cellStart == 'F')
                         {
                             inside = inside != true;
                             cellStart = null;
                         }
-                        else if(cellStart == 'L')
+                        else if (cellStart == 'L')
                         {
                             cellStart = null;
                         }
@@ -523,23 +517,23 @@ public class Day10 : IDay
                         {
                             cellStart = 'F';
                         }
-                        else if(cellStart == 'J')
+                        else if (cellStart == 'J')
                         {
                             inside = inside != true;
                             cellStart = null;
                         }
-                        else if(cellStart == '7')
+                        else if (cellStart == '7')
                         {
                             cellStart = null;
                         }
                     }
                     else if (cell == '7')
                     {
-                        if(cellStart == 'F')
+                        if (cellStart == 'F')
                         {
                             cellStart = null;
                         }
-                        else if(cellStart == 'L')
+                        else if (cellStart == 'L')
                         {
                             inside = inside != true;
                             cellStart = null;
@@ -551,11 +545,11 @@ public class Day10 : IDay
                         {
                             cellStart = 'L';
                         }
-                        else if(cellStart == 'J')
+                        else if (cellStart == 'J')
                         {
                             cellStart = null;
                         }
-                        else if(cellStart == '7')
+                        else if (cellStart == '7')
                         {
                             inside = inside != true;
                             cellStart = null;

@@ -50,7 +50,7 @@ What letters are common between the two correct box IDs? (In the example above, 
 
 public class Day02 : IDay
 {
-    private int CountOccurrencesOfLetter(string text, char letter)
+    private static int CountOccurrencesOfLetter(string text, char letter)
     {
         return text.Count(c => (c == letter));
     }
@@ -75,7 +75,7 @@ public class Day02 : IDay
         int tripletsCount = 0;
         foreach (string input in inputs)
         {
-            var hasPairsAndTriplets = HasPairsAndTriplets(input);
+            Tuple<bool, bool> hasPairsAndTriplets = HasPairsAndTriplets(input);
             if (hasPairsAndTriplets.Item1) { pairsCount++; }
             if (hasPairsAndTriplets.Item2) { tripletsCount++; }
         }
@@ -104,11 +104,10 @@ public class Day02 : IDay
         {
             for (int j = (i + 1); j < inputs.Length; j++)
             {
-                var result = CompareIDPair(inputs[i], inputs[j]);
+                Tuple<int, string> result = CompareIDPair(inputs[i], inputs[j]);
                 if (result.Item1 == 1) { return result.Item2; }
             }
         }
         return string.Empty;
     }
-
 }

@@ -9,7 +9,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart1(new[] { "+1", "-2", "+3", "+1", });
+        string result = day01.ResolvePart1(["+1", "-2", "+3", "+1"]);
 
         Assert.Equal("3", result);
     }
@@ -19,7 +19,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart1(new[] { "+1", "+1", "+1", });
+        string result = day01.ResolvePart1(["+1", "+1", "+1"]);
 
         Assert.Equal("3", result);
     }
@@ -29,7 +29,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart1(new[] { "+1", "+1", "-2", });
+        string result = day01.ResolvePart1(["+1", "+1", "-2"]);
 
         Assert.Equal("0", result);
     }
@@ -39,7 +39,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart1(new[] { "-1", "-2", "-3", });
+        string result = day01.ResolvePart1(["-1", "-2", "-3"]);
 
         Assert.Equal("-6", result);
     }
@@ -53,7 +53,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart2(new[] { "+1", "-2", "+3", "+1", });
+        string result = day01.ResolvePart2(["+1", "-2", "+3", "+1"]);
 
         Assert.Equal("2", result);
     }
@@ -63,7 +63,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart2(new[] { "+1", "-1", });
+        string result = day01.ResolvePart2(["+1", "-1"]);
 
         Assert.Equal("0", result);
     }
@@ -73,7 +73,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart2(new[] { "+3", "+3", "+4", "-2", "-4", });
+        string result = day01.ResolvePart2(["+3", "+3", "+4", "-2", "-4"]);
 
         Assert.Equal("10", result);
     }
@@ -83,7 +83,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart2(new[] { "-6", "+3", "+8", "+5", "-6", });
+        string result = day01.ResolvePart2(["-6", "+3", "+8", "+5", "-6"]);
 
         Assert.Equal("5", result);
     }
@@ -93,7 +93,7 @@ public class Day01_Tests
     {
         Day01 day01 = new();
 
-        string result = day01.ResolvePart2(new[] { "+7", "+7", "-2", "-7", "-4", });
+        string result = day01.ResolvePart2(["+7", "+7", "-2", "-7", "-4"]);
 
         Assert.Equal("14", result);
     }

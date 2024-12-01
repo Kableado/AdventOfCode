@@ -5,9 +5,9 @@ public class Day04_Tests
     [Fact]
     public void ResolvePart1__Example()
     {
-        var day = new Day04();
+        Day04 day = new Day04();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd",
             "byr:1937 iyr:2017 cid:147 hgt:183cm",
             "",
@@ -21,7 +21,7 @@ public class Day04_Tests
             "",
             "hcl:#cfa07d eyr:2025 pid:166559648",
             "iyr:2011 ecl:brn hgt:59in",
-        });
+        ]);
 
         Assert.Equal("2", result);
     }
@@ -29,9 +29,9 @@ public class Day04_Tests
     [Fact]
     public void ResolvePart2__ExampleInvalid()
     {
-        var day = new Day04();
+        Day04 day = new Day04();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "eyr:1972 cid:100",
             "hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926",
             "",
@@ -45,7 +45,7 @@ public class Day04_Tests
             "hgt:59cm ecl:zzz",
             "eyr:2038 hcl:74454a iyr:2023",
             "pid:3556412378 byr:2007",
-        });
+        ]);
 
         Assert.Equal("0", result);
     }
@@ -53,9 +53,9 @@ public class Day04_Tests
     [Fact]
     public void ResolvePart2__ExampleValid()
     {
-        var day = new Day04();
+        Day04 day = new Day04();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980",
             "hcl:#623a2f",
             "",
@@ -68,7 +68,7 @@ public class Day04_Tests
             "eyr:2022",
             "",
             "iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719",
-        });
+        ]);
 
         Assert.Equal("4", result);
     }

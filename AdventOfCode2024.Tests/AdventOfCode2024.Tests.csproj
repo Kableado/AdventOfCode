@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>AdventOfCode2023.Tests</RootNamespace>
+        <RootNamespace>AdventOfCode2024.Tests</RootNamespace>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\AdventOfCode2024\AdventOfCode2024.csproj" />
+        <ProjectReference Include="..\AdventOfCode2024\AdventOfCode2024.csproj"/>
     </ItemGroup>
 
 </Project>

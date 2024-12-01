@@ -372,7 +372,7 @@ public class Day13 : IDay
     private int _width;
     private int _height;
     private char[,] _grid;
-    private List<Train> _trains = new();
+    private readonly List<Train> _trains = [];
 
     private void Initialize(string[] inputs)
     {
@@ -387,8 +387,7 @@ public class Day13 : IDay
                 char cell = inputs[j][i];
                 if (cell == '^')
                 {
-                    _trains.Add(new Train
-                    {
+                    _trains.Add(new Train {
                         X = i,
                         Y = j,
                         Direction = TrainDirection.North,
@@ -398,8 +397,7 @@ public class Day13 : IDay
                 }
                 if (cell == 'v')
                 {
-                    _trains.Add(new Train
-                    {
+                    _trains.Add(new Train {
                         X = i,
                         Y = j,
                         Direction = TrainDirection.South,
@@ -409,8 +407,7 @@ public class Day13 : IDay
                 }
                 if (cell == '<')
                 {
-                    _trains.Add(new Train
-                    {
+                    _trains.Add(new Train {
                         X = i,
                         Y = j,
                         Direction = TrainDirection.West,
@@ -420,8 +417,7 @@ public class Day13 : IDay
                 }
                 if (cell == '>')
                 {
-                    _trains.Add(new Train
-                    {
+                    _trains.Add(new Train {
                         X = i,
                         Y = j,
                         Direction = TrainDirection.East,
@@ -502,5 +498,4 @@ public class Day13 : IDay
             Console.WriteLine();
         }
     }
-
 }

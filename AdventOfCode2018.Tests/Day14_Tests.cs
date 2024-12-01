@@ -9,7 +9,7 @@ public class Day14_Tests
     {
         Day14 day = new();
 
-        string result = day.ResolvePart1(new[] { "9", });
+        string result = day.ResolvePart1(["9"]);
 
         Assert.Equal("5158916779", result);
     }
@@ -19,7 +19,7 @@ public class Day14_Tests
     {
         Day14 day = new();
 
-        string result = day.ResolvePart1(new[] { "5", });
+        string result = day.ResolvePart1(["5"]);
 
         Assert.Equal("0124515891", result);
     }
@@ -29,7 +29,7 @@ public class Day14_Tests
     {
         Day14 day = new();
 
-        string result = day.ResolvePart1(new[] { "18", });
+        string result = day.ResolvePart1(["18"]);
 
         Assert.Equal("9251071085", result);
     }
@@ -39,7 +39,7 @@ public class Day14_Tests
     {
         Day14 day = new();
 
-        string result = day.ResolvePart1(new[] { "2018", });
+        string result = day.ResolvePart1(["2018"]);
 
         Assert.Equal("5941429882", result);
     }
@@ -53,7 +53,7 @@ public class Day14_Tests
     {
         Day14 day = new();
 
-        string result = day.ResolvePart2(new[] { "51589", });
+        string result = day.ResolvePart2(["51589"]);
 
         Assert.Equal("9", result);
     }
@@ -63,7 +63,7 @@ public class Day14_Tests
     {
         Day14 day = new();
 
-        string result = day.ResolvePart2(new[] { "01245", });
+        string result = day.ResolvePart2(["01245"]);
 
         Assert.Equal("5", result);
     }
@@ -73,7 +73,7 @@ public class Day14_Tests
     {
         Day14 day = new();
 
-        string result = day.ResolvePart2(new[] { "92510", });
+        string result = day.ResolvePart2(["92510"]);
 
         Assert.Equal("18", result);
     }
@@ -83,7 +83,7 @@ public class Day14_Tests
     {
         Day14 day = new();
 
-        string result = day.ResolvePart2(new[] { "59414", });
+        string result = day.ResolvePart2(["59414"]);
 
         Assert.Equal("2018", result);
     }

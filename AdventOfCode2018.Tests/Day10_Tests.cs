@@ -7,7 +7,7 @@ public class Day10_Tests
     {
         Day10 day = new() { Width = 12, Height = 10 };
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "position=< 9,  1> velocity=< 0,  2>",
             "position=< 7,  0> velocity=<-1,  0>",
             "position=< 3, -2> velocity=<-1,  1>",
@@ -39,7 +39,7 @@ public class Day10_Tests
             "position=< 5,  9> velocity=< 1, -2>",
             "position=<14,  7> velocity=<-2,  0>",
             "position=<-3,  6> velocity=< 2, -1>",
-        });
+        ]);
 
         Assert.Equal(
             Environment.NewLine + "............" +
@@ -59,7 +59,7 @@ public class Day10_Tests
     {
         Day10 day = new();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "position=< 9,  1> velocity=< 0,  2>",
             "position=< 7,  0> velocity=<-1,  0>",
             "position=< 3, -2> velocity=<-1,  1>",
@@ -91,7 +91,7 @@ public class Day10_Tests
             "position=< 5,  9> velocity=< 1, -2>",
             "position=<14,  7> velocity=<-2,  0>",
             "position=<-3,  6> velocity=< 2, -1>",
-        });
+        ]);
 
         Assert.Equal("3", result);
     }

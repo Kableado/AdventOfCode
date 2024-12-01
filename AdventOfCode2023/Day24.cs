@@ -103,24 +103,17 @@ public class Day24 : IDay
         throw new NotImplementedException();
     }
 
-    public struct Vector3D
+    public struct Vector3D(long x, long y, long z)
     {
-        public readonly long X;
-        public readonly long Y;
-        public readonly long Z;
-
-        public Vector3D(long x, long y, long z)
-        {
-            X = x;
-            Y = y;
-            Z = z;
-        }
+        public readonly long X = x;
+        public readonly long Y = y;
+        public readonly long Z = z;
     }
 
     public readonly struct Hail
     {
         public readonly Vector3D Position;
-        public readonly Vector3D Velocity;
+        private readonly Vector3D _velocity;
 
         public Hail(string input)
         {
@@ -131,7 +124,7 @@ public class Day24 : IDay
                 y: Convert.ToInt64(strPosition[1]),
                 z: Convert.ToInt64(strPosition[2]));
             string[] strVelocity = parts[1].Split(", ");
-            Velocity = new Vector3D(
+            _velocity = new Vector3D(
                 x: Convert.ToInt64(strVelocity[0]),
                 y: Convert.ToInt64(strVelocity[1]),
                 z: Convert.ToInt64(strVelocity[2]));
@@ -139,21 +132,21 @@ public class Day24 : IDay
 
         public (bool intersects, double s, double t, Vector3D point) Intersect2D(Hail other)
         {
-            long s_Div = (-other.Velocity.X * Velocity.Y + Velocity.X * other.Velocity.Y);
+            long s_Div = (-other._velocity.X * _velocity.Y + _velocity.X * other._velocity.Y);
             if (s_Div == 0)
             {
                 return (false, 0, 0, new Vector3D());
             }
-            double s = (-Velocity.Y * (Position.X - other.Position.X) + Velocity.X * (Position.Y - other.Position.Y)) / (double)s_Div;
+            double s = (-_velocity.Y * (Position.X - other.Position.X) + _velocity.X * (Position.Y - other.Position.Y)) / (double)s_Div;
 
-            long t_Div = (-other.Velocity.X * Velocity.Y + Velocity.X * other.Velocity.Y);
+            long t_Div = (-other._velocity.X * _velocity.Y + _velocity.X * other._velocity.Y);
             if (t_Div == 0)
             {
                 return (false, 0, 0, new Vector3D());
             }
-            double t = (other.Velocity.X * (Position.Y - other.Position.Y) - other.Velocity.Y * (Position.X - other.Position.X)) / (double)t_Div;
+            double t = (other._velocity.X * (Position.Y - other.Position.Y) - other._velocity.Y * (Position.X - other.Position.X)) / (double)t_Div;
 
-            Vector3D intersection = new((long)(Position.X + t * Velocity.X), (long)(Position.Y + t * Velocity.Y), 0);
+            Vector3D intersection = new((long)(Position.X + t * _velocity.X), (long)(Position.Y + t * _velocity.Y), 0);
             return (true, s, t, intersection);
         }
     }

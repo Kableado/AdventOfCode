@@ -5,9 +5,9 @@ public class Day08_Tests
     [Fact]
     public void ResolvePart1__Example()
     {
-        var day = new Day08();
+        Day08 day = new Day08();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "nop +0",
             "acc +1",
             "jmp +4",
@@ -17,7 +17,7 @@ public class Day08_Tests
             "acc +1",
             "jmp -4",
             "acc +6",
-        });
+        ]);
 
         Assert.Equal("5", result);
     }
@@ -25,9 +25,9 @@ public class Day08_Tests
     [Fact]
     public void ResolvePart2__Example()
     {
-        var day = new Day08();
+        Day08 day = new Day08();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "nop +0",
             "acc +1",
             "jmp +4",
@@ -37,7 +37,7 @@ public class Day08_Tests
             "acc +1",
             "jmp -4",
             "acc +6",
-        });
+        ]);
 
         Assert.Equal("8", result);
     }

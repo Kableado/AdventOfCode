@@ -5,9 +5,9 @@ public class Day09_Tests
     [Fact]
     public void ResolvePart1__Example()
     {
-        var day = new Day09();
+        Day09 day = new Day09();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "35",
             "20",
             "15",
@@ -28,7 +28,7 @@ public class Day09_Tests
             "277",
             "309",
             "576",
-        });
+        ]);
 
         Assert.Equal("127", result);
     }
@@ -36,9 +36,9 @@ public class Day09_Tests
     [Fact]
     public void ResolvePart2__Example()
     {
-        var day = new Day09();
+        Day09 day = new Day09();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             "35",
             "20",
             "15",
@@ -59,7 +59,7 @@ public class Day09_Tests
             "277",
             "309",
             "576",
-        });
+        ]);
 
         Assert.Equal("62", result);
     }

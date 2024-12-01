@@ -164,15 +164,15 @@ public class Day09 : IDay
 
             return newLastNumber;
         }
-        
+
         public long ExtrapolatePast()
         {
-            _derivatives.Last().Insert(0,0);
+            _derivatives.Last().Insert(0, 0);
             for (int i = _derivatives.Count - 2; i >= 0; i--)
             {
                 long firstDerivative1 = _derivatives[i].First();
                 long firstDerivative0 = _derivatives[i + 1].First();
-                _derivatives[i].Insert(0,firstDerivative1 - firstDerivative0);
+                _derivatives[i].Insert(0, firstDerivative1 - firstDerivative0);
             }
             long firstNumber = _numbers.First();
             long firstDerivative = _derivatives[0].First();

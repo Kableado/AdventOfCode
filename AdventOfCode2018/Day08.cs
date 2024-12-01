@@ -77,13 +77,13 @@ public class Day08 : IDay
 
     public class IntStream
     {
-        private int[] _values;
+        private readonly int[] _values;
         private int _index;
 
         public IntStream(string strValues)
         {
             _values = strValues
-                .Split(new[] { " ", }, StringSplitOptions.RemoveEmptyEntries)
+                .Split([" "], StringSplitOptions.RemoveEmptyEntries)
                 .Select(strVal => Convert.ToInt32(strVal))
                 .ToArray();
             _index = 0;
@@ -99,9 +99,9 @@ public class Day08 : IDay
 
     public class ChronoLicenceNode
     {
-        public List<ChronoLicenceNode> Childs { get; } = new();
+        public List<ChronoLicenceNode> Childs { get; } = [];
 
-        public List<int> Metadata { get; } = new();
+        public List<int> Metadata { get; } = [];
 
         public static ChronoLicenceNode BuildFromIntStream(IntStream stream)
         {

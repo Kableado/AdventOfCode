@@ -7,8 +7,7 @@ public class Day12_Tests
     {
         Day12 day = new();
 
-        string result = day.ResolvePart1(new[]
-        {
+        string result = day.ResolvePart1([
             "initial state: #..#.#..##......###...###",
             "",
             "...## => #",
@@ -25,7 +24,7 @@ public class Day12_Tests
             "###.. => #",
             "###.# => #",
             "####. => #",
-        });
+        ]);
 
         Assert.Equal("325", result);
     }

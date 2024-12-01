@@ -108,7 +108,7 @@ public class Day05 : IDay
     public string ResolvePart2(string[] inputs)
     {
         string input = inputs[0];
-        List<char> allUnitTypes = input.Select(c => char.ToLower(c)).Distinct().ToList();
+        List<char> allUnitTypes = input.Select(char.ToLower).Distinct().ToList();
 
         int minPolymerLenght = int.MaxValue;
         foreach (char unitType in allUnitTypes)

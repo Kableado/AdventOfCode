@@ -60,7 +60,7 @@ public class Day03 : IDay
 {
     public string ResolvePart1(string[] inputs)
     {
-        List<Claim> claims = inputs.Select(i => Claim.FromString(i)).ToList();
+        List<Claim> claims = inputs.Select(Claim.FromString).ToList();
 
         const int edgeSize = 1000;
         int[,] cells = new int[edgeSize, edgeSize];
@@ -92,9 +92,9 @@ public class Day03 : IDay
 
     public string ResolvePart2(string[] inputs)
     {
-        List<Claim> claims = inputs.Select(i => Claim.FromString(i)).ToList();
+        List<Claim> claims = inputs.Select(Claim.FromString).ToList();
 
-        Claim unoverlappingClaim = null;
+        Claim unOverlappingClaim = null;
         for (int i = 0; i < claims.Count; i++)
         {
             bool overlaps = false;
@@ -109,29 +109,43 @@ public class Day03 : IDay
             }
             if (overlaps == false)
             {
-                unoverlappingClaim = claims[i];
+                unOverlappingClaim = claims[i];
                 break;
             }
         }
-        return unoverlappingClaim.ID.ToString();
+        return unOverlappingClaim.ID.ToString();
 
     }
 
     public class Claim
     {
-        public int ID { get; set; }
+        public int ID { get; private set; }
 
-        public int Left { get; set; }
-        public int Top { get; set; }
+        public int Left { get; private set; }
+        public int Top { get; private set; }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
 
-        public int MinX { get { return Left; } }
-        public int MaxX { get { return Left + Width; } }
+        private int MinX
+        {
+            get { return Left; }
+        }
 
-        public int MinY { get { return Top; } }
-        public int MaxY { get { return Top + Height; } }
+        private int MaxX
+        {
+            get { return Left + Width; }
+        }
+
+        private int MinY
+        {
+            get { return Top; }
+        }
+
+        private int MaxY
+        {
+            get { return Top + Height; }
+        }
 
         public int GetArea()
         {
@@ -141,7 +155,7 @@ public class Day03 : IDay
         public static Claim FromString(string strClaim)
         {
             Claim claim = new();
-            string[] parts = strClaim.Split(new[] { " @ ", ",", ": ", "x", }, StringSplitOptions.None);
+            string[] parts = strClaim.Split([" @ ", ",", ": ", "x"], StringSplitOptions.None);
             claim.ID = Convert.ToInt32(parts[0].Substring(1));
             claim.Left = Convert.ToInt32(parts[1]);
             claim.Top = Convert.ToInt32(parts[2]);

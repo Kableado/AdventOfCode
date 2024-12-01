@@ -3,7 +3,7 @@
 public class Day09_Tests
 {
     #region MarbleGame_PlayGame
-    
+
     [Fact]
     public void MarbleGame_PlayGame__Test1()
     {
@@ -69,15 +69,15 @@ public class Day09_Tests
 
         Assert.Equal(37305, highScore);
     }
-    
+
     #endregion MarbleGame_PlayGame
-    
+
     [Fact]
     public void ResolvePart1__Test1()
     {
         Day09 day = new();
 
-        string result = day.ResolvePart1(new[] { "9 players; last marble is worth 25 points" });
+        string result = day.ResolvePart1(["9 players; last marble is worth 25 points"]);
 
         Assert.Equal("32", result);
     }
@@ -87,7 +87,7 @@ public class Day09_Tests
     {
         Day09 day = new();
 
-        string result = day.ResolvePart1(new[] { "10 players; last marble is worth 1618 points" });
+        string result = day.ResolvePart1(["10 players; last marble is worth 1618 points"]);
 
         Assert.Equal("8317", result);
     }
@@ -97,7 +97,7 @@ public class Day09_Tests
     {
         Day09 day = new();
 
-        string result = day.ResolvePart1(new[] { "13 players; last marble is worth 7999 points" });
+        string result = day.ResolvePart1(["13 players; last marble is worth 7999 points"]);
 
         Assert.Equal("146373", result);
     }
@@ -107,7 +107,7 @@ public class Day09_Tests
     {
         Day09 day = new();
 
-        string result = day.ResolvePart1(new[] { "17 players; last marble is worth 1104 points" });
+        string result = day.ResolvePart1(["17 players; last marble is worth 1104 points"]);
 
         Assert.Equal("2764", result);
     }
@@ -117,7 +117,7 @@ public class Day09_Tests
     {
         Day09 day = new();
 
-        string result = day.ResolvePart1(new[] { "21 players; last marble is worth 6111 points" });
+        string result = day.ResolvePart1(["21 players; last marble is worth 6111 points"]);
 
         Assert.Equal("54718", result);
     }
@@ -127,7 +127,7 @@ public class Day09_Tests
     {
         Day09 day = new();
 
-        string result = day.ResolvePart1(new[] { "30 players; last marble is worth 5807 points" });
+        string result = day.ResolvePart1(["30 players; last marble is worth 5807 points"]);
 
         Assert.Equal("37305", result);
     }

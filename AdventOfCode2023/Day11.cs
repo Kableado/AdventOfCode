@@ -130,8 +130,8 @@ public class Day11 : IDay
 
     private struct Point
     {
-        public long X { get; set; }
-        public long Y { get; set; }
+        public long X { get; init; }
+        public long Y { get; init; }
     }
 
     private class GalaxyMap

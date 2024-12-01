@@ -114,9 +114,9 @@ public class Day07 : IDay
 
     public class CamelCard
     {
-        private readonly static char[] Labels = { 'A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2' };
+        private readonly static char[] Labels = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'];
 
-        private readonly static char[] LabelsWithJoker = { 'A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J' };
+        private readonly static char[] LabelsWithJoker = ['A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J'];
         private const char JokerLabel = 'J';
 
         public enum Types
@@ -174,7 +174,7 @@ public class Day07 : IDay
                     dictLabelCounts.Add(JokerLabel, 5);
                 }
             }
-            
+
             if (dictLabelCounts.Count == 1) { return Types.FiveOfAKind; }
             if (dictLabelCounts.Count == 5) { return Types.HighCard; }
             if (dictLabelCounts.Count == 2)

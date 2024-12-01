@@ -163,5 +163,4 @@ public class Day09 : IDay
 
         return firstInvalid;
     }
-
 }

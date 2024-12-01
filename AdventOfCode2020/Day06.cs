@@ -67,10 +67,7 @@ public class Day06 : IDay
 
             foreach (char c in input)
             {
-                if (groupMap.ContainsKey(c) == false)
-                {
-                    groupMap.Add(c, true);
-                }
+                groupMap.TryAdd(c, true);
             }
         }
         if (groupMap.Count > 0)
@@ -78,7 +75,7 @@ public class Day06 : IDay
             groupMaps.Add(groupMap);
         }
 
-        int total = groupMaps.Sum(groupMap => groupMap.Count);
+        int total = groupMaps.Sum(dict => dict.Count);
         return total.ToString();
 
     }
@@ -101,13 +98,9 @@ public class Day06 : IDay
             groupCount++;
             foreach (char c in input)
             {
-                if (groupMap.ContainsKey(c) == false)
+                if (groupMap.TryAdd(c, 1) == false)
                 {
-                    groupMap.Add(c, 1);
-                }
-                else
-                {
-                    groupMap[c] = groupMap[c] + 1;
+                    groupMap[c] += 1;
                 }
             }
         }

@@ -96,7 +96,7 @@ public class Day06 : IDay
     {
         return inputs
             .Where(input => string.IsNullOrEmpty(input) == false)
-            .Select(input => ChronoPoint.FromString(input))
+            .Select(ChronoPoint.FromString)
             .ToList();
     }
 
@@ -183,12 +183,12 @@ public class Day06 : IDay
         return areaInRange;
     }
 
-    public int DistanceThresold { get; set; } = 10000;
+    public int DistanceThreshold { get; init; } = 10000;
 
     public string ResolvePart2(string[] inputs)
     {
         List<ChronoPoint> points = InputsToPoints(inputs);
-        int areaInRange = AreaInThresold(points, DistanceThresold);
+        int areaInRange = AreaInThresold(points, DistanceThreshold);
         return areaInRange.ToString();
     }
 
@@ -200,7 +200,7 @@ public class Day06 : IDay
         public static ChronoPoint FromString(string strPoint)
         {
             if (string.IsNullOrEmpty(strPoint)) { return null; }
-            string[] parts = strPoint.Split(new[] { ", ", }, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = strPoint.Split([", "], StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length < 2) { return null; }
             ChronoPoint point = new() {
                 X = Convert.ToInt32(parts[0]),

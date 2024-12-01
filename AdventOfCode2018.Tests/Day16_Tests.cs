@@ -7,7 +7,7 @@ public class Day16_Tests
     {
         Day16 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "Before: [3, 2, 1, 1]",
             "9 2 1 2",
             "After:  [3, 2, 2, 1]",
@@ -18,7 +18,7 @@ public class Day16_Tests
             "",
             "",
             "Garbage",
-        });
+        ]);
 
         Assert.Equal("2", result);
     }

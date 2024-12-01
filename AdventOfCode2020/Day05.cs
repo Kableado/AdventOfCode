@@ -169,8 +169,8 @@ public class Day05 : IDay
     private Seat Seat_Parse(string input)
     {
         if (input.Length != 10 ||
-            input.All(c => c == 'F' || c == 'B' || c == 'L' || c == 'R') == false ||
-            false)
+            input.All(c => c == 'F' || c == 'B' || c == 'L' || c == 'R') == false
+           )
         {
             return null;
         }

@@ -2,7 +2,7 @@ namespace AdventOfCode2023.Tests;
 
 public class Day05_Tests
 {
-    private readonly string[] _example = {
+    private readonly string[] _example = [
         "seeds: 79 14 55 13",
         "",
         "seed-to-soil map:",
@@ -36,13 +36,13 @@ public class Day05_Tests
         "humidity-to-location map:",
         "60 56 37",
         "56 93 4",
-    };
+    ];
 
     [Fact]
     public void ResolvePart1__Example()
     {
         Day05 day = new();
-        
+
         string result = day.ResolvePart1(_example);
 
         Assert.Equal("35", result);
@@ -52,7 +52,7 @@ public class Day05_Tests
     public void ResolvePart2__Example()
     {
         Day05 day = new();
-        
+
         string result = day.ResolvePart2(_example);
 
         Assert.Equal("46", result);
@@ -61,22 +61,22 @@ public class Day05_Tests
     [Fact]
     public void AlmanacMapping_ParseNext__Empty__Null()
     {
-        Day05.LinesReader reader = new(Array.Empty<string>());
+        Day05.LinesReader reader = new([]);
         Day05.AlmanacMapping? mapping = Day05.AlmanacMapping.ParseNext(reader);
-        
+
         Assert.Null(mapping);
     }
-    
+
     [Fact]
     public void AlmanacMapping_ParseNext__Example1()
     {
-        Day05.LinesReader reader = new(new[] { 
+        Day05.LinesReader reader = new([
             "seed-to-soil map:",
             "50 98 2",
             "52 50 48",
-        });
+        ]);
         Day05.AlmanacMapping? mapping = Day05.AlmanacMapping.ParseNext(reader);
-        
+
         Assert.NotNull(mapping);
         Assert.Equal("seed-to-soil", mapping.Name);
         Assert.Equal(2, mapping.RangeMappings.Count);
@@ -90,11 +90,11 @@ public class Day05_Tests
         const long value1 = 100;
         long valueMapped1 = mapping.Apply(value1);
         Assert.Equal(100, valueMapped1);
-        
+
         const long value2 = 99;
         long valueMapped2 = mapping.Apply(value2);
         Assert.Equal(51, valueMapped2);
-        
+
         const long value3 = 45;
         long valueMapped3 = mapping.Apply(value3);
         Assert.Equal(45, valueMapped3);
@@ -109,7 +109,7 @@ public class Day05_Tests
             DestinationStart = 1000,
             Length = 10,
         };
-        
+
         // ..........■■■■■■■■■■..........
         // #####.........................
         Day05.AlmanacRangeMapping range_Lower = new() {
@@ -124,7 +124,7 @@ public class Day05_Tests
         Assert.Equal(5, range_Lower_Result.PreClip.Value.Length);
         Assert.Null(range_Lower_Result.Clipped);
         Assert.Null(range_Lower_Result.PostClip);
-        
+
         // ..........■■■■■■■■■■..........
         // ##########....................
         Day05.AlmanacRangeMapping range_LowerTouching = new() {
@@ -139,7 +139,7 @@ public class Day05_Tests
         Assert.Equal(10, range_LowerTouching_Result.PreClip.Value.Length);
         Assert.Null(range_LowerTouching_Result.Clipped);
         Assert.Null(range_LowerTouching_Result.PostClip);
-        
+
         // ..........■■■■■■■■■■..........
         // .........................#####
         Day05.AlmanacRangeMapping range_Upper = new() {
@@ -154,7 +154,7 @@ public class Day05_Tests
         Assert.Equal(25, range_Upper_Result.PostClip.Value.OriginStart);
         Assert.Equal(25, range_Upper_Result.PostClip.Value.DestinationStart);
         Assert.Equal(5, range_Upper_Result.PostClip.Value.Length);
-        
+
         // ..........■■■■■■■■■■..........
         // ....................##########
         Day05.AlmanacRangeMapping range_UpperTouching = new() {
@@ -169,7 +169,7 @@ public class Day05_Tests
         Assert.Equal(20, range_UpperTouching_Result.PostClip.Value.OriginStart);
         Assert.Equal(20, range_UpperTouching_Result.PostClip.Value.DestinationStart);
         Assert.Equal(10, range_UpperTouching_Result.PostClip.Value.Length);
-        
+
         // ..........■■■■■■■■■■..........
         // ..........$$$$$$$$$$..........
         Day05.AlmanacRangeMapping range_IntersectCover = new() {
@@ -184,7 +184,7 @@ public class Day05_Tests
         Assert.Equal(1000, range_IntersectCover_Result.Clipped.Value.DestinationStart);
         Assert.Equal(10, range_IntersectCover_Result.Clipped.Value.Length);
         Assert.Null(range_IntersectCover_Result.PostClip);
-        
+
         // ..........■■■■■■■■■■..........
         // ...............$$$$$..........
         Day05.AlmanacRangeMapping range_IntersectInsideToEnd = new() {
@@ -199,7 +199,7 @@ public class Day05_Tests
         Assert.Equal(1005, range_IntersectInsideToEnd_Result.Clipped.Value.DestinationStart);
         Assert.Equal(5, range_IntersectInsideToEnd_Result.Clipped.Value.Length);
         Assert.Null(range_IntersectInsideToEnd_Result.PostClip);
-        
+
         // ..........■■■■■■■■■■..........
         // ...............$$$$$#####.....
         Day05.AlmanacRangeMapping range_IntersectInsideToOutside = new() {
@@ -217,7 +217,7 @@ public class Day05_Tests
         Assert.Equal(20, range_IntersectInsideToOutside_Result.PostClip.Value.OriginStart);
         Assert.Equal(20, range_IntersectInsideToOutside_Result.PostClip.Value.DestinationStart);
         Assert.Equal(5, range_IntersectInsideToOutside_Result.PostClip.Value.Length);
-        
+
         // ..........■■■■■■■■■■..........
         // .....#####$$$$$...............
         Day05.AlmanacRangeMapping range_IntersectOutsideToInside = new() {
@@ -235,7 +235,7 @@ public class Day05_Tests
         Assert.Equal(1000, range_IntersectOutsideToInside_Result.Clipped.Value.DestinationStart);
         Assert.Equal(5, range_IntersectOutsideToInside_Result.Clipped.Value.Length);
         Assert.Null(range_IntersectOutsideToInside_Result.PostClip);
-        
+
         // ..........■■■■■■■■■■..........
         // .....#####$$$$$$$$$$..........
         Day05.AlmanacRangeMapping range_IntersectOutsideToEnd = new() {
@@ -253,7 +253,7 @@ public class Day05_Tests
         Assert.Equal(1000, range_IntersectOutsideToEnd_Result.Clipped.Value.DestinationStart);
         Assert.Equal(10, range_IntersectOutsideToEnd_Result.Clipped.Value.Length);
         Assert.Null(range_IntersectOutsideToEnd_Result.PostClip);
-        
+
         // ..........■■■■■■■■■■..........
         // .....#####$$$$$$$$$$#####.....
         Day05.AlmanacRangeMapping range_IntersectOutsideToOutside = new() {

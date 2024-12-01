@@ -102,7 +102,7 @@ public class Day03 : IDay
             for (column = 0; column < inputs[row].Length; column++)
             {
                 if (inputs[row][column] != '*') { continue; }
-                
+
                 List<SchemaNumber> adjacentNumbers = numbers.Where(n => CellAdjacentToSchemaNumber(row, column, n)).ToList();
                 if (adjacentNumbers.Count != 2) { continue; }
 
@@ -115,11 +115,11 @@ public class Day03 : IDay
 
     public struct SchemaNumber
     {
-        public string[] Schema { get; set; }
-        public int Row { get; set; }
-        public int Column { get; set; }
-        public int Lenght { get; set; }
-        public int Value { get; set; }
+        public string[] Schema { get; init; }
+        public int Row { get; init; }
+        public int Column { get; init; }
+        public int Lenght { get; init; }
+        public int Value { get; init; }
     }
 
     public static SchemaNumber? SearchNextSchemaNumber(string[] schema, int initialRow, int initialColumn)
@@ -176,7 +176,7 @@ public class Day03 : IDay
         }
         return false;
     }
-    
+
     private static bool CellAdjacentToSchemaNumber(int row, int column, SchemaNumber number)
     {
         int minRow = number.Row - 1;
@@ -188,8 +188,7 @@ public class Day03 : IDay
         {
             return true;
         }
-        
+
         return false;
     }
-
 }

@@ -96,20 +96,20 @@ public class Day12 : IDay
 
     private class PlantRule
     {
-        public bool Minus2 { get; set; }
-        public bool Minus1 { get; set; }
-        public bool Current { get; set; }
-        public bool Plus1 { get; set; }
-        public bool Plus2 { get; set; }
+        public bool Minus2 { get; init; }
+        public bool Minus1 { get; init; }
+        public bool Current { get; init; }
+        public bool Plus1 { get; init; }
+        public bool Plus2 { get; init; }
 
-        public bool Result { get; set; }
+        public bool Result { get; init; }
     }
 
     private const int SideMargin = 5;
     private const int SideProcessMargin = 2;
 
-    private List<bool> _initialState = new();
-    private List<PlantRule> _rules = new();
+    private readonly List<bool> _initialState = [];
+    private readonly List<PlantRule> _rules = [];
     private long _offsetField;
     private bool[] _field;
     private bool[] _workField;
@@ -126,9 +126,8 @@ public class Day12 : IDay
         for (int i = 2; i < inputs.Length; i++)
         {
             if (string.IsNullOrEmpty(inputs[i])) { continue; }
-            string[] parts = inputs[i].Split(new[] { " => " }, StringSplitOptions.RemoveEmptyEntries);
-            _rules.Add(new PlantRule
-            {
+            string[] parts = inputs[i].Split([" => "], StringSplitOptions.RemoveEmptyEntries);
+            _rules.Add(new PlantRule {
                 Minus2 = (parts[0][0] == '#'),
                 Minus1 = (parts[0][1] == '#'),
                 Current = (parts[0][2] == '#'),
@@ -151,9 +150,7 @@ public class Day12 : IDay
 
     private void SwapFields()
     {
-        bool[] aux = _field;
-        _field = _workField;
-        _workField = aux;
+        (_field, _workField) = (_workField, _field);
     }
 
     private void RecenterField()
@@ -236,8 +233,7 @@ public class Day12 : IDay
                     rule.Minus1 == minus1 &&
                     rule.Current == current &&
                     rule.Plus1 == plus1 &&
-                    rule.Plus2 == plus2 &&
-                    true
+                    rule.Plus2 == plus2
                 )
                 {
                     result = rule.Result;

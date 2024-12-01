@@ -1,4 +1,3 @@
-using System.Text;
 
 namespace AdventOfCode2023;
 
@@ -212,7 +211,7 @@ public class Day12 : IDay
             {
                 throw new Exception("Invalid input");
             }
-            
+
             if (springsRecord.Length < damagedSprings[0])
             {
                 // Invalid match; Not enough data on record for the current damagedSprings group
@@ -230,7 +229,7 @@ public class Day12 : IDay
                 // Skip current damagedSprings group
                 return CountPossibleArrangements(springsRecord.Substring(damagedSprings[0]), damagedSprings.Skip(1).ToArray());
             }
-                
+
             if (springsRecord.Length < (damagedSprings[0] + 1) || springsRecord[damagedSprings[0]] == '#')
             {
                 // Invalid match; There must be an operational (or unknown) spring between damaged spring groups

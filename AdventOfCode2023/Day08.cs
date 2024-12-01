@@ -105,18 +105,11 @@ public class Day08 : IDay
         return steps.ToString();
     }
 
-    private class MapNode
+    private class MapNode(string strMapNode)
     {
-        public string Key { get; set; }
-        public string LeftKey { get; set; }
-        public string RightKey { get; set; }
-
-        public MapNode(string strMapNode)
-        {
-            Key = strMapNode.Substring(0, 3);
-            LeftKey = strMapNode.Substring(7, 3);
-            RightKey = strMapNode.Substring(12, 3);
-        }
+        public string Key { get; } = strMapNode.Substring(0, 3);
+        public string LeftKey { get; } = strMapNode.Substring(7, 3);
+        public string RightKey { get; } = strMapNode.Substring(12, 3);
     }
 
     private class Map
@@ -155,32 +148,23 @@ public class Day08 : IDay
         }
     }
 
-    private class MapWalker
+    private class MapWalker(Map map, string startKey)
     {
-        private readonly Map _map;
-
-        private MapNode _currentNode;
+        private MapNode _currentNode = map.GetByKey(startKey) ?? map.Nodes.First();
         private long _steps;
-
-        public MapWalker(Map map, string startKey)
-        {
-            _map = map;
-            _currentNode = map.GetByKey(startKey) ?? map.Nodes.First();
-            _steps = 0;
-        }
 
         public void StepWhile(Func<MapWalker, bool> condition)
         {
             while (condition(this))
             {
-                char leftRightInstruction = _map.GetInstruction(_steps);
+                char leftRightInstruction = map.GetInstruction(_steps);
                 if (leftRightInstruction == 'L')
                 {
-                    _currentNode = _map.GetByKey(_currentNode.LeftKey) ?? _map.Nodes.First();
+                    _currentNode = map.GetByKey(_currentNode.LeftKey) ?? map.Nodes.First();
                 }
                 if (leftRightInstruction == 'R')
                 {
-                    _currentNode = _map.GetByKey(_currentNode.RightKey) ?? _map.Nodes.First();
+                    _currentNode = map.GetByKey(_currentNode.RightKey) ?? map.Nodes.First();
                 }
                 _steps++;
             }
@@ -196,7 +180,7 @@ public class Day08 : IDay
             get { return _steps; }
         }
     }
-    
+
     // https://en.wikipedia.org/wiki/Euclidean_algorithm#Implementations
     private static long GreatestCommonDivisor(long a, long b)
     {

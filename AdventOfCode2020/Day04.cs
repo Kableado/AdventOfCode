@@ -118,7 +118,7 @@ iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
 
 Count the number of valid passports - those that have all required fields and valid values. Continue to treat cid as optional. In your batch file, how many passports are valid?
 
- 
+
 */
 
 public class Day04 : IDay
@@ -127,7 +127,7 @@ public class Day04 : IDay
     {
         List<Dictionary<string, string>> passports = Passports_Parse(inputs);
         int cnt = 0;
-        List<string> neededFields = new() {
+        List<string> neededFields = [
             "byr", // Birth Year
             "iyr", // Issue Year
             "eyr", // Expiration Year
@@ -135,7 +135,7 @@ public class Day04 : IDay
             "hcl", // Hair Color
             "ecl", // Eye Color
             "pid", // Passport ID
-        };
+        ];
 
         foreach (Dictionary<string, string> passport in passports)
         {
@@ -167,7 +167,7 @@ public class Day04 : IDay
 
     private List<Dictionary<string, string>> Passports_Parse(string[] inputs)
     {
-        List<Dictionary<string, string>> passports = new();
+        List<Dictionary<string, string>> passports = [];
         Dictionary<string, string> passport = new();
         foreach (string input in inputs)
         {
@@ -257,5 +257,4 @@ public class Day04 : IDay
         if (input.All(char.IsNumber) == false) { return null; }
         return Convert.ToInt32(input);
     }
-
 }

@@ -1,10 +1,9 @@
-
 [*]
 
 # Microsoft .NET properties
 csharp_indent_braces = false
 csharp_new_line_before_members_in_object_initializers = false
-csharp_new_line_before_open_brace = accessors,anonymous_methods,control_blocks,events,indexers,lambdas,local_functions,methods,properties,types
+csharp_new_line_before_open_brace = accessors, anonymous_methods, control_blocks, events, indexers, lambdas, local_functions, methods, properties, types
 csharp_preferred_modifier_order = private, public, protected, internal, file, new, readonly, abstract, virtual, sealed, static, override, extern, unsafe, volatile, async, required:suggestion
 csharp_prefer_braces = true:none
 csharp_preserve_single_line_blocks = true

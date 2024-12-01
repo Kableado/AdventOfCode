@@ -78,7 +78,7 @@ public class Day01 : IDay
 
     public string ResolvePart2(string[] inputs)
     {
-        List<(string Text, int Value)> digits = new() {
+        List<(string Text, int Value)> digits = [
             ("1", 1),
             ("2", 2),
             ("3", 3),
@@ -97,7 +97,7 @@ public class Day01 : IDay
             ("seven", 7),
             ("eight", 8),
             ("nine", 9),
-        };
+        ];
 
         int sum = 0;
         foreach (string line in inputs)

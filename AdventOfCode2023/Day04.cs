@@ -118,7 +118,7 @@ public class Day04 : IDay
             _winningNumbers = GetNumbers(strColumns[0]);
             _myNumbers = GetNumbers(strColumns[1]);
         }
-        
+
         private static List<int> GetNumbers(string strNumbers)
         {
             string[] parts = strNumbers.Split(' ');
@@ -135,6 +135,5 @@ public class Day04 : IDay
         {
             return _myNumbers.Count(myNumber => _winningNumbers.Contains(myNumber));
         }
-        
     }
 }

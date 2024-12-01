@@ -50,7 +50,7 @@ public class Day04_Tests
     [Fact]
     public void GuardEvent_FromStringArray__TestBase()
     {
-        List<Day04.GuardEvent> guardEvents = Day04.GuardEvent.FromStringArray(new[] {
+        List<Day04.GuardEvent> guardEvents = Day04.GuardEvent.FromStringArray([
             "[1518-11-01 00:00] Guard #10 begins shift",
             "[1518-11-01 00:05] falls asleep",
             "[1518-11-01 00:25] wakes up",
@@ -59,7 +59,7 @@ public class Day04_Tests
             "[1518-11-01 23:58] Guard #99 begins shift",
             "[1518-11-02 00:40] falls asleep",
             "[1518-11-02 00:50] wakes up",
-        });
+        ]);
 
         Assert.Equal(10, guardEvents[0].ID);
         Assert.Equal(Day04.GuardEventType.ShiftBegin, guardEvents[0].Type);
@@ -89,7 +89,7 @@ public class Day04_Tests
     [Fact]
     public void GuardEvent_FromStringArray__TestBaseUnsorted()
     {
-        List<Day04.GuardEvent> guardEvents = Day04.GuardEvent.FromStringArray(new[] {
+        List<Day04.GuardEvent> guardEvents = Day04.GuardEvent.FromStringArray([
             "[1518-11-01 00:00] Guard #10 begins shift",
             "[1518-11-01 23:58] Guard #99 begins shift",
             "[1518-11-01 00:30] falls asleep",
@@ -98,7 +98,7 @@ public class Day04_Tests
             "[1518-11-02 00:50] wakes up",
             "[1518-11-01 00:55] wakes up",
             "[1518-11-01 00:25] wakes up",
-        });
+        ]);
 
         Assert.Equal(10, guardEvents[0].ID);
         Assert.Equal(Day04.GuardEventType.ShiftBegin, guardEvents[0].Type);
@@ -126,13 +126,13 @@ public class Day04_Tests
     }
 
     #endregion GuardEvent_FromStringArray
-    
+
     [Fact]
     public void ResolvePart1__BaseStatement()
     {
         Day04 day04 = new();
 
-        string result = day04.ResolvePart1(new[] {
+        string result = day04.ResolvePart1([
             "[1518-11-01 00:00] Guard #10 begins shift",
             "[1518-11-01 00:05] falls asleep",
             "[1518-11-01 00:25] wakes up",
@@ -150,7 +150,7 @@ public class Day04_Tests
             "[1518-11-05 00:03] Guard #99 begins shift",
             "[1518-11-05 00:45] falls asleep",
             "[1518-11-05 00:55] wakes up",
-        });
+        ]);
 
         Assert.Equal("240", result);
     }
@@ -160,7 +160,7 @@ public class Day04_Tests
     {
         Day04 day04 = new();
 
-        string result = day04.ResolvePart1(new[] {
+        string result = day04.ResolvePart1([
             "[1518-11-04 00:36] falls asleep",
             "[1518-11-04 00:46] wakes up",
             "[1518-11-05 00:03] Guard #99 begins shift",
@@ -178,7 +178,7 @@ public class Day04_Tests
             "[1518-11-01 00:55] wakes up",
             "[1518-11-01 23:58] Guard #99 begins shift",
             "[1518-11-05 00:55] wakes up",
-        });
+        ]);
 
         Assert.Equal("240", result);
     }
@@ -189,7 +189,7 @@ public class Day04_Tests
     {
         Day04 day04 = new();
 
-        string result = day04.ResolvePart2(new[] {
+        string result = day04.ResolvePart2([
             "[1518-11-01 00:00] Guard #10 begins shift",
             "[1518-11-01 00:05] falls asleep",
             "[1518-11-01 00:25] wakes up",
@@ -207,7 +207,7 @@ public class Day04_Tests
             "[1518-11-05 00:03] Guard #99 begins shift",
             "[1518-11-05 00:45] falls asleep",
             "[1518-11-05 00:55] wakes up",
-        });
+        ]);
 
         Assert.Equal("4455", result);
     }
@@ -217,7 +217,7 @@ public class Day04_Tests
     {
         Day04 day04 = new();
 
-        string result = day04.ResolvePart2(new[] {
+        string result = day04.ResolvePart2([
             "[1518-11-04 00:36] falls asleep",
             "[1518-11-04 00:46] wakes up",
             "[1518-11-05 00:03] Guard #99 begins shift",
@@ -235,7 +235,7 @@ public class Day04_Tests
             "[1518-11-01 00:55] wakes up",
             "[1518-11-01 23:58] Guard #99 begins shift",
             "[1518-11-05 00:55] wakes up",
-        });
+        ]);
 
         Assert.Equal("4455", result);
     }

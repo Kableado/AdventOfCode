@@ -136,7 +136,7 @@ public class Day05 : IDay
         LinesReader reader = new(inputs);
         Almanac? almanac = Almanac.Parse(reader);
         int i = 0;
-        List<AlmanacRangeMapping> ranges = new();
+        List<AlmanacRangeMapping> ranges = [];
         while (almanac?.Seeds.Count > i)
         {
             long seed = almanac.Seeds[i];
@@ -155,21 +155,14 @@ public class Day05 : IDay
     }
 
 
-    public class LinesReader
+    public class LinesReader(string[] lines)
     {
-        private readonly string[] _lines;
         private int _index;
-
-        public LinesReader(string[] lines)
-        {
-            _lines = lines;
-            _index = 0;
-        }
 
         public string? GetLine()
         {
-            if (_index >= _lines.Length) { return null; }
-            string line = _lines[_index];
+            if (_index >= lines.Length) { return null; }
+            string line = lines[_index];
             _index++;
             return line;
         }
@@ -298,7 +291,7 @@ public class Day05 : IDay
     {
         public string Name { get; private init; } = string.Empty;
 
-        public List<AlmanacRangeMapping> RangeMappings { get; } = new();
+        public List<AlmanacRangeMapping> RangeMappings { get; } = [];
 
         public static AlmanacMapping? ParseNext(LinesReader reader)
         {
@@ -346,29 +339,32 @@ public class Day05 : IDay
 
         public List<AlmanacRangeMapping> Apply(AlmanacRangeMapping range)
         {
-            List<AlmanacRangeMapping> unMappedRanges = new() {
+            List<AlmanacRangeMapping> unMappedRanges = [
                 range,
-            };
-            List<AlmanacRangeMapping> newUnMappedRanges = new();
-            List<AlmanacRangeMapping> mappedRanges = new();
+            ];
+            List<AlmanacRangeMapping> newUnMappedRanges = [];
+            List<AlmanacRangeMapping> mappedRanges = [];
 
             int i = 0;
             while (RangeMappings.Count > i)
             {
                 AlmanacRangeMapping rangeMapping = RangeMappings[i];
-                for (int j = 0; j < unMappedRanges.Count; j++)
+                foreach (AlmanacRangeMapping unMappedRange in unMappedRanges)
                 {
-                    AlmanacRangeMapping.ClipResult result = rangeMapping.Clip(unMappedRanges[j]);
+                    AlmanacRangeMapping.ClipResult result = rangeMapping.Clip(unMappedRange);
                     if (result.Clipped != null) { mappedRanges.Add(result.Clipped.Value); }
                     if (result.PreClip != null) { newUnMappedRanges.Add(result.PreClip.Value); }
                     if (result.PostClip != null) { newUnMappedRanges.Add(result.PostClip.Value); }
                 }
                 unMappedRanges = newUnMappedRanges;
-                newUnMappedRanges = new List<AlmanacRangeMapping>();
+                newUnMappedRanges = [];
                 i++;
             }
 
-            return mappedRanges.Union(unMappedRanges).ToList();
+            List<AlmanacRangeMapping> resultMappedRanges = [];
+            resultMappedRanges.AddRange(mappedRanges);
+            resultMappedRanges.AddRange(unMappedRanges);
+            return resultMappedRanges;
         }
     }
 
@@ -381,7 +377,7 @@ public class Day05 : IDay
 
         public List<long> Seeds { get; }
 
-        private List<AlmanacMapping> Mappings { get; } = new();
+        private List<AlmanacMapping> Mappings { get; } = [];
 
         public static Almanac? Parse(LinesReader reader)
         {

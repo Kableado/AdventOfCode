@@ -7,7 +7,7 @@ public class Day02_Tests
     {
         Day02 day02 = new();
 
-        string result = day02.ResolvePart1(new[] {
+        string result = day02.ResolvePart1([
             "abcdef",
             "bababc",
             "abbcde",
@@ -15,7 +15,7 @@ public class Day02_Tests
             "aabcdd",
             "abcdee",
             "ababab",
-        });
+        ]);
 
         Assert.Equal("12", result);
     }
@@ -25,7 +25,7 @@ public class Day02_Tests
     {
         Day02 day02 = new();
 
-        string result = day02.ResolvePart2(new[] {
+        string result = day02.ResolvePart2([
             "abcde",
             "fghij",
             "klmno",
@@ -33,7 +33,7 @@ public class Day02_Tests
             "fguij",
             "axcye",
             "wvxyz",
-        });
+        ]);
 
         Assert.Equal("fgij", result);
     }

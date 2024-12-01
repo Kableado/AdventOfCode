@@ -7,7 +7,7 @@ public class Day05_Tests
     {
         Day05 day05 = new();
 
-        string result = day05.ResolvePart1(new[] { "dabAcCaCBAcCcaDA" });
+        string result = day05.ResolvePart1(["dabAcCaCBAcCcaDA"]);
 
         Assert.Equal("10", result);
     }
@@ -17,7 +17,7 @@ public class Day05_Tests
     {
         Day05 day05 = new();
 
-        string result = day05.ResolvePart2(new[] { "dabAcCaCBAcCcaDA" });
+        string result = day05.ResolvePart2(["dabAcCaCBAcCcaDA"]);
 
         Assert.Equal("4", result);
     }

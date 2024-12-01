@@ -75,7 +75,7 @@ public class Day09 : IDay
 
     private static string CalculateHighScore(string input, long factor)
     {
-        string[] parts = input.Split(new[] { " players; last marble is worth ", " points" }, StringSplitOptions.RemoveEmptyEntries);
+        string[] parts = input.Split([" players; last marble is worth ", " points"], StringSplitOptions.RemoveEmptyEntries);
         long numberOfPlayers = Convert.ToInt32(parts[0]);
         long lastMarble = Convert.ToInt32(parts[1]) * factor;
         MarbleGame marbleGame = new();
@@ -86,14 +86,14 @@ public class Day09 : IDay
 
     public class Marble
     {
-        public long Value { get; set; }
+        public long Value { get; init; }
         public Marble Previous { get; set; }
         public Marble Next { get; set; }
     }
 
     public class MarbleGame
     {
-        public Dictionary<long, long> Scores { get; } = new();
+        private Dictionary<long, long> Scores { get; } = new();
 
         private Marble _firstMarble;
         private Marble _currentMarble;
@@ -141,20 +141,15 @@ public class Day09 : IDay
             }
         }
 
-        public void PrintStatus()
+        private void PrintStatus()
         {
             Console.Write("[{0}] ", _currentPlayer);
             Marble marble = _firstMarble;
             do
             {
-                if (_currentMarble.Value == marble.Value)
-                {
-                    Console.Write("({0}) ", marble.Value);
-                }
-                else
-                {
-                    Console.Write("{0} ", marble.Value);
-                }
+                Console.Write(_currentMarble.Value == marble.Value 
+                    ? "({0}) " 
+                    : "{0} ", marble.Value);
                 marble = marble.Next;
             } while (marble.Value != 0);
             Console.WriteLine();

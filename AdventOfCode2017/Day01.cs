@@ -48,10 +48,10 @@ public class Day01 : IDay
     {
         string input = inputs[0];
         int value = 0;
-        for(int i = 0; i < input.Length; i++)
+        for (int i = 0; i < input.Length; i++)
         {
             int nextI = (i + 1) % input.Length;
-            if(input[i] == input[nextI])
+            if (input[i] == input[nextI])
             {
                 value += (input[i] - '0');
             }

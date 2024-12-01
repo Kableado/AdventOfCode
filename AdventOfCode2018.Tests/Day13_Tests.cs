@@ -7,7 +7,7 @@ public class Day13_Tests
     {
         Day13 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "|",
             "v",
             "|",
@@ -15,7 +15,7 @@ public class Day13_Tests
             "|",
             "^",
             "|",
-        });
+        ]);
 
         Assert.Equal("0,3", result);
     }
@@ -25,14 +25,14 @@ public class Day13_Tests
     {
         Day13 day = new();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             @"/->-\        ",
             @"|   |  /----\",
             @"| /-+--+-\  |",
             @"| | |  | v  |",
             @"\-+-/  \-+--/",
             @"  \------/   ",
-        });
+        ]);
 
         Assert.Equal("7,3", result);
     }
@@ -42,7 +42,7 @@ public class Day13_Tests
     {
         Day13 day = new();
 
-        string result = day.ResolvePart2(new[] {
+        string result = day.ResolvePart2([
             @"/>-<\  ",
             @"|   |  ",
             @"| /<+-\",
@@ -50,7 +50,7 @@ public class Day13_Tests
             @"\>+</ |",
             @"  |   ^",
             @"  \<->/",
-        });
+        ]);
 
         Assert.Equal("6,4", result);
     }

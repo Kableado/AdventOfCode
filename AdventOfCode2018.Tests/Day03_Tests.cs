@@ -90,17 +90,17 @@ public class Day03_Tests
     }
 
     #endregion Claim_Overlaps
-    
+
     [Fact]
     public void ResolvePart1__Test()
     {
         Day03 day03 = new();
 
-        string result = day03.ResolvePart1(new[] {
+        string result = day03.ResolvePart1([
             "#1 @ 1,3: 4x4",
             "#2 @ 3,1: 4x4",
             "#3 @ 5,5: 2x2",
-        });
+        ]);
 
         Assert.Equal("4", result);
     }
@@ -110,11 +110,11 @@ public class Day03_Tests
     {
         Day03 day03 = new();
 
-        string result = day03.ResolvePart2(new[] {
+        string result = day03.ResolvePart2([
             "#1 @ 1,3: 4x4",
             "#2 @ 3,1: 4x4",
             "#3 @ 5,5: 2x2",
-        });
+        ]);
 
         Assert.Equal("3", result);
     }

@@ -1,13 +1,13 @@
 ﻿<Solution>
-  <Project Path="AdventOfCode.Common\AdventOfCode.Common.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2017.Tests\AdventOfCode2017.Tests.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2017\AdventOfCode2017.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2018.Tests\AdventOfCode2018.Tests.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2018\AdventOfCode2018.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2020.Tests\AdventOfCode2020.Tests.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2020\AdventOfCode2020.csproj" />
-  <Project Path="AdventOfCode2023.Tests\AdventOfCode2023.Tests.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2023\AdventOfCode2023.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2024.Tests\AdventOfCode2024.Tests.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode2024\AdventOfCode2024.csproj" Type="Classic C#" />
+    <Project Path="AdventOfCode.Common\AdventOfCode.Common.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2017.Tests\AdventOfCode2017.Tests.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2017\AdventOfCode2017.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2018.Tests\AdventOfCode2018.Tests.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2018\AdventOfCode2018.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2020.Tests\AdventOfCode2020.Tests.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2020\AdventOfCode2020.csproj"/>
+    <Project Path="AdventOfCode2023.Tests\AdventOfCode2023.Tests.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2023\AdventOfCode2023.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2024.Tests\AdventOfCode2024.Tests.csproj" Type="Classic C#"/>
+    <Project Path="AdventOfCode2024\AdventOfCode2024.csproj" Type="Classic C#"/>
 </Solution>

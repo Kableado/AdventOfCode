@@ -89,11 +89,11 @@ public class Day07 : IDay
         foreach (string input in inputs)
         {
             if (string.IsNullOrEmpty(input)) { continue; }
-            string[] parts = input.Split(new[] {
+            string[] parts = input.Split([
                 "Step ",
                 " must be finished before step ",
                 " can begin.",
-            }, StringSplitOptions.RemoveEmptyEntries);
+            ], StringSplitOptions.RemoveEmptyEntries);
             instructions.AddNodeRelation(parts[1].ToUpper(), parts[0].ToUpper());
         }
         foreach (InstructionNode node in instructions.Nodes.Values)
@@ -118,8 +118,8 @@ public class Day07 : IDay
         return sbInstructions.ToString();
     }
 
-    public int BaseCost { get; set; } = 60;
-    public int NumberOfWorkers { get; set; } = 5;
+    public int BaseCost { get; init; } = 60;
+    public int NumberOfWorkers { get; init; } = 5;
 
     public string ResolvePart2(string[] inputs)
     {
@@ -130,9 +130,9 @@ public class Day07 : IDay
 
     public class InstructionNode
     {
-        public string NodeID { get; set; }
+        public string NodeID { get; init; }
 
-        public List<string> PreviousNodeIDs { get; } = new();
+        public List<string> PreviousNodeIDs { get; } = [];
 
         public int Cost { get; set; }
 
@@ -148,16 +148,16 @@ public class Day07 : IDay
         }
     }
 
-    public class Instructions
+    private class Instructions
     {
         public Dictionary<string, InstructionNode> Nodes { get; } = new();
 
-        public InstructionNode GetNode(string nodeID)
+        private InstructionNode GetNode(string nodeID)
         {
-            InstructionNode node = null;
-            if (Nodes.ContainsKey(nodeID))
+            InstructionNode node;
+            if (Nodes.TryGetValue(nodeID, out InstructionNode nodeAux))
             {
-                node = Nodes[nodeID];
+                node = nodeAux;
             }
             else
             {
@@ -176,7 +176,7 @@ public class Day07 : IDay
 
         public List<InstructionNode> SortInstructions()
         {
-            List<InstructionNode> finalNodes = new();
+            List<InstructionNode> finalNodes = [];
 
             foreach (InstructionNode node in Nodes.Values)
             {
@@ -204,8 +204,8 @@ public class Day07 : IDay
 
         private class SimulatedWorker
         {
-            public InstructionNode CurrentInstruction { get; set; }
-            public int ElapsedTime { get; set; }
+            public InstructionNode CurrentInstruction { get; private set; }
+            private int ElapsedTime { get; set; }
 
             public void SetInstruction(InstructionNode instruction)
             {
@@ -242,7 +242,6 @@ public class Day07 : IDay
                 workers.Add(new SimulatedWorker());
             }
 
-            bool anyWorkerWitoutWork;
             do
             {
                 bool anyWorkDone = false;
@@ -255,8 +254,8 @@ public class Day07 : IDay
                 }
                 if (anyWorkDone) { totalElapsedTime++; }
 
-                anyWorkerWitoutWork = workers.Any(w => w.CurrentInstruction == null);
-                if (anyWorkerWitoutWork)
+                bool anyWorkerWithoutWork = workers.Any(w => w.CurrentInstruction == null);
+                if (anyWorkerWithoutWork)
                 {
                     List<InstructionNode> unusedNodes = Nodes.Values
                         .Where(n =>

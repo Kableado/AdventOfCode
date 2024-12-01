@@ -2,7 +2,7 @@ namespace AdventOfCode2023.Tests;
 
 public class Day08_Tests
 {
-    private readonly string[] _example1 = {
+    private readonly string[] _example1 = [
         "RL",
         "",
         "AAA = (BBB, CCC)",
@@ -12,37 +12,37 @@ public class Day08_Tests
         "EEE = (EEE, EEE)",
         "GGG = (GGG, GGG)",
         "ZZZ = (ZZZ, ZZZ)",
-    };
-    
+    ];
+
     [Fact]
     public void ResolvePart1__Example1()
     {
         Day08 day = new();
-        
+
         string result = day.ResolvePart1(_example1);
 
         Assert.Equal("2", result);
     }
 
-    private readonly string[] _example2 = {
+    private readonly string[] _example2 = [
         "LLR",
         "",
         "AAA = (BBB, BBB)",
         "BBB = (AAA, ZZZ)",
         "ZZZ = (ZZZ, ZZZ)",
-    };
+    ];
 
     [Fact]
     public void ResolvePart1__Example2()
     {
         Day08 day = new();
-        
+
         string result = day.ResolvePart1(_example2);
 
         Assert.Equal("6", result);
     }
 
-    private readonly string[] _example3 = {
+    private readonly string[] _example3 = [
         "LR",
         "",
         "11A = (11B, XXX)",
@@ -53,16 +53,15 @@ public class Day08_Tests
         "22C = (22Z, 22Z)",
         "22Z = (22B, 22B)",
         "XXX = (XXX, XXX)",
-    };
+    ];
 
     [Fact]
     public void ResolvePart2__Example3()
     {
         Day08 day = new();
-        
+
         string result = day.ResolvePart2(_example3);
 
         Assert.Equal("6", result);
     }
-
 }

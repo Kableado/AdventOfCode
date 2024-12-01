@@ -111,12 +111,12 @@ public class Day01 : IDay
             leftNumbers.Add(int.Parse(numbers[0]));
             rightNumbers.Add(int.Parse(numbers[1]));
         }
-        
+
         long totalSim = 0;
-        for (int i = 0; i < leftNumbers.Count; i++)
+        foreach (int number in leftNumbers)
         {
-            int count = rightNumbers.Count(x => x == leftNumbers[i]);
-            int sim = leftNumbers[i] * count;
+            int count = rightNumbers.Count(x => x == number);
+            int sim = number * count;
             totalSim += sim;
         }
         return totalSim.ToString();

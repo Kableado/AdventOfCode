@@ -28,13 +28,13 @@ public class Day08_Tests
         Assert.Single(result.Childs[1].Childs[0].Metadata);
         Assert.Equal(99, result.Childs[1].Childs[0].Metadata[0]);
     }
-    
+
     [Fact]
     public void ResolvePart1__Test()
     {
         Day08 day = new();
 
-        string result = day.ResolvePart1(new[] { "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2", });
+        string result = day.ResolvePart1(["2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2"]);
 
         Assert.Equal("138", result);
     }
@@ -44,7 +44,7 @@ public class Day08_Tests
     {
         Day08 day = new();
 
-        string result = day.ResolvePart2(new[] { "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2", });
+        string result = day.ResolvePart2(["2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2"]);
 
         Assert.Equal("66", result);
     }

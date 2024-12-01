@@ -63,8 +63,7 @@ public class Day01 : IDay
         int accumulator = 0;
         foreach (string input in inputs)
         {
-            int intInput;
-            if (int.TryParse(input.Substring(1), out intInput))
+            if (int.TryParse(input.Substring(1), out int intInput))
             {
                 if (input[0] == '-')
                 {
@@ -90,8 +89,7 @@ public class Day01 : IDay
             foreach (string input in inputs)
             {
                 accumulatorHistory.Add(accumulator);
-                int intInput;
-                if (int.TryParse(input.Substring(1), out intInput))
+                if (int.TryParse(input.Substring(1), out int intInput))
                 {
                     if (input[0] == '-')
                     {

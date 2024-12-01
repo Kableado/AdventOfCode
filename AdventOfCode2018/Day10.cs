@@ -156,13 +156,13 @@ Impressed by your sub-hour communication capabilities, the Elves are curious: ex
 
 public class Day10 : IDay
 {
-    public int Width { get; set; } = 65;
-    public int Height { get; set; } = 12;
+    public int Width { get; init; } = 65;
+    public int Height { get; init; } = 12;
 
     public string ResolvePart1(string[] inputs)
     {
         LightField lightField = new(inputs);
-        int t = lightField.SearchSmallerBoundindBox();
+        int t = lightField.SearchSmallerBoundingBox();
         string result = lightField.Render(t, Width, Height);
         return result;
     }
@@ -170,20 +170,20 @@ public class Day10 : IDay
     public string ResolvePart2(string[] inputs)
     {
         LightField lightField = new(inputs);
-        int t = lightField.SearchSmallerBoundindBox();
+        int t = lightField.SearchSmallerBoundingBox();
         return t.ToString();
     }
 
     public class LightPoint
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int VX { get; set; }
-        public int VY { get; set; }
+        private int X { get; init; }
+        private int Y { get; init; }
+        private int VX { get; init; }
+        private int VY { get; init; }
 
         public static LightPoint FromString(string strPoint)
         {
-            string[] parts = strPoint.Split(new[] { "position=<", " ", ",", "> velocity=<", ">" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = strPoint.Split(["position=<", " ", ",", "> velocity=<", ">"], StringSplitOptions.RemoveEmptyEntries);
             LightPoint point = new() {
                 X = Convert.ToInt32(parts[0]),
                 Y = Convert.ToInt32(parts[1]),
@@ -204,16 +204,11 @@ public class Day10 : IDay
         }
     }
 
-    public class LightField
+    private class LightField(string[] strPoints)
     {
-        private readonly List<LightPoint> _points;
+        private readonly List<LightPoint> _points = strPoints.Select(LightPoint.FromString).ToList();
 
-        public LightField(string[] strPoints)
-        {
-            _points = strPoints.Select(strPoint => LightPoint.FromString(strPoint)).ToList();
-        }
-
-        public int SearchSmallerBoundindBox()
+        public int SearchSmallerBoundingBox()
         {
             int minHeight = int.MaxValue;
             int minT = 0;
@@ -288,14 +283,7 @@ public class Day10 : IDay
                 sb.AppendLine();
                 for (int i = 0; i < width; i++)
                 {
-                    if (field[i, j] > 0)
-                    {
-                        sb.Append("#");
-                    }
-                    else
-                    {
-                        sb.Append(".");
-                    }
+                    sb.Append(field[i, j] > 0 ? "#" : ".");
                 }
             }
             return sb.ToString();

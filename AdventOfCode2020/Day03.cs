@@ -112,5 +112,4 @@ public class Day03 : IDay
         }
         return treeCnt;
     }
-
 }

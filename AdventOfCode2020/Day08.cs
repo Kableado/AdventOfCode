@@ -124,14 +124,14 @@ public class Day08 : IDay
         return vm.Accumulator.ToString();
     }
 
-    public enum OpCode
+    private enum OpCode
     {
         Acc,
         Jmp,
         Nop,
     }
 
-    public class Instruction
+    private class Instruction
     {
         public OpCode OpCode { get; set; }
         public int Value { get; set; }
@@ -154,14 +154,9 @@ public class Day08 : IDay
                 OpCode = OpCode.Nop;
             }
 
-            if (parts[1].StartsWith("+"))
-            {
-                Value = Convert.ToInt32(parts[1].Substring(1));
-            }
-            else
-            {
-                Value = Convert.ToInt32(parts[1]);
-            }
+            Value = Convert.ToInt32(parts[1].StartsWith("+") 
+                ? parts[1].Substring(1) 
+                : parts[1]);
             Executed = false;
         }
     }
@@ -176,7 +171,7 @@ public class Day08 : IDay
 
         public VM(string[] inputs)
         {
-            Instructions = new List<Instruction>();
+            Instructions = [];
             foreach (string input in inputs)
             {
                 Instructions.Add(new Instruction(input));

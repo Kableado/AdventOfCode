@@ -5,11 +5,11 @@ public class Day05_Tests
     [Fact]
     public void ResolvePart1__Example1()
     {
-        var day = new Day05();
+        Day05 day = new Day05();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "FBFBBFFRLR",
-        });
+        ]);
 
         Assert.Equal("357", result);
     }
@@ -17,11 +17,11 @@ public class Day05_Tests
     [Fact]
     public void ResolvePart1__Example2()
     {
-        var day = new Day05();
+        Day05 day = new Day05();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "BFFFBBFRRR",
-        });
+        ]);
 
         Assert.Equal("567", result);
     }
@@ -29,11 +29,11 @@ public class Day05_Tests
     [Fact]
     public void ResolvePart1__Example3()
     {
-        var day = new Day05();
+        Day05 day = new Day05();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "FFFBBBFRRR",
-        });
+        ]);
 
         Assert.Equal("119", result);
     }
@@ -41,11 +41,11 @@ public class Day05_Tests
     [Fact]
     public void ResolvePart1__Example4()
     {
-        var day = new Day05();
+        Day05 day = new Day05();
 
-        string result = day.ResolvePart1(new[] {
+        string result = day.ResolvePart1([
             "BBFFBBFRLL",
-        });
+        ]);
 
         Assert.Equal("820", result);
     }

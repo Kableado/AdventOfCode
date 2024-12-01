@@ -64,14 +64,14 @@ public class Day06_Tests
     {
         Day06 day06 = new();
 
-        string result = day06.ResolvePart1(new[] {
+        string result = day06.ResolvePart1([
             "1, 1",
             "1, 6",
             "8, 3",
             "3, 4",
             "5, 5",
             "8, 9",
-        });
+        ]);
 
         Assert.Equal("17", result);
     }
@@ -79,16 +79,16 @@ public class Day06_Tests
     [Fact]
     public void ResolvePart2__Test()
     {
-        Day06 day06 = new() { DistanceThresold = 32, };
+        Day06 day06 = new() { DistanceThreshold = 32, };
 
-        string result = day06.ResolvePart2(new[] {
+        string result = day06.ResolvePart2([
             "1, 1",
             "1, 6",
             "8, 3",
             "3, 4",
             "5, 5",
             "8, 9",
-        });
+        ]);
 
         Assert.Equal("16", result);
     }

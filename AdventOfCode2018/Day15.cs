@@ -377,18 +377,18 @@ public class Day15 : IDay
 {
     public enum EntityType { Elf, Goblin, }
 
-    public bool Show { get; set; } = false;
+    private bool Show { get; set; } = false;
 
     public class Entity
     {
-        public const int GoblinAttackPower = 3;
+        private const int GoblinAttackPower = 3;
         public static int ElfAttackPower { get; set; } = 3;
-        public const int InitialHealth = 200;
+        private const int InitialHealth = 200;
 
-        public EntityType Type { get; set; }
+        public EntityType Type { get; init; }
         public int X { get; set; }
         public int Y { get; set; }
-        public int Health { get; set; } = InitialHealth;
+        public int Health { get; private set; } = InitialHealth;
 
         public bool IsAlive()
         {
@@ -401,18 +401,17 @@ public class Day15 : IDay
                 (other.X + 1 == X && other.Y == Y) ||
                 (other.X - 1 == X && other.Y == Y) ||
                 (other.X == X && other.Y + 1 == Y) ||
-                (other.X == X && other.Y - 1 == Y) ||
-                false
+                (other.X == X && other.Y - 1 == Y)
             )
             {
                 return true;
             }
             return false;
         }
-            
+
         public void Attack(char[,] map, Entity other)
         {
-            if(Type == EntityType.Elf)
+            if (Type == EntityType.Elf)
             {
                 other.Health -= ElfAttackPower;
             }
@@ -435,13 +434,12 @@ public class Day15 : IDay
         }
     }
 
-    public class Target
+    private class Target
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; init; }
+        public int Y { get; init; }
         public int Distance { get; set; }
-        public int Priority { get; set; }
-        public Entity Entity { get; set; }
+        public int Priority { get; init; }
     }
 
     private int _width;
@@ -450,7 +448,7 @@ public class Day15 : IDay
     private List<Entity> _entities;
     private BreadthFirstSearchGrid _search;
     private int _rounds;
-        
+
     private void Init(string[] inputs)
     {
         _height = inputs.Length;
@@ -473,8 +471,7 @@ public class Day15 : IDay
                 }
                 else if (cell == 'E')
                 {
-                    _entities.Add(new Entity
-                    {
+                    _entities.Add(new Entity {
                         Type = EntityType.Elf,
                         X = i,
                         Y = j,
@@ -483,8 +480,7 @@ public class Day15 : IDay
                 }
                 else if (cell == 'G')
                 {
-                    _entities.Add(new Entity
-                    {
+                    _entities.Add(new Entity {
                         Type = EntityType.Goblin,
                         X = i,
                         Y = j,
@@ -505,7 +501,7 @@ public class Day15 : IDay
             .ThenBy(e => e.X);
     }
 
-    public IEnumerable<Entity> GetTargetEntities(Entity entity)
+    private IEnumerable<Entity> GetTargetEntities(Entity entity)
     {
         return _entities
             .Where(e => e.IsAlive() && e.Type != entity.Type)
@@ -513,30 +509,28 @@ public class Day15 : IDay
             .ThenBy(e => e.X);
     }
 
-    public Entity GetBestInRangeTarget(Entity entity, IEnumerable<Entity> targets)
+    private Entity GetBestInRangeTarget(Entity entity, IEnumerable<Entity> targets)
     {
         return targets
-            .Where(e => entity.InRangeOf(e))
+            .Where(entity.InRangeOf)
             .OrderBy(e => e.Health)
             .ThenBy(e => e.Y)
             .ThenBy(e => e.X)
             .FirstOrDefault();
     }
 
-    private void AddTarget(List<Target> targets, int targetX, int targetY, int priority, Entity entity)
+    private void AddTarget(List<Target> targets, int targetX, int targetY, int priority)
     {
         if (targetX >= 0 && targetX < _width && targetY >= 0 && targetY < _height && _map[targetX, targetY] == '.')
         {
             int distance = _search.QueryDistance(targetX, targetY);
             if (distance >= 0)
             {
-                targets.Add(new Target
-                {
+                targets.Add(new Target {
                     X = targetX,
                     Y = targetY,
                     Distance = distance,
                     Priority = priority,
-                    Entity = entity,
                 });
             }
         }
@@ -552,7 +546,7 @@ public class Day15 : IDay
             foreach (Entity entity in entities)
             {
                 if (entity.IsAlive() == false) { continue; }
-                IEnumerable<Entity> entitiesTargets = GetTargetEntities(entity);
+                IEnumerable<Entity> entitiesTargets = GetTargetEntities(entity).ToList();
                 if (entitiesTargets.Any() == false)
                 {
                     running = false;
@@ -573,19 +567,18 @@ public class Day15 : IDay
                 int priority = 0;
                 foreach (Entity entityTarget in entitiesTargets)
                 {
-                    AddTarget(targets, entityTarget.X, entityTarget.Y - 1, priority++, entityTarget);
-                    AddTarget(targets, entityTarget.X - 1, entityTarget.Y, priority++, entityTarget);
-                    AddTarget(targets, entityTarget.X + 1, entityTarget.Y, priority++, entityTarget);
-                    AddTarget(targets, entityTarget.X, entityTarget.Y + 1, priority++, entityTarget);
+                    AddTarget(targets, entityTarget.X, entityTarget.Y - 1, priority++);
+                    AddTarget(targets, entityTarget.X - 1, entityTarget.Y, priority++);
+                    AddTarget(targets, entityTarget.X + 1, entityTarget.Y, priority++);
+                    AddTarget(targets, entityTarget.X, entityTarget.Y + 1, priority++);
                 }
                 Target bestTarget = targets.OrderBy(t => t.Distance).ThenBy(t => t.Priority).FirstOrDefault();
                 if (bestTarget != null)
                 {
                     _search.SearchCharGrid(_map, '.', bestTarget.X, bestTarget.Y);
                     targets.Clear();
-                    Target dirTarget;
 
-                    dirTarget = new Target { X = entity.X, Y = entity.Y - 1, Priority = 0, };
+                    Target dirTarget = new() { X = entity.X, Y = entity.Y - 1, Priority = 0, };
                     dirTarget.Distance = _search.QueryDistance(dirTarget.X, dirTarget.Y);
                     if (dirTarget.Distance >= 0) targets.Add(dirTarget);
 
@@ -609,7 +602,7 @@ public class Day15 : IDay
                     {
                         throw new Exception("No possible direction");
                     }
-                        
+
                     entity.MoveTo(_map, finalTarget.X, finalTarget.Y);
 
                     // Attack
@@ -620,10 +613,10 @@ public class Day15 : IDay
                     }
                 }
             }
-            if(running == false) { break; }
+            if (running == false) { break; }
             _rounds++;
             if (Show) { PrintBattlefield(); }
-        } while (running);
+        } while (true);
         if (Show) { PrintBattlefield(); }
     }
 
@@ -637,7 +630,8 @@ public class Day15 : IDay
             {
                 Console.Write(_map[i, j]);
             }
-            IEnumerable<Entity> entitiesOnLine = _entities.Where(e => e.IsAlive() && e.Y == j).OrderBy(e => e.X);
+            int j1 = j;
+            IEnumerable<Entity> entitiesOnLine = _entities.Where(e => e.IsAlive() && e.Y == j1).OrderBy(e => e.X);
             foreach (Entity entity in entitiesOnLine)
             {
                 Console.Write(" {0}({1})", (entity.Type == EntityType.Elf) ? 'E' : 'G', entity.Health);
@@ -683,16 +677,15 @@ public class Day15 : IDay
         private class BFSCell
         {
             public bool Visited { get; set; }
-            public BFSCell CameFrom { get; set; }
             public int Distance { get; set; } = -1;
-            public int X { get; set; }
-            public int Y { get; set; }
+            public int X { get; init; }
+            public int Y { get; init; }
         }
 
         private readonly BFSCell[,] _grid;
         private readonly int _width;
         private readonly int _height;
- 
+
         public BreadthFirstSearchGrid(int width, int height)
         {
             _grid = new BFSCell[width, height];
@@ -707,15 +700,14 @@ public class Day15 : IDay
             }
         }
 
-        public void Reset()
+        private void Reset()
         {
-            for(int j =0;j< _height; j++)
+            for (int j = 0; j < _height; j++)
             {
-                for(int i = 0; i < _width; i++)
+                for (int i = 0; i < _width; i++)
                 {
                     BFSCell cell = _grid[i, j];
                     cell.Visited = false;
-                    cell.CameFrom = null;
                     cell.Distance = -1;
                 }
             }
@@ -724,7 +716,7 @@ public class Day15 : IDay
         private void ProcessCell(char[,] grid, char empty, Queue<BFSCell> frontier, BFSCell current, int nextX, int nextY)
         {
             if (nextX < 0 || nextX >= _width || nextY < 0 || nextY >= _height) { return; }
-            if (grid[nextX, nextY] == empty || current== null)
+            if (grid[nextX, nextY] == empty || current == null)
             {
                 BFSCell cell = _grid[nextX, nextY];
                 if (cell.Visited == false)
@@ -732,7 +724,6 @@ public class Day15 : IDay
                     frontier.Enqueue(cell);
                     cell.Visited = true;
                     cell.Distance = (current?.Distance ?? -1) + 1;
-                    cell.CameFrom = current;
                 }
             }
         }
