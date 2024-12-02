@@ -5,7 +5,7 @@ public class Day07_Tests
     [Fact]
     public void ResolvePart1__Example()
     {
-        Day07 day = new Day07();
+        Day07 day = new();
 
         string result = day.ResolvePart1([
             "light red bags contain 1 bright white bag, 2 muted yellow bags.",
@@ -25,7 +25,7 @@ public class Day07_Tests
     [Fact]
     public void ResolvePart2__Example()
     {
-        Day07 day = new Day07();
+        Day07 day = new();
 
         string result = day.ResolvePart2([
             "shiny gold bags contain 2 dark red bags.",

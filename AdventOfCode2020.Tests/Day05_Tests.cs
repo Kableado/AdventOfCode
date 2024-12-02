@@ -5,7 +5,7 @@ public class Day05_Tests
     [Fact]
     public void ResolvePart1__Example1()
     {
-        Day05 day = new Day05();
+        Day05 day = new();
 
         string result = day.ResolvePart1([
             "FBFBBFFRLR",
@@ -17,7 +17,7 @@ public class Day05_Tests
     [Fact]
     public void ResolvePart1__Example2()
     {
-        Day05 day = new Day05();
+        Day05 day = new();
 
         string result = day.ResolvePart1([
             "BFFFBBFRRR",
@@ -29,7 +29,7 @@ public class Day05_Tests
     [Fact]
     public void ResolvePart1__Example3()
     {
-        Day05 day = new Day05();
+        Day05 day = new();
 
         string result = day.ResolvePart1([
             "FFFBBBFRRR",
@@ -41,7 +41,7 @@ public class Day05_Tests
     [Fact]
     public void ResolvePart1__Example4()
     {
-        Day05 day = new Day05();
+        Day05 day = new();
 
         string result = day.ResolvePart1([
             "BBFFBBFRLL",

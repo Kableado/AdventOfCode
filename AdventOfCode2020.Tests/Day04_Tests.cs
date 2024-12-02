@@ -5,7 +5,7 @@ public class Day04_Tests
     [Fact]
     public void ResolvePart1__Example()
     {
-        Day04 day = new Day04();
+        Day04 day = new();
 
         string result = day.ResolvePart1([
             "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd",
@@ -29,7 +29,7 @@ public class Day04_Tests
     [Fact]
     public void ResolvePart2__ExampleInvalid()
     {
-        Day04 day = new Day04();
+        Day04 day = new();
 
         string result = day.ResolvePart2([
             "eyr:1972 cid:100",
@@ -53,7 +53,7 @@ public class Day04_Tests
     [Fact]
     public void ResolvePart2__ExampleValid()
     {
-        Day04 day = new Day04();
+        Day04 day = new();
 
         string result = day.ResolvePart2([
             "pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980",

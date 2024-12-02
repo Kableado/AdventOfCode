@@ -5,7 +5,7 @@ public class Day03_Tests
     [Fact]
     public void ResolvePart1__Example()
     {
-        Day03 day = new Day03();
+        Day03 day = new();
 
         string result = day.ResolvePart1([
             "..##.......",
@@ -27,7 +27,7 @@ public class Day03_Tests
     [Fact]
     public void ResolvePart2__Example()
     {
-        Day03 day = new Day03();
+        Day03 day = new();
 
         string result = day.ResolvePart2([
             "..##.......",
