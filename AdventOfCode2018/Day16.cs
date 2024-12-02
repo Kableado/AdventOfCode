@@ -87,8 +87,8 @@ public class Day16 : IDay
         int count = 0;
         int i = 0;
         bool end = false;
-        int[] beforeRegisters = null;
-        int[] instruction = null;
+        int[]? beforeRegisters = null;
+        int[]? instruction = null;
         const string beforeKeyword = "Before: [";
         const string afterKeyword = "After:  [";
         while (inputs.Length > i)

@@ -444,9 +444,9 @@ public class Day15 : IDay
 
     private int _width;
     private int _height;
-    private char[,] _map;
-    private List<Entity> _entities;
-    private BreadthFirstSearchGrid _search;
+    private char[,] _map = new char[0, 0];
+    private readonly List<Entity> _entities = [];
+    private BreadthFirstSearchGrid? _search;
     private int _rounds;
 
     private void Init(string[] inputs)
@@ -454,7 +454,7 @@ public class Day15 : IDay
         _height = inputs.Length;
         _width = inputs.Max(input => input.Length);
         _map = new char[_width, _height];
-        _entities = new List<Entity>();
+        _entities.Clear();
         for (int j = 0; j < _height; j++)
         {
             for (int i = 0; i < _width; i++)
@@ -509,7 +509,7 @@ public class Day15 : IDay
             .ThenBy(e => e.X);
     }
 
-    private Entity GetBestInRangeTarget(Entity entity, IEnumerable<Entity> targets)
+    private Entity? GetBestInRangeTarget(Entity entity, IEnumerable<Entity> targets)
     {
         return targets
             .Where(entity.InRangeOf)
@@ -521,6 +521,7 @@ public class Day15 : IDay
 
     private void AddTarget(List<Target> targets, int targetX, int targetY, int priority)
     {
+        if (_search == null) { return;}
         if (targetX >= 0 && targetX < _width && targetY >= 0 && targetY < _height && _map[targetX, targetY] == '.')
         {
             int distance = _search.QueryDistance(targetX, targetY);
@@ -538,6 +539,7 @@ public class Day15 : IDay
 
     private void RunBattle()
     {
+        if (_search == null) { return;}
         _rounds = 0;
         bool running = true;
         do
@@ -554,7 +556,7 @@ public class Day15 : IDay
                 }
 
                 // Attack
-                Entity targetInRange = GetBestInRangeTarget(entity, entitiesTargets);
+                Entity? targetInRange = GetBestInRangeTarget(entity, entitiesTargets);
                 if (targetInRange != null)
                 {
                     entity.Attack(_map, targetInRange);
@@ -572,7 +574,7 @@ public class Day15 : IDay
                     AddTarget(targets, entityTarget.X + 1, entityTarget.Y, priority++);
                     AddTarget(targets, entityTarget.X, entityTarget.Y + 1, priority++);
                 }
-                Target bestTarget = targets.OrderBy(t => t.Distance).ThenBy(t => t.Priority).FirstOrDefault();
+                Target? bestTarget = targets.OrderBy(t => t.Distance).ThenBy(t => t.Priority).FirstOrDefault();
                 if (bestTarget != null)
                 {
                     _search.SearchCharGrid(_map, '.', bestTarget.X, bestTarget.Y);
@@ -594,7 +596,7 @@ public class Day15 : IDay
                     dirTarget.Distance = _search.QueryDistance(dirTarget.X, dirTarget.Y);
                     if (dirTarget.Distance >= 0) targets.Add(dirTarget);
 
-                    Target finalTarget = targets
+                    Target? finalTarget = targets
                         .OrderBy(t => t.Distance)
                         .ThenBy(t => t.Priority)
                         .FirstOrDefault();
@@ -606,7 +608,7 @@ public class Day15 : IDay
                     entity.MoveTo(_map, finalTarget.X, finalTarget.Y);
 
                     // Attack
-                    Entity targetInRangeAfterMove = GetBestInRangeTarget(entity, entitiesTargets);
+                    Entity? targetInRangeAfterMove = GetBestInRangeTarget(entity, entitiesTargets);
                     if (targetInRangeAfterMove != null)
                     {
                         entity.Attack(_map, targetInRangeAfterMove);
@@ -713,7 +715,7 @@ public class Day15 : IDay
             }
         }
 
-        private void ProcessCell(char[,] grid, char empty, Queue<BFSCell> frontier, BFSCell current, int nextX, int nextY)
+        private void ProcessCell(char[,] grid, char empty, Queue<BFSCell> frontier, BFSCell? current, int nextX, int nextY)
         {
             if (nextX < 0 || nextX >= _width || nextY < 0 || nextY >= _height) { return; }
             if (grid[nextX, nextY] == empty || current == null)

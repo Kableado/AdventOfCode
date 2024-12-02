@@ -128,9 +128,9 @@ public class Day07 : IDay
         return totalElapsedTime.ToString();
     }
 
-    public class InstructionNode
+    public class InstructionNode(string nodeID)
     {
-        public string NodeID { get; init; }
+        public string NodeID { get; init; } = nodeID;
 
         public List<string> PreviousNodeIDs { get; } = [];
 
@@ -154,16 +154,12 @@ public class Day07 : IDay
 
         private InstructionNode GetNode(string nodeID)
         {
-            InstructionNode node;
-            if (Nodes.TryGetValue(nodeID, out InstructionNode nodeAux))
+            if (Nodes.TryGetValue(nodeID, out InstructionNode? nodeAux))
             {
-                node = nodeAux;
+                return nodeAux;
             }
-            else
-            {
-                node = new InstructionNode { NodeID = nodeID, };
-                Nodes.Add(nodeID, node);
-            }
+            InstructionNode node = new(nodeID);
+            Nodes.Add(nodeID, node);
             return node;
         }
 
@@ -194,7 +190,8 @@ public class Day07 : IDay
                     .ToList();
                 if (unusedNodes.Count > 0)
                 {
-                    InstructionNode node = unusedNodes.FirstOrDefault();
+                    InstructionNode? node = unusedNodes.FirstOrDefault();
+                    if (node == null) { continue; }
                     finalNodes.Add(node);
                     node.Used = true;
                 }
@@ -204,7 +201,7 @@ public class Day07 : IDay
 
         private class SimulatedWorker
         {
-            public InstructionNode CurrentInstruction { get; private set; }
+            public InstructionNode? CurrentInstruction { get; private set; }
             private int ElapsedTime { get; set; }
 
             public void SetInstruction(InstructionNode instruction)

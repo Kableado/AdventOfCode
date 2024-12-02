@@ -30,11 +30,11 @@ public class Day03 : IDay
 {
     public string ResolvePart1(string[] inputs)
     {
-        return null;
+        return string.Empty;
     }
 
     public string ResolvePart2(string[] inputs)
     {
-        return null;
+        return string.Empty;
     }
 }

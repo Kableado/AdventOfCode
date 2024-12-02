@@ -64,7 +64,7 @@ public class Day05 : IDay
         int maxSerialNumber = 0;
         foreach (string input in inputs)
         {
-            Seat seat = Seat_Parse(input);
+            Seat? seat = Seat_Parse(input);
             if (seat == null) { continue; }
             int newSerialNumber = seat.GetSerialNumber();
             if (newSerialNumber > maxSerialNumber) { maxSerialNumber = newSerialNumber; }
@@ -83,7 +83,7 @@ public class Day05 : IDay
         }
         foreach (string input in inputs)
         {
-            Seat seat = Seat_Parse(input);
+            Seat? seat = Seat_Parse(input);
             if (seat == null) { continue; }
 
             seats[seat.Column][seat.Row] = 'X';
@@ -166,7 +166,7 @@ public class Day05 : IDay
         }
     }
 
-    private Seat Seat_Parse(string input)
+    private Seat? Seat_Parse(string input)
     {
         if (input.Length != 10 ||
             input.All(c => c == 'F' || c == 'B' || c == 'L' || c == 'R') == false

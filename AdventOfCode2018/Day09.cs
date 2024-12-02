@@ -87,16 +87,16 @@ public class Day09 : IDay
     public class Marble
     {
         public long Value { get; init; }
-        public Marble Previous { get; set; }
-        public Marble Next { get; set; }
+        public Marble? Previous { get; set; }
+        public Marble? Next { get; set; }
     }
 
     public class MarbleGame
     {
         private Dictionary<long, long> Scores { get; } = new();
 
-        private Marble _firstMarble;
-        private Marble _currentMarble;
+        private Marble? _firstMarble;
+        private Marble? _currentMarble;
         private long _currentPlayer;
 
         private const long PointValueMultiple = 23;
@@ -119,20 +119,34 @@ public class Day09 : IDay
                 Marble newMarble = new() { Value = i + 1 };
                 if ((newMarble.Value % PointValueMultiple) > 0)
                 {
-                    Marble previousMarble = _currentMarble.Next;
-                    Marble nextMarble = previousMarble.Next;
+                    Marble? previousMarble = _currentMarble?.Next;
+                    Marble? nextMarble = previousMarble?.Next;
                     newMarble.Previous = previousMarble;
                     newMarble.Next = nextMarble;
-                    previousMarble.Next = newMarble;
-                    nextMarble.Previous = newMarble;
+                    if(previousMarble != null)
+                    {
+                        previousMarble.Next = newMarble;
+                    }
+                    if(nextMarble != null)
+                    {
+                        nextMarble.Previous = newMarble;
+                    }
                     _currentMarble = newMarble;
                 }
                 else
                 {
-                    Marble marbleToRemove = _currentMarble.Previous.Previous.Previous.Previous.Previous.Previous.Previous;
-                    _currentMarble = marbleToRemove.Next;
-                    marbleToRemove.Previous.Next = marbleToRemove.Next;
-                    marbleToRemove.Next.Previous = marbleToRemove.Previous;
+                    Marble? marbleToRemove = _currentMarble?.Previous?.Previous?.Previous?.Previous?.Previous?.Previous?.Previous;
+                    _currentMarble = marbleToRemove?.Next;
+                    if (marbleToRemove == null) { continue; }
+                    
+                    if(marbleToRemove.Previous != null)
+                    {
+                        marbleToRemove.Previous.Next = marbleToRemove.Next;
+                    }
+                    if (marbleToRemove.Next != null)
+                    {
+                        marbleToRemove.Next.Previous = marbleToRemove.Previous;
+                    }
 
                     long currentPlayerScore = Scores[_currentPlayer] + (newMarble.Value + marbleToRemove.Value);
                     Scores[_currentPlayer] = currentPlayerScore;
@@ -144,14 +158,14 @@ public class Day09 : IDay
         private void PrintStatus()
         {
             Console.Write("[{0}] ", _currentPlayer);
-            Marble marble = _firstMarble;
+            Marble? marble = _firstMarble;
             do
             {
-                Console.Write(_currentMarble.Value == marble.Value 
+                Console.Write(_currentMarble?.Value == marble?.Value 
                     ? "({0}) " 
-                    : "{0} ", marble.Value);
-                marble = marble.Next;
-            } while (marble.Value != 0);
+                    : "{0} ", marble?.Value);
+                marble = marble?.Next;
+            } while (marble != null && marble.Value != 0);
             Console.WriteLine();
         }
 

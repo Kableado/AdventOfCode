@@ -62,7 +62,7 @@ public class Day14 : IDay
 {
     private long _numRecipes;
     private long _numRecipesAllocated;
-    private byte[] _recipes;
+    private byte[] _recipes = [];
     private long _idxA;
     private long _idxB;
     private long _searchSkip;

@@ -217,7 +217,7 @@ public class Day13 : IDay
     public string ResolvePart1(string[] inputs)
     {
         Initialize(inputs);
-        Train collidingTrain;
+        Train? collidingTrain;
         do
         {
             if (ShowProgress) { ShowGrid(); }
@@ -229,7 +229,7 @@ public class Day13 : IDay
     public string ResolvePart2(string[] inputs)
     {
         Initialize(inputs);
-        Train lastCart;
+        Train? lastCart;
         do
         {
             if (ShowProgress) { ShowGrid(); }
@@ -371,7 +371,7 @@ public class Day13 : IDay
 
     private int _width;
     private int _height;
-    private char[,] _grid;
+    private char[,] _grid = new char[0, 0];
     private readonly List<Train> _trains = [];
 
     private void Initialize(string[] inputs)
@@ -430,9 +430,9 @@ public class Day13 : IDay
         }
     }
 
-    private Train SimulateForFirstCollision()
+    private Train? SimulateForFirstCollision()
     {
-        Train collidingTrain = null;
+        Train? collidingTrain = null;
         IEnumerable<Train> orderedTrains = _trains.OrderBy(t => t.X + (t.Y * _width));
         foreach (Train t in orderedTrains)
         {
@@ -443,13 +443,13 @@ public class Day13 : IDay
         return collidingTrain;
     }
 
-    private Train SimulateForLastCart()
+    private Train? SimulateForLastCart()
     {
         List<Train> orderedTrains = _trains.OrderBy(t => t.X + (t.Y * _width)).ToList();
         foreach (Train t in orderedTrains)
         {
             t.Simulate(_grid);
-            Train collidingTrain = _trains.FirstOrDefault(x => x.X == t.X && x.Y == t.Y && t != x);
+            Train? collidingTrain = _trains.FirstOrDefault(x => x.X == t.X && x.Y == t.Y && t != x);
             if (collidingTrain != null)
             {
                 _trains.Remove(t);
@@ -470,7 +470,7 @@ public class Day13 : IDay
         {
             for (int i = 0; i < _width; i++)
             {
-                Train t = _trains.FirstOrDefault(x => x.X == i && x.Y == j);
+                Train? t = _trains.FirstOrDefault(x => x.X == i && x.Y == j);
                 if (t != null)
                 {
                     if (t.Direction == TrainDirection.North)

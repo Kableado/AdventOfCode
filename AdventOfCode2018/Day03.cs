@@ -94,7 +94,7 @@ public class Day03 : IDay
     {
         List<Claim> claims = inputs.Select(Claim.FromString).ToList();
 
-        Claim unOverlappingClaim = null;
+        Claim? unOverlappingClaim = null;
         for (int i = 0; i < claims.Count; i++)
         {
             bool overlaps = false;
@@ -113,7 +113,7 @@ public class Day03 : IDay
                 break;
             }
         }
-        return unOverlappingClaim.ID.ToString();
+        return unOverlappingClaim?.ID.ToString() ?? string.Empty;
 
     }
 

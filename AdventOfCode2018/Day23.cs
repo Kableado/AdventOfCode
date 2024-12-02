@@ -68,8 +68,8 @@ public class Day23 : IDay
     public string ResolvePart1(string[] inputs)
     {
         List<NanoBot> nanoBots = NanoBot.ListFromStrings(inputs);
-        NanoBot bestNanoBot = nanoBots.OrderBy(nanoBot => nanoBot.Range).LastOrDefault();
-        int countInRange = nanoBots.Count(nanoBot => bestNanoBot.InRange(nanoBot));
+        NanoBot? bestNanoBot = nanoBots.OrderBy(nanoBot => nanoBot.Range).LastOrDefault();
+        int countInRange = nanoBots.Count(nanoBot => bestNanoBot?.InRange(nanoBot) == true);
         return countInRange.ToString();
     }
 
@@ -150,7 +150,7 @@ public class Day23 : IDay
         public long Z { get; private init; }
         public long Range { get; private init; }
 
-        private static NanoBot FromString(string strInput)
+        private static NanoBot? FromString(string strInput)
         {
             string[] parts = strInput.Split(["pos=<", ",", ">, r="], StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length != 4) { return null; }
@@ -167,7 +167,7 @@ public class Day23 : IDay
         {
             List<NanoBot> nanoBots = inputs
                 .Select(FromString)
-                .Where(nanoBot => nanoBot != null)
+                .OfType<NanoBot>()
                 .ToList();
             return nanoBots;
         }

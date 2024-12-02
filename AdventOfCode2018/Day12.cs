@@ -111,8 +111,8 @@ public class Day12 : IDay
     private readonly List<bool> _initialState = [];
     private readonly List<PlantRule> _rules = [];
     private long _offsetField;
-    private bool[] _field;
-    private bool[] _workField;
+    private bool[] _field = [];
+    private bool[] _workField = [];
 
     private void Initialize(string[] inputs)
     {

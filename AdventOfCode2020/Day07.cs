@@ -123,25 +123,23 @@ public class Day07 : IDay
 
     private class BaggageContainRule
     {
-        public string BagColor { get; set; }
+        public string BagColor { get; set; } = string.Empty;
         public int Count { get; init; }
     }
 
     private class BaggageRule
     {
-        public string BagColor { get; set; }
+        public string BagColor { get; set; } = string.Empty;
 
-        public List<BaggageContainRule> Contain { get; init; }
+        public List<BaggageContainRule> Contain { get; } = [];
     }
 
     private BaggageRule BaggageRule_Parse(string input)
     {
         string[] words = input.Split(' ');
         string status = "Parse Color 1";
-        BaggageRule rule = new() {
-            Contain = [],
-        };
-        BaggageContainRule containRule = null;
+        BaggageRule rule = new();
+        BaggageContainRule? containRule = null;
         string color1 = string.Empty;
 
         foreach (string word in words)
@@ -180,6 +178,7 @@ public class Day07 : IDay
                     status = "Parse Contain color 2";
                     break;
                 case "Parse Contain color 2":
+                    if(containRule == null) { break; } 
                     containRule.BagColor = string.Concat(color1, " ", word);
                     rule.Contain.Add(containRule);
                     status = "Parse Contain continue";

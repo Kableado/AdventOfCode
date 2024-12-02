@@ -7,28 +7,28 @@ public class Day06_Tests
     [Fact]
     public void ChronoPoint_FromString__Test1()
     {
-        Day06.ChronoPoint point = Day06.ChronoPoint.FromString("1, 1");
+        Day06.ChronoPoint? point = Day06.ChronoPoint.FromString("1, 1");
 
-        Assert.Equal(1, point.X);
-        Assert.Equal(1, point.Y);
+        Assert.Equal(1, point?.X);
+        Assert.Equal(1, point?.Y);
     }
 
     [Fact]
     public void ChronoPoint_FromString__Test2()
     {
-        Day06.ChronoPoint point = Day06.ChronoPoint.FromString("1, 6");
+        Day06.ChronoPoint? point = Day06.ChronoPoint.FromString("1, 6");
 
-        Assert.Equal(1, point.X);
-        Assert.Equal(6, point.Y);
+        Assert.Equal(1, point?.X);
+        Assert.Equal(6, point?.Y);
     }
 
     [Fact]
     public void ChronoPoint_FromString__Test3()
     {
-        Day06.ChronoPoint point = Day06.ChronoPoint.FromString("8, 9");
+        Day06.ChronoPoint? point = Day06.ChronoPoint.FromString("8, 9");
 
-        Assert.Equal(8, point.X);
-        Assert.Equal(9, point.Y);
+        Assert.Equal(8, point?.X);
+        Assert.Equal(9, point?.Y);
     }
 
     #endregion ChronoPoint_FromString
@@ -38,9 +38,12 @@ public class Day06_Tests
     [Fact]
     public void ChronoPoint_ManhattanDistance__Test1()
     {
-        Day06.ChronoPoint p0 = Day06.ChronoPoint.FromString("8, 9");
-        Day06.ChronoPoint p1 = Day06.ChronoPoint.FromString("1, 6");
+        Day06.ChronoPoint? p0 = Day06.ChronoPoint.FromString("8, 9");
+        Day06.ChronoPoint? p1 = Day06.ChronoPoint.FromString("1, 6");
 
+        Assert.NotNull(p0);
+        Assert.NotNull(p1);
+        
         int distance = Day06.ChronoPoint.ManhattanDistance(p0, p1);
 
         Assert.Equal(10, distance);
@@ -49,9 +52,12 @@ public class Day06_Tests
     [Fact]
     public void ChronoPoint_ManhattanDistance__Test2()
     {
-        Day06.ChronoPoint p0 = Day06.ChronoPoint.FromString("1, 1");
-        Day06.ChronoPoint p1 = Day06.ChronoPoint.FromString("1, 6");
+        Day06.ChronoPoint? p0 = Day06.ChronoPoint.FromString("1, 1");
+        Day06.ChronoPoint? p1 = Day06.ChronoPoint.FromString("1, 6");
 
+        Assert.NotNull(p0);
+        Assert.NotNull(p1);
+        
         int distance = Day06.ChronoPoint.ManhattanDistance(p0, p1);
 
         Assert.Equal(5, distance);

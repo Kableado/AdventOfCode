@@ -82,7 +82,7 @@ public class Day01 : IDay
     public string ResolvePart2(string[] inputs)
     {
         int accumulator = 0;
-        List<int> accumulatorHistory = new();
+        List<int> accumulatorHistory = [];
         int? repeatedAccumulator = null;
         while (repeatedAccumulator == null)
         {
@@ -108,6 +108,6 @@ public class Day01 : IDay
                 }
             }
         }
-        return repeatedAccumulator.ToString();
+        return repeatedAccumulator.ToString() ?? string.Empty;
     }
 }

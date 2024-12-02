@@ -71,7 +71,7 @@ public class Day04 : IDay
         Dictionary<int, GuardSleepHistogram> dictFullHistogram = BuildFullHistogram(guardEvents);
 
         // Find sleepier guard
-        GuardSleepHistogram highestSleeperHistogram = null;
+        GuardSleepHistogram? highestSleeperHistogram = null;
         long highestTotalSleep = long.MinValue;
         foreach (GuardSleepHistogram guardHistogram in dictFullHistogram.Values)
         {
@@ -83,6 +83,7 @@ public class Day04 : IDay
                 highestTotalSleep = totalSleep;
             }
         }
+        if (highestSleeperHistogram == null) { return string.Empty; }
 
         // Find sleepier minute
         int maxSleepMinute = int.MinValue;
@@ -156,14 +157,12 @@ public class Day04 : IDay
 
             foreach (GuardSleepHistogram dayGuardHistogram in dictDayHistogram.Values)
             {
-                if (dictFullHistogram.TryGetValue(dayGuardHistogram.ID, out GuardSleepHistogram guardHistogram))
+                if (dictFullHistogram.TryGetValue(dayGuardHistogram.ID, out GuardSleepHistogram? guardHistogram))
                 {
                     guardHistogram.AddHistogram(dayGuardHistogram);
+                    continue;
                 }
-                else
-                {
-                    dictFullHistogram.Add(dayGuardHistogram.ID, dayGuardHistogram);
-                }
+                dictFullHistogram.Add(dayGuardHistogram.ID, dayGuardHistogram);
             }
         }
 

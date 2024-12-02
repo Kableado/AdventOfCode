@@ -3,10 +3,11 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>AdventOfCode2023.Tests</RootNamespace>
         <Nullable>enable</Nullable>
+        <RootNamespace>AdventOfCode2023.Tests</RootNamespace>
 
         <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
     </PropertyGroup>
 
     <ItemGroup>

@@ -97,6 +97,7 @@ public class Day06 : IDay
         return inputs
             .Where(input => string.IsNullOrEmpty(input) == false)
             .Select(ChronoPoint.FromString)
+            .OfType<ChronoPoint>()
             .ToList();
     }
 
@@ -197,7 +198,7 @@ public class Day06 : IDay
         public int X { get; set; }
         public int Y { get; set; }
 
-        public static ChronoPoint FromString(string strPoint)
+        public static ChronoPoint? FromString(string strPoint)
         {
             if (string.IsNullOrEmpty(strPoint)) { return null; }
             string[] parts = strPoint.Split([", "], StringSplitOptions.RemoveEmptyEntries);
